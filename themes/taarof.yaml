@@ -29,7 +29,7 @@ score:
 
 gains:
   - { en: You insisted the guest take the last piece of cake, fa: اصرار کردی آخرین تیکه‌ی کیک مال مهمون باشه }
-  - { en: You insisted on paying the taxi fare for everyone, fa: اصرار کردی کرایه‌ی تاکسی همه با تو باشه }
+  - { en: 'In the shared taxi you insisted on paying everyone''s fare', fa: 'تو تاکسی اصرار کردی کرایه‌ی همه رو تو حساب کنی' }
   - { en: You won the doorway battle over who goes in first, fa: دم در سر اینکه کی اول بره تو، تعارف کردی و بردی }
   - { en: You refused the fruit three times before taking one, fa: سه بار میوه رو رد کردی تا آخر یکی برداشتی }
   - { en: You walked the guests all the way to their car, fa: مهمون‌ها رو تا دم ماشین بدرقه کردی }
@@ -44,7 +44,7 @@ gains:
   - { en: You gave the comfiest seat to the eldest guest, fa: بهترین جای مجلس رو دادی به بزرگ‌ترِ جمع }
   - { en: 'You peeled a cucumber, salted it and handed it to the guest', fa: خیار پوست کندی، نمک زدی و دادی دست مهمون }
   - { en: You refilled everyone's tea before their glasses were empty, fa: هنوز استکان‌ها خالی نشده بود که چای همه رو دوباره ریختی }
-  - { en: 'You didn''t return a neighbor''s dish empty. You filled it first', fa: ظرف همسایه رو خالی پس ندادی، پرش کردی و پس دادی }
+  - { en: 'You didn''t return a neighbor''s dish empty. You filled it first', fa: 'ظرف همسایه رو خالی پس ندادی، پرش کردی' }
   - { en: You slipped off to the counter and paid while everyone was reading the menu, fa: تا بقیه داشتن منو رو می‌خوندن، یواشکی رفتی دم صندوق حساب کردی }
   - { en: You offered your place in the bakery line to the old man behind you, fa: تو صف نونوایی نوبتت رو به پیرمرد پشت‌سری تعارف کردی }
   - { en: You held the elevator and said "befarmaid" to the whole building, fa: در آسانسور رو نگه داشتی و به کل ساختمون گفتی «بفرمایید» }
@@ -85,8 +85,8 @@ losses:
 
 neutral:
   - { en: You and your aunt are still standing at the door saying "after you", fa: تو و خاله‌ت هنوز دم در دارین می‌گین «اول شما» }
-  - { en: Someone said "you must come over sometime" and nobody picked a date. As is tradition, fa: یکی گفت «یه روز بیاین خونه‌ی ما» و هیچ‌کس روزی رو مشخص نکرد. طبق سنت }
-  - { en: 'The host asked "tea or juice?" and you said "whatever you prefer". Neither of you will decide', fa: صاحب‌خونه پرسید «چای یا شربت؟»، گفتی «هر چی شما بفرمایید». هنوز هیچ‌کدوم تصمیم نگرفتین }
+  - { en: 'Someone said "come over some day" and nobody asked which day. As always', fa: 'یکی گفت «یه روز بیاین خونه‌ی ما» و هیچ‌کس نپرسید کدوم روز. مثل همیشه' }
+  - { en: 'The host asked "tea or sharbat?" and you said "whatever you like". Still undecided', fa: 'صاحب‌خونه پرسید «چای یا شربت؟» گفتی «هرچی شما بخواین». هنوز معلوم نیست کدوم' }
   - { en: You offered the last date to everyone and it's still sitting on the plate, fa: آخرین خرما رو به همه تعارف کردی، هنوز تو بشقاب مونده }
   - { en: You said goodbye at the door for so long the tea went cold, fa: اون‌قدر دم در خداحافظی کردین که چای یخ کرد }
   - { en: 'You both grabbed the bill at once and it tore in half', fa: هر دوتون هم‌زمان صورت‌حساب رو گرفتین و از وسط پاره شد }
@@ -130,7 +130,7 @@ hook:
     - { en: "You told the bot \"after you\" and it said \"no, after you!\" Your turn is gone", fa: "به ربات گفتی «اول شما»، ربات گفت «نه، اول شما!» نوبتت پرید" }
     - { en: The bot offered you a turn and you politely refused. It believed you, fa: ربات بهت نوبت تعارف کرد، تو مؤدبانه رد کردی، اونم باور کرد }
     - { en: "You and the bot spent twelve hours saying \"please, you first\"", fa: تو و ربات دوازده ساعت به هم گفتین «خواهش می‌کنم، اول شما» }
-    - { en: 'The bot said "I''m not worthy of your time" and you spent the whole turn talking it out of it', fa: ربات گفت «من لایق وقت شما نیستم» و تو کل نوبتت رو سر قانع کردنش گذروندی }
+    - { en: 'The bot said "Im at your service", you said "no, Im at yours", and by the end your turn was gone', fa: 'ربات گفت «من کوچیکتونم»، گفتی «اختیار دارین»، تا تعارفا تموم شد نوبتت پریده بود' }
     - { en: The bot walked you all the way to your car and your turn got left behind, fa: ربات تا دم ماشین بدرقه‌ت کرد، نوبتت جا موند }
     - { en: You and the bot fought over who pays for this turn until the waiter took it away, fa: تو و ربات اون‌قدر سر حساب این نوبت دعوا کردین که گارسون نوبت رو برد }
     - { en: The bot offered you tea first. You refused three times and your turn went cold, fa: ربات اول به تو چای تعارف کرد، سه بار رد کردی تا نوبتت سرد شد }

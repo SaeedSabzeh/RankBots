@@ -47,7 +47,7 @@ gains:
   - { en: 'Mom said "this cat is too skinny" and doubled its food', fa: مامانت گفت «این گربه چقدر لاغره» و غذاش رو دوبرابر کرد }
   - { en: Your cat ate the breakfast sarshir in one go, fa: گربه‌ت سرشیرِ صبحونه رو یه‌جا خورد }
   - { en: Your cat napped in a basket of warm clean laundry, fa: گربه‌ت توی سبد لباس‌های گرم و تازه‌شسته چرت زد }
-  - { en: Your cat caught a moth and is very proud of itself, fa: گربه‌ت یه پروانه گرفت و کلی به خودش می‌نازه }
+  - { en: 'Your cat caught a butterfly and showed off to everyone', fa: 'گربه‌ت یه پروانه گرفت و کلی برای همه کلاس گذاشت' }
   - { en: Guests came over and everyone petted your cat, fa: مهمون اومد و همه گربه‌ت رو ناز کردن }
   - { en: Your cat found a cardboard box and wants nothing more from life, fa: گربه‌ت یه کارتن پیدا کرد و دیگه هیچی از زندگی نمی‌خواد }
   - { en: Your cat sat on your warm laptop all afternoon, fa: گربه‌ت کل بعدازظهر روی لپ‌تاپ داغت نشست }
@@ -57,7 +57,7 @@ gains:
 
 losses:
   - { en: Your cat got caught in the rain, fa: گربه‌ت زیر بارون موند }
-  - { en: Vet day. Your cat is on a diet now, fa: روز دامپزشکی بود؛ گربه‌ت رژیم گرفته }
+  - { en: 'Vet day. Your cat is on a diet now', fa: 'رفتین دامپزشکی و گربه‌ت رو گذاشتن رو رژیم' }
   - { en: Your cat chased a laser pointer for an hour, fa: گربه‌ت یه ساعت دنبال نور لیزر دوید }
   - { en: Bath time. Your cat looks like a wet rat, fa: حمومش کردی؛ شده عین موش آب‌کشیده }
   - { en: Your cat shed all over the sofa, fa: گربه‌ت کل پشمش رو ریخت روی مبل }
@@ -97,7 +97,7 @@ events:
     - { en: On Yalda night the whole family kept feeding your cat till morning, fa: شب یلدا کل فامیل تا صبح به گربه‌ت لقمه دادن }
   bad:
     - { en: Your cat fell into the hoz, fa: گربه‌ت افتاد تو حوض }
-    - { en: The vet shaved your cat. All of it, fa: دامپزشک گربه‌ت رو از ته تراشید. کاملش رو }
+    - { en: 'The vet shaved your cat. All of it', fa: 'دامپزشک گربه‌ت رو از ته تراشید. سرتاپاش رو' }
     - { en: Your cat saw a cucumber and lost half its fluff from fright, fa: گربه‌ت خیار دید و از ترس نصف پشمش ریخت }
     - { en: Your cat got locked in the storage room all weekend, fa: گربه‌ت کل آخر هفته تو انباری زندونی شد }
     - { en: Your cat fought the big tomcat of the alley and left a tuft of fur behind, fa: گربه‌ت با گربه‌ی گنده‌لات محل دعوا کرد و یه دسته پشمش جا موند }

@@ -38,7 +38,7 @@ gains:
   - { en: Her friends said what a polite kid you are, fa: دوستاش گفتن چه بچه‌ی مؤدبی داری }
   - { en: You sat and cleaned sabzi with her for an hour, fa: یه ساعت نشستی باهاش سبزی پاک کردی }
   - { en: You took the trash out the first time she asked, fa: همون بار اول که گفت، آشغال‌ها رو بردی دم در }
-  - { en: You called her back the second you saw her missed call, fa: تا دیدی زنگ زده سریع بهش زنگ زدی }
+  - { en: 'You saw her missed call and called right back', fa: 'تا دیدی میس‌کال داده، سریع بهش زنگ زدی' }
   - { en: You tidied the whole house before the guests arrived, fa: قبل از اومدن مهمون‌ها کل خونه رو مرتب کردی }
   - { en: You came home with hot fresh sangak bread, fa: با نون سنگک داغ اومدی خونه }
   - { en: You ate yesterday's leftovers without complaining, fa: غذای مونده‌ی دیروز رو بی‌غر خوردی }
@@ -80,7 +80,7 @@ losses:
   - { en: 'You said "I''ll do it later"', fa: گفتی «بعداً انجامش می‌دم» }
   - { en: You came home late and didn't let her know, fa: دیر اومدی خونه و خبر ندادی }
   - { en: You were glued to your phone while the guests were over, fa: جلوی مهمون‌ها سرت تو گوشی بود }
-  - { en: You forgot it was trash night, fa: یادت رفت امشب شب بردن آشغال‌هاست }
+  - { en: 'You forgot it was your turn to take the trash out tonight', fa: 'یادت رفت امشب نوبت تو بود آشغال‌ها رو ببری' }
   - { en: You said her rice was a little salty, fa: گفتی برنجش یه کم شوره }
   - { en: You drank ice water right after eating, fa: درست بعد غذا آب یخ خوردی }
   - { en: You walked across the floor she had just mopped, fa: روی زمینی که تازه طی کشیده بود راه رفتی }
@@ -91,7 +91,7 @@ neutral:
   - { en: She forwarded you an article about the dangers of phones, fa: برات یه مطلب درباره‌ی ضررهای گوشی فوروارد کرد }
   - { en: She asked when you're getting married. Again, fa: دوباره پرسید کِی ازدواج می‌کنی }
   - { en: 'She said "do whatever you want" in that tone', fa: با اون لحن همیشگی گفت «هرکاری دلت می‌خواد بکن» }
-  - { en: She asked if you were cold. You weren't. She brought a blanket anyway, fa: پرسید «سردته؟»، گفتی نه، باز هم برات پتو آورد }
+  - { en: 'She asked if you were cold. You weren''t. She brought a blanket anyway', fa: 'پرسید «سردته؟» گفتی نه، ولی بازم برات پتو آورد' }
 
 # Rare events (5% of rolls) replace the normal roll with a big swing.
 events:
