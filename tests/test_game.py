@@ -95,14 +95,16 @@ def test_score_delta_follows_direction_and_scale():
 
 
 def test_score_never_goes_below_the_floor():
-    assert game.apply_delta(CAT, 3, -5) == 0
+    floor = CAT.score.min
+    assert game.apply_delta(CAT, floor + 3, -5) == floor
     assert game.apply_delta(KONKUR, 2000, -7000) == 1
 
 
 def test_titles_by_tier():
-    assert game.title_for(CAT, 0).at == 0
-    assert game.title_for(CAT, 24).at == 0
-    assert game.title_for(CAT, 25).at == 25
+    first, second = CAT.titles[0].at, CAT.titles[1].at
+    assert game.title_for(CAT, CAT.score.start).at == first
+    assert game.title_for(CAT, second - 1).at == first
+    assert game.title_for(CAT, second).at == second
     assert game.title_for(CAT, 10_000).at == CAT.titles[-1].at
 
 
@@ -140,7 +142,7 @@ def test_themes_without_a_hook_never_lose_a_turn():
 
 
 def test_duel_headroom_is_the_distance_to_the_floor():
-    assert game.duel_headroom(CAT, 40) == 40
+    assert game.duel_headroom(CAT, CAT.score.min + 40) == 40
     assert game.duel_headroom(KONKUR, 500_000) == 499_999
     assert game.duel_headroom(KONKUR, 1) == 0
 

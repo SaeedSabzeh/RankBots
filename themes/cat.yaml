@@ -20,10 +20,11 @@ leaderboard_title:
 score:
   name: { en: Fluffiness, fa: پشمالویی }
   unit: { en: g, fa: گرم }
-  start: 0
+  # A new kitten weighs 150 g and can never shrink below a newborn's 100 g.
+  start: 150
   direction: higher
   scale: 1
-  min: 0
+  min: 100
 
 gains:
   - { en: Your cat ate a whole sausage, fa: گربه‌ت یه سوسیس کامل خورد }
@@ -61,13 +62,13 @@ events:
 
 # Cat outfits as titles. Each one is reached once the score is at least `at`.
 titles:
-  - { at: 0, name: { en: Bare kitten 🐾, fa: بچه‌گربه‌ی بی‌لباس 🐾 } }
-  - { at: 25, name: { en: Kitten in a bow tie 🎀, fa: بچه‌گربه با پاپیون 🎀 } }
-  - { at: 60, name: { en: Fluffball in a beanie 🧶, fa: پشمالو با کلاه بافتنی 🧶 } }
-  - { at: 120, name: { en: Chonky in a hoodie 🧥, fa: تپل با هودی 🧥 } }
-  - { at: 200, name: { en: Mega chonk in a tuxedo 🤵, fa: تپلِ گنده با کت‌وشلوار 🤵 } }
-  - { at: 350, name: { en: Absolute Unit in a royal cape 🦸, fa: غول پشمالو با شنل شاهی 🦸 } }
-  - { at: 600, name: { en: Cat Emperor in a golden crown 👑, fa: امپراتور گربه‌ها با تاج طلا 👑 } }
+  - { at: 150, name: { en: Bare kitten 🐾, fa: بچه‌گربه‌ی بی‌لباس 🐾 } }
+  - { at: 175, name: { en: Kitten in a bow tie 🎀, fa: بچه‌گربه با پاپیون 🎀 } }
+  - { at: 210, name: { en: Fluffball in a beanie 🧶, fa: پشمالو با کلاه بافتنی 🧶 } }
+  - { at: 270, name: { en: Chonky in a hoodie 🧥, fa: تپل با هودی 🧥 } }
+  - { at: 350, name: { en: Mega chonk in a tuxedo 🤵, fa: تپلِ گنده با کت‌وشلوار 🤵 } }
+  - { at: 500, name: { en: Absolute Unit in a royal cape 🦸, fa: غول پشمالو با شنل شاهی 🦸 } }
+  - { at: 750, name: { en: Cat Emperor in a golden crown 👑, fa: امپراتور گربه‌ها با تاج طلا 👑 } }
 
 # Optional special mechanic, at most one per theme. The cat bot has none. The taarof bot will use:
 # hook:

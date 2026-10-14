@@ -10,7 +10,12 @@ from engine import game, service, texts
 from engine.db import Blocked
 from engine.theme import load_themes
 
-CAT = load_themes()["cat"]
+# These tests use round scores like 50 g, so they run on a cat with a floor of 0.
+_CAT = load_themes()["cat"]
+CAT = _CAT.model_copy(update={
+    "score": _CAT.score.model_copy(update={"start": 0, "min": 0}),
+    "titles": [t.model_copy(update={"at": t.at - _CAT.score.start}) for t in _CAT.titles],
+})
 CAT_BOTH = CAT.model_copy(update={"language": "both"})
 KONKUR = CAT.model_copy(
     update={

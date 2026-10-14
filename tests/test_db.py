@@ -47,7 +47,7 @@ async def test_play_then_cooldown_then_play_again(store):
     first = await _play(store)
     assert isinstance(first, service.Played)
     assert first.rank == 1
-    assert first.score == max(0, first.delta)
+    assert first.score == max(CAT.score.min, CAT.score.start + first.delta)
 
     again = await _play(store, now=T0 + timedelta(hours=3))
     assert again == service.OnCooldown(timedelta(hours=9))
