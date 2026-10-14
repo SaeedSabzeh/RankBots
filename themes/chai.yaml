@@ -1,0 +1,70 @@
+# Chai bot: grow your tea addiction, one glass at a time.
+# Messages are written without numbers; the engine adds ": +9 glasses" after them.
+# Farsi copy is a first draft for Simin to review.
+
+name: chai
+emoji: "🫖"
+# fa, en, or both. "both" sends every message in Farsi and then English.
+language: fa
+
+bot_name:
+  en: Chai Bot
+  fa: ربات چای
+tagline:
+  en: Drink more tea than the whole group. One more glass?
+  fa: از کل گروه بیشتر چای بخور. یه استکان دیگه؟
+leaderboard_title:
+  en: Biggest tea drinkers
+  fa: چایی‌خورترین‌های گروه
+
+score:
+  name: { en: Tea, fa: چای }
+  unit: { en: glasses, fa: استکان }
+  start: 0
+  direction: higher
+  scale: 1
+  min: 0
+
+gains:
+  - { en: "You had tea with breakfast, lunch and dinner", fa: با صبحونه و ناهار و شام چای خوردی }
+  - { en: You drank a glass with a sugar cube in your mouth, fa: یه استکان چای قند به دهن خوردی }
+  - { en: 'Someone asked "shall I make tea?" and you said yes before they finished', fa: یکی گفت «چای بذارم؟» هنوز حرفش تموم نشده بود گفتی آره }
+  - { en: You had tea at the neighbors' too, fa: خونه‌ی همسایه هم چای خوردی }
+  - { en: "You drank it so hot you burned your tongue, no regrets", fa: اون‌قدر داغ خوردی که زبونت سوخت، ولی ارزشش رو داشت }
+  - { en: You had a glass with saffron nabat, fa: یه استکان چای با نبات زعفرونی خوردی }
+  - { en: You brewed a fresh pot just for yourself, fa: یه قوری تازه فقط برای خودت دم کردی }
+  - { en: You had tea after tea at a mehmooni, fa: تو مهمونی چای پشت چای خوردی }
+
+losses:
+  - { en: Someone gave you a teabag. You're in mourning, fa: بهت چای کیسه‌ای دادن. عزای عمومی }
+  - { en: You talked so much your tea went cold, fa: اون‌قدر حرف زدی که چاییت یخ کرد }
+  - { en: They served you tea that hadn't brewed yet, fa: بهت چای دم‌نکشیده دادن }
+  - { en: You drank coffee for a whole day. Traitor, fa: یه روز کامل قهوه خوردی. خائن! }
+  - { en: The tea ran out at home, fa: چای خونه تموم شد }
+  - { en: The samovar broke, fa: سماور خراب شد }
+  - { en: The doctor said to cut down on tea, fa: دکتر گفت چایی رو کم کن }
+
+neutral:
+  - { en: You poured a glass and forgot it on the windowsill, fa: یه استکان ریختی و لب پنجره یادت رفت }
+  - { en: The phone rang and you only drank half, fa: تلفن زنگ زد و فقط نصفش رو خوردی }
+
+# Rare events (5% of rolls) replace the normal roll with a big swing.
+events:
+  good:
+    - { en: Grandma refilled your glass without asking. Again. And again, fa: مامان‌بزرگ بی‌اینکه بپرسه دوباره چاییت رو پر کرد. و دوباره. و دوباره }
+    - { en: You found the good Lahijan tea at the back of the cupboard, fa: چای لاهیجان اعلا رو ته کابینت پیدا کردی }
+    - { en: At the family gathering a whole samovar was all yours, fa: تو دورهمی فامیلی یه سماور کامل مال خودت شد }
+  bad:
+    - { en: You dropped the whole tea tray in front of the guests, fa: سینی چای رو جلوی مهمون‌ها برگردوندی }
+    - { en: Someone put milk in your tea, fa: یکی تو چاییت شیر ریخت }
+    - { en: The power went out and there was no tea all day, fa: برق رفت و کل روز چای نبود }
+
+# Each title is reached once the score is at least `at`.
+titles:
+  - { at: 0, name: { en: Just a sip 🥄, fa: یه قلپ 🥄 } }
+  - { at: 25, name: { en: Tea lover ☕, fa: عاشق چای ☕ } }
+  - { at: 60, name: { en: One-more-glass person 🫖, fa: آدمِ «یه استکان دیگه» 🫖 } }
+  - { at: 120, name: { en: Guardian of the samovar 🔥, fa: نگهبان سماور 🔥 } }
+  - { at: 200, name: { en: Sugar-cube master 🧊, fa: استاد قند به دهن 🧊 } }
+  - { at: 350, name: { en: Tea runs in your veins 🌊, fa: تو رگ‌هات چای جریان داره 🌊 } }
+  - { at: 600, name: { en: Grandma's true heir 👑, fa: وارث واقعی مامان‌بزرگ 👑 } }

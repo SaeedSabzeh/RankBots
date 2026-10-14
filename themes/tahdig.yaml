@@ -1,0 +1,71 @@
+# Tahdig bot: grow your tahdig's crispiness. Mom flipping it perfectly is the jackpot.
+# Messages are written without numbers; the engine adds ": +9 crunch" after them.
+# Farsi copy is a first draft for Simin to review.
+
+name: tahdig
+emoji: "🍚"
+# fa, en, or both. "both" sends every message in Farsi and then English.
+language: fa
+
+bot_name:
+  en: Tahdig Bot
+  fa: ربات ته‌دیگ
+tagline:
+  en: Make your tahdig the crispiest in the whole group!
+  fa: ته‌دیگت رو تردترین ته‌دیگ گروه کن!
+leaderboard_title:
+  en: Crispiest tahdigs
+  fa: تردترین ته‌دیگ‌ها
+
+score:
+  name: { en: Crispiness, fa: تردی }
+  unit: { en: crunch, fa: قرچ }
+  start: 0
+  direction: higher
+  scale: 1
+  min: 0
+
+gains:
+  - { en: You didn't hold back on the oil, fa: روغنش رو کم نذاشتی }
+  - { en: You put the lid towel on like a pro, fa: دم‌کنی رو مثل حرفه‌ای‌ها گذاشتی رو قابلمه }
+  - { en: You bloomed the saffron just right, fa: زعفرونش رو درست‌وحسابی دم کردی }
+  - { en: You waited an hour on low heat and never lifted the lid, fa: یه ساعت رو شعله‌ی کم صبر کردی و درش رو برنداشتی }
+  - { en: The sizzle from the pot sounded exactly right, fa: صدای جلزوولز ته قابلمه دقیقاً همونی بود که باید باشه }
+  - { en: Grandma let slip her secret. A spoonful of yogurt in the bottom, fa: مامان‌بزرگ رازش رو لو داد؛ یه قاشق ماست ته قابلمه }
+  - { en: You sliced the potatoes paper-thin, fa: سیب‌زمینی‌ها رو نازکِ نازک حلقه کردی }
+  - { en: You rinsed the rice until the water ran clear, fa: برنج رو اون‌قدر شستی تا آبش زلال شد }
+
+losses:
+  - { en: You lifted the lid for a peek. Twice, fa: درِ قابلمه رو برداشتی یه سرک بکشی. دو بار }
+  - { en: You left the heat on high and the tahdig turned to charcoal, fa: شعله رو زیاد گذاشتی و ته‌دیگ شد زغال }
+  - { en: You were stingy with the oil, fa: سر روغن خسیس‌بازی درآوردی }
+  - { en: The rice went mushy and the tahdig went limp, fa: برنج شفته شد و ته‌دیگ وارفت }
+  - { en: You forgot the lid towel and the steam made it soggy, fa: دم‌کنی یادت رفت و ته‌دیگ از بخار خیس خورد }
+  - { en: You flipped it and half of it stayed stuck in the pot, fa: برگردوندی و نصفش ته قابلمه چسبید }
+  - { en: Someone drowned it in gheymeh before you got a bite, fa: "یکی قبل از اینکه دستت بهش برسه، روش خورش قیمه خالی کرد" }
+
+neutral:
+  - { en: The whole house argued potato versus bread tahdig. Nobody won, fa: "سر اینکه ته‌دیگ سیب‌زمینی بهتره یا نون، کل خونه دعوا شد. برنده نداشت" }
+  - { en: Grandma tasted it and said "not bad". Nobody knows what that means yet, fa: مامان‌بزرگ چشید و گفت «بد نیست». هنوز هیچ‌کس نفهمیده یعنی چی }
+
+# Rare events (5% of rolls) replace the normal roll with a big swing.
+events:
+  good:
+    # The signature jackpot, kept first on purpose: Mom flipped it perfectly.
+    - { en: "Mom flipped it perfectly! One golden piece, and not a single grain left in the pot", fa: "مامان برگردوندش و بی‌نقص دراومد! یه‌تیکه و طلایی، یه دونه برنج هم ته قابلمه نموند" }
+    - { en: You flipped the pot and the whole family applauded, fa: "قابلمه رو که برگردوندی، کل فامیل براش دست زدن" }
+    - { en: The crunch of your tahdig was heard all the way down the street, fa: صدای قرچ‌قرچ ته‌دیگت تا سر کوچه رفت }
+  bad:
+    - { en: You flipped the pot and the tahdig landed on the floor, fa: قابلمه رو برگردوندی و ته‌دیگ پخش زمین شد }
+    - { en: Your aunt called and by the time you said goodbye the tahdig was black, fa: "خاله زنگ زد؛ تا خداحافظی کنی، ته‌دیگ سوخت و سیاه شد" }
+    - { en: Someone reheated the leftover tahdig in the microwave, fa: یکی ته‌دیگِ مونده رو گذاشت تو مایکروویو }
+
+# Tahdig styles as titles. Each one is reached once the score is at least `at`.
+titles:
+  - { at: 0, name: { en: Soggy rice 💧, fa: برنج شفته 💧 } }
+  - { at: 25, name: { en: Bread tahdig 🫓, fa: ته‌دیگ نون 🫓 } }
+  - { at: 60, name: { en: Potato tahdig 🥔, fa: ته‌دیگ سیب‌زمینی 🥔 } }
+  - { at: 120, name: { en: Saffron tahdig 🌼, fa: ته‌دیگ زعفرونی 🌼 } }
+  - { at: 200, name: { en: Tahchin master 🍗, fa: استاد ته‌چین 🍗 } }
+  - { at: 350, name: { en: Grandma-level tahdig 👵, fa: ته‌دیگ در حد مامان‌بزرگ 👵 } }
+  - { at: 600, name: { en: Legendary tahdig 👑, fa: ته‌دیگ افسانه‌ای 👑 } }

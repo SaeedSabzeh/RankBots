@@ -1,0 +1,79 @@
+# Taarof bot: grow your politeness. The bot sometimes taarofs back and you lose the turn.
+# Messages are written without numbers; the engine adds ": +9 pts" after them.
+# Farsi copy is a first draft for Simin to review.
+
+name: taarof
+emoji: "🌹"
+# fa, en, or both. "both" sends every message in Farsi and then English.
+language: fa
+
+bot_name:
+  en: Taarof Bot
+  fa: ربات تعارف
+tagline:
+  en: Out-polite the whole group. After you, of course!
+  fa: از همه‌ی گروه باتعارف‌تر باش. البته اول شما!
+leaderboard_title:
+  en: Most polite in the group
+  fa: باتعارف‌ترین‌های گروه
+
+score:
+  name: { en: Taarof, fa: تعارف }
+  unit: { en: pts, fa: امتیاز }
+  start: 0
+  direction: higher
+  scale: 1
+  min: 0
+
+gains:
+  - { en: You insisted the guest take the last piece of cake, fa: اصرار کردی آخرین تیکه‌ی کیک مال مهمون باشه }
+  - { en: You told the taxi driver it's on you, fa: به راننده تاکسی گفتی کرایه با من }
+  - { en: You won the doorway battle over who goes in first, fa: دم در سر اینکه کی اول بره تو، تعارف کردی و بردی }
+  - { en: You refused the fruit three times before taking one, fa: سه بار میوه رو رد کردی تا آخر یکی برداشتی }
+  - { en: You walked the guests all the way to their car, fa: مهمون‌ها رو تا دم ماشین بدرقه کردی }
+  - { en: You wrestled everyone for the restaurant bill, fa: تو رستوران سر حساب کردن با همه کشتی گرفتی }
+  - { en: You said "befarmaid" so many times you lost count, fa: اون‌قدر گفتی «بفرمایید» که حسابش از دستت در رفت }
+  - { en: They said not to bring anything and you brought sweets, fa: گفتن چیزی نیار، ولی شیرینی بردی }
+
+losses:
+  - { en: You took the tea the very first time it was offered, fa: چای رو بار اول که تعارف کردن برداشتی. زشته! }
+  - { en: You said "no thanks" and they actually believed you, fa: گفتی «نه ممنون» و طرف واقعاً باور کرد }
+  - { en: You forgot to offer your food to the person next to you, fa: یادت رفت غذات رو به بغل‌دستیت تعارف کنی }
+  - { en: You walked through the door first, fa: اول از همه از در رفتی تو }
+  - { en: You let your uncle pay, fa: گذاشتی عموت حساب کنه }
+  - { en: You left the party without saying goodbye to everyone, fa: بدون خداحافظی با تک‌تک مهمون‌ها رفتی }
+  - { en: You ate the last piece of tahdig without offering it, fa: آخرین تیکه‌ی ته‌دیگ رو بدون تعارف خوردی }
+
+neutral:
+  - { en: You and your aunt are still standing at the door saying "after you", fa: تو و خاله‌ت هنوز دم در دارین می‌گین «اول شما» }
+  - { en: You said "it's nothing" and they said "you're everything". A draw, fa: گفتی «قابل نداره»، گفت «صاحبش قابل داره». مساوی }
+
+# Rare events (5% of rolls) replace the normal roll with a big swing.
+events:
+  good:
+    - { en: You won a twenty-minute taarof battle with your great-aunt, fa: یه جنگ تعارف بیست‌دقیقه‌ای رو با عمه‌خانم بردی }
+    - { en: The taxi driver refused your money three times and you still paid, fa: راننده تاکسی سه بار پول رو قبول نکرد و تو آخرش حساب کردی }
+    - { en: "You kept the guests for dinner, and then they stayed the night", fa: مهمون‌ها رو برای شام نگه داشتی، شب هم موندن }
+  bad:
+    - { en: The taxi driver said "be my guest" and you got out without paying, fa: راننده تاکسی گفت «قابل نداره» و تو بی‌پول پیاده شدی }
+    - { en: You said "you shouldn't have" and opened the gift on the spot, fa: گفتی «چرا زحمت کشیدین» و همون‌جا کادو رو باز کردی }
+    - { en: Grandma offered once and you took the whole plate, fa: مامان‌بزرگ یه بار تعارف کرد و کل بشقاب رو برداشتی }
+
+# Each title is reached once the score is at least `at`.
+titles:
+  - { at: 0, name: { en: Guest with no taarof 😶, fa: مهمون بی‌تعارف 😶 } }
+  - { at: 25, name: { en: Polite neighbor 🙂, fa: همسایه‌ی مؤدب 🙂 } }
+  - { at: 60, name: { en: Professional host 🫖, fa: میزبان حرفه‌ای 🫖 } }
+  - { at: 120, name: { en: Doorway champion 🚪, fa: قهرمان «اول شما» دم در 🚪 } }
+  - { at: 200, name: { en: Grandmaster of "qabel nadare" 🎩, fa: استاد بزرگ «قابل نداره» 🎩 } }
+  - { at: 350, name: { en: Taarof legend 🌟, fa: اسطوره‌ی تعارف 🌟 } }
+  - { at: 600, name: { en: Persian aunt level 👑, fa: در حد خاله‌ی ایرانی 👑 } }
+
+# 10% of rolls: the bot taarofs back, the turn is used and the score doesn't move.
+hook:
+  kind: lost_turn
+  chance: 0.1
+  messages:
+    - { en: "You told the bot \"after you\" and it said \"no, after you!\" Your turn is gone", fa: "به ربات گفتی «اول شما»، ربات گفت «نه، اول شما!» نوبتت پرید" }
+    - { en: The bot offered you a turn and you politely refused. It believed you, fa: ربات بهت نوبت تعارف کرد، تو مؤدبانه رد کردی، اونم باور کرد }
+    - { en: "You and the bot spent twelve hours saying \"please, you first\"", fa: تو و ربات دوازده ساعت به هم گفتین «خواهش می‌کنم، اول شما» }
