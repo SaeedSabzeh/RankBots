@@ -64,6 +64,10 @@ Steps:
    It also sets each bot's command menu. (In a Render shell, `PUBLIC_URL` can be left out:
    `RENDER_EXTERNAL_URL` is used.)
 
+**Live service:** `rank-bots` on Render's free plan, https://rank-bots.onrender.com. It was created from
+the repo URL, so Render doesn't hear about pushes: after pushing to `main`, start a deploy from the
+dashboard (Manual Deploy → Deploy latest commit) or the Render API.
+
 A bot has either a webhook or long polling, not both. Starting `engine.main` deletes the
 bot's webhook, so to go back to Render afterwards, stop it and run `set_webhooks.py` again.
 On Render's free plan the service sleeps after 15 idle minutes: Telegram's retries wake it,
