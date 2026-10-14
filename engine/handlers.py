@@ -6,6 +6,8 @@ picked by which bot received it, so handlers never know which bot they are.
 
 from __future__ import annotations
 
+import asyncio
+import logging
 import random
 import re
 from collections.abc import Awaitable, Callable
@@ -14,6 +16,7 @@ from typing import Any
 
 from aiogram import BaseMiddleware, Bot, Dispatcher, F, Router
 from aiogram.enums import ChatType, MessageEntityType
+from aiogram.exceptions import TelegramAPIError
 from aiogram.filters import Command, CommandObject, CommandStart
 from aiogram.filters.callback_data import CallbackData
 from aiogram.types import (
@@ -30,6 +33,13 @@ from engine.db import Store
 from engine.theme import Theme
 
 _rng = random.SystemRandom()
+log = logging.getLogger(__name__)
+
+# Short-lived replies ("not yet", refused duels, ...) and the command that caused them are
+# deleted after this many seconds, to keep groups clean. Deleting a member's command needs
+# the bot to be a group admin with "Delete messages"; without it only the reply goes.
+CLEANUP_AFTER = 60.0
+_cleanups: set[asyncio.Task] = set()
 
 GROUPS = F.chat.type.in_({ChatType.GROUP, ChatType.SUPERGROUP})
 COMMANDS = {
@@ -85,6 +95,29 @@ def _now() -> datetime:
     return datetime.now(timezone.utc)
 
 
+async def _delete_later(bot: Bot, chat_id: int, message_ids: list[int], delay: float) -> None:
+    await asyncio.sleep(delay)
+    for message_id in message_ids:
+        try:
+            await bot.delete_message(chat_id, message_id)
+        except TelegramAPIError as e:  # already deleted, too old, or no admin rights
+            log.debug("Could not delete %s in %s: %s", message_id, chat_id, e)
+
+
+def delete_later(bot: Bot, chat_id: int, *message_ids: int) -> None:
+    """Delete these messages after CLEANUP_AFTER seconds, without waiting for it."""
+    task = asyncio.create_task(_delete_later(bot, chat_id, list(message_ids), CLEANUP_AFTER))
+    _cleanups.add(task)  # keep a reference so the task isn't garbage-collected
+    task.add_done_callback(_cleanups.discard)
+
+
+async def reply_briefly(message: Message, text: str) -> None:
+    """Reply, then remove the reply and the command a minute later (groups only)."""
+    sent = await message.reply(text)
+    if message.chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
+        delete_later(message.bot, message.chat.id, sent.message_id, message.message_id)
+
+
 def _name(message: Message) -> str:
     user = message.from_user
     return texts.display_name(user.first_name, user.username)
@@ -107,7 +140,7 @@ async def cmd_play(message: Message, theme: Theme, store: Store) -> None:
         now=_now(), rng=_rng,
     )
     if isinstance(result, service.OnCooldown):
-        await message.reply(texts.cooldown(theme, _name(message), result.left))
+        await reply_briefly(message, texts.cooldown(theme, _name(message), result.left))
     else:
         await message.reply(texts.play_result(theme, _name(message), result))
 
@@ -115,7 +148,7 @@ async def cmd_play(message: Message, theme: Theme, store: Store) -> None:
 async def cmd_me(message: Message, theme: Theme, store: Store) -> None:
     st = await service.stats(store, theme, chat_id=message.chat.id, user_id=message.from_user.id, now=_now())
     if st is None:
-        await message.reply(texts.not_played(theme, _name(message)))
+        await reply_briefly(message, texts.not_played(theme, _name(message)))
     else:
         await message.reply(texts.me(theme, _name(message), st))
 
@@ -150,7 +183,7 @@ async def cmd_duel(message: Message, command: CommandObject, theme: Theme, store
     stake = _stake(args[-1]) if args else None
     target = _duel_target(message)
     if not stake or target is None:
-        await message.reply(texts.duel_usage(theme))
+        await reply_briefly(message, texts.duel_usage(theme))
         return
 
     user = message.from_user
@@ -161,7 +194,7 @@ async def cmd_duel(message: Message, command: CommandObject, theme: Theme, store
         target=target, stake=stake, now=_now(),
     )
     if isinstance(result, service.DuelRefused):
-        await message.reply(texts.duel_refused(theme, result))
+        await reply_briefly(message, texts.duel_refused(theme, result))
         return
     accept, decline = texts.duel_buttons(theme)
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[
@@ -191,6 +224,12 @@ async def on_duel_button(query: CallbackQuery, callback_data: DuelButton, theme:
             text = texts.duel_closed(theme, result)
         if isinstance(query.message, Message):
             await query.message.edit_text(text, reply_markup=None)
+            if isinstance(result, service.DuelClosed):
+                # A declined or expired challenge is clutter: clear it and the /duel command.
+                ids = [query.message.message_id]
+                if query.message.reply_to_message is not None:
+                    ids.append(query.message.reply_to_message.message_id)
+                delete_later(query.bot, query.message.chat.id, *ids)
         await query.answer()
 
 

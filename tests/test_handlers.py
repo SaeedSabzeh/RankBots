@@ -9,7 +9,7 @@ from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.client.session.base import BaseSession
 from aiogram.enums import ParseMode
-from aiogram.methods import AnswerCallbackQuery, EditMessageText, GetMe, SendMessage, TelegramMethod
+from aiogram.methods import AnswerCallbackQuery, DeleteMessage, EditMessageText, GetMe, SendMessage, TelegramMethod
 from aiogram.types import CallbackQuery, Chat, Message, MessageEntity, Update, User
 
 from engine.db import Store
@@ -34,6 +34,7 @@ class FakeSession(BaseSession):
         self.sent: list[SendMessage] = []
         self.edits: list[EditMessageText] = []
         self.answers: list[AnswerCallbackQuery] = []
+        self.deleted: list[int] = []
 
     async def make_request(self, bot: Bot, method: TelegramMethod[Any], timeout: int | None = None) -> Any:
         if isinstance(method, GetMe):
@@ -51,6 +52,9 @@ class FakeSession(BaseSession):
             return True
         if isinstance(method, AnswerCallbackQuery):
             self.answers.append(method)
+            return True
+        if isinstance(method, DeleteMessage):
+            self.deleted.append(method.message_id)
             return True
         raise AssertionError(f"unexpected Bot API call: {type(method).__name__}")
 
@@ -199,3 +203,31 @@ async def test_duel_refusals(harness):
     assert "ربات" in await _send(harness, "/duel 1", user=SIMIN, reply_to=BOT_USER, update_id=8)
     assert "خودت" in await _send(harness, "/duel @simin 1", user=SIMIN, update_id=9)
     assert "گروه" in await _send(harness, "/duel @arash 1", chat_type="private", update_id=10)
+
+
+async def test_not_yet_reply_and_command_are_cleaned_up(harness, monkeypatch):
+    import asyncio
+
+    from engine import handlers
+
+    monkeypatch.setattr(handlers, "CLEANUP_AFTER", 0)
+    _, _, session, _ = harness
+    await _send(harness, "/play", update_id=1)
+    assert "هنوز نوبتت نشده" in await _send(harness, "/play", update_id=2)
+    await asyncio.sleep(0.05)
+    not_yet_reply = 1000 + len(session.sent)
+    # The "not yet" reply and the second /play go; the real result and first /play stay.
+    assert sorted(session.deleted) == sorted([not_yet_reply, 2])
+
+
+async def test_real_results_are_not_cleaned_up(harness, monkeypatch):
+    import asyncio
+
+    from engine import handlers
+
+    monkeypatch.setattr(handlers, "CLEANUP_AFTER", 0)
+    _, _, session, _ = harness
+    await _send(harness, "/play", update_id=1)
+    await _send(harness, "/top", update_id=2)
+    await asyncio.sleep(0.05)
+    assert session.deleted == []
