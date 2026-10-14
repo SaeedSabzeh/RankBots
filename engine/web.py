@@ -10,6 +10,7 @@ scripts/set_webhooks.py registers the URLs and secrets with Telegram.
 
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import hmac
 import logging
@@ -21,6 +22,7 @@ from dataclasses import dataclass
 from aiogram import Bot, Dispatcher
 from fastapi import FastAPI, Header, HTTPException, Request, Response
 
+from engine.champion import champion_loop
 from engine.handlers import build_dispatcher
 from engine.main import bots_to_run, connect_store, load_dotenv, new_bot
 from engine.theme import load_themes
@@ -56,9 +58,13 @@ async def _from_env() -> AsyncIterator[Webhooks]:
     bots = {theme.name: new_bot(token) for theme, token in selected}
     dp = build_dispatcher(store, {bots[theme.name].id: theme for theme, _ in selected})
     log.info("Serving webhooks for %s", ", ".join(bots))
+    # Sunday champion posts. On Render's free plan this only runs while the service is awake,
+    # but it checks as soon as it wakes, so the first message after Sunday 20:00 triggers it.
+    champions = asyncio.create_task(champion_loop([(bots[t.name], t) for t, _ in selected], store))
     try:
         yield Webhooks(dp, bots, {theme.name: webhook_secret(token, key) for theme, token in selected})
     finally:
+        champions.cancel()
         await store.close()
         for bot in bots.values():
             await bot.session.close()

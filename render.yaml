@@ -4,9 +4,9 @@ services:
   - type: web
     name: rank-bots
     runtime: python
-    # Starter stays up. Free sleeps after 15 idle minutes; Telegram's retries wake it, but the
-    # first reply after a quiet spell then takes about a minute.
-    plan: starter
+    # Free sleeps after 15 idle minutes; Telegram's retries wake it, but the first reply after a
+    # quiet spell then takes about a minute. Switch to starter (~$7/month) to stay always on.
+    plan: free
     region: frankfurt  # next to Supabase's aws-1-eu-central-1
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn engine.web:app --host 0.0.0.0 --port $PORT
