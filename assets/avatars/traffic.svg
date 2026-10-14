@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<rect width="512" height="512" fill="#FB8500"/>
+<circle cx="256" cy="256" r="212" fill="#FFA436"/>
+
+<rect x="368" y="96" width="44" height="112" rx="14" fill="#212529"/>
+<circle cx="390" cy="122" r="12" fill="#E63946"/>
+<circle cx="390" cy="152" r="12" fill="#5C4400"/>
+<circle cx="390" cy="182" r="12" fill="#1B4332"/>
+<path d="M92 214 L68 196 M92 240 L62 240 M92 266 L68 284" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
+<ellipse cx="256" cy="428" rx="170" ry="16" fill="#000" opacity="0.12"/>
+<rect x="138" y="352" width="46" height="62" rx="12" fill="#212529"/>
+<rect x="328" y="352" width="46" height="62" rx="12" fill="#212529"/>
+<path d="M162 238 L192 152 L320 152 L350 238 Z" fill="#F1FAEE"/>
+<path d="M180 232 L204 166 L308 166 L332 232 Z" fill="#8ECAE6"/>
+<path d="M196 226 L214 176 L236 176 L214 226 Z" fill="#fff" opacity="0.35"/>
+<rect x="112" y="230" width="288" height="134" rx="30" fill="#F1FAEE"/>
+<rect x="96" y="232" width="26" height="18" rx="6" fill="#ADB5BD"/>
+<rect x="390" y="232" width="26" height="18" rx="6" fill="#ADB5BD"/>
+<ellipse cx="232" cy="206" rx="11.049999999999999" ry="13" fill="#2B2118"/><circle cx="228.1" cy="200.8" r="4.55" fill="#fff"/><ellipse cx="280" cy="206" rx="11.049999999999999" ry="13" fill="#2B2118"/><circle cx="276.1" cy="200.8" r="4.55" fill="#fff"/>
+<path d="M214 182 L244 190 M298 182 L268 190" stroke="#2B2118" stroke-width="5" stroke-linecap="round"/>
+<circle cx="162" cy="284" r="26" fill="#FFE066"/><circle cx="162" cy="284" r="14" fill="#FFF6C7"/>
+<circle cx="350" cy="284" r="26" fill="#FFE066"/><circle cx="350" cy="284" r="14" fill="#FFF6C7"/>
+<rect x="204" y="266" width="104" height="42" rx="10" fill="#FFFFFF" stroke="#2B2118" stroke-width="5"/>
+<path d="M230 266 L230 308 M256 266 L256 308 M282 266 L282 308 M204 287 L308 287" stroke="#2B2118" stroke-width="4"/>
+<rect x="104" y="330" width="304" height="26" rx="12" fill="#6C757D"/>
+<rect x="226" y="334" width="60" height="18" rx="4" fill="#F8F9FA"/>
+<path d="M346 148 Q360 170 346 180 Q332 170 346 148 Z" fill="#BDE0FE"/>
+<path d="M372 196 Q382 212 372 220 Q362 212 372 196 Z" fill="#BDE0FE"/>
+
+</svg>

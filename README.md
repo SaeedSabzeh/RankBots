@@ -138,3 +138,9 @@ by the floor.
 4. To go live, add `BOT_TOKEN_<NAME>` on Render (and to `render.yaml`), let it redeploy, then
    run `python scripts/set_webhooks.py --bot <name>`.
 
+## Profile pictures
+
+`assets/avatars/` has one avatar per bot (preview: `assets/avatars/preview.png`), drawn as
+SVG by `scripts/make_avatars.py`. The 640px PNGs in `assets/avatars/png/` are ready for
+BotFather: send `/setuserpic`, pick the bot, then send the PNG **as a photo** (not as a file).
+Telegram crops avatars to a circle; every drawing stays inside it.
