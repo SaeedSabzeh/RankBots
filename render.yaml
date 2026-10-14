@@ -1,0 +1,23 @@
+# Render Blueprint: one web service runs every bot behind webhooks (engine/web.py).
+# Secrets are `sync: false`: Render asks for them when the Blueprint is created.
+services:
+  - type: web
+    name: rank-bots
+    runtime: python
+    # Starter stays up. Free sleeps after 15 idle minutes; Telegram's retries wake it, but the
+    # first reply after a quiet spell then takes about a minute.
+    plan: starter
+    region: frankfurt  # next to Supabase's aws-1-eu-central-1
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn engine.web:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DATABASE_URL
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: BOT_TOKEN_CAT
+        sync: false

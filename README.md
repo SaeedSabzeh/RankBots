@@ -4,9 +4,8 @@ A family of "grow your X" Telegram group bots on one shared engine. Members `/pl
 once per cooldown, get a random score change, and compete on a per-group leaderboard.
 Each bot is a Telegram token plus a theme file in `themes/`.
 
-**Status:** Phases 1–3 of the plan: the play loop, leaderboard, rare events, titles, duels
-and the theme hook. The cat bot is ready to run locally. Webhooks/Render and the other
-seven themes come next.
+**Status:** Phases 1–4 of the plan: the play loop, leaderboard, rare events, titles, duels,
+the theme hook, and a webhook web service for Render. The other seven themes come next.
 
 ## Run the cat bot locally
 
@@ -30,6 +29,46 @@ seven themes come next.
 
 5. Add the bot to a private test group and send `/play`, `/me`, `/top`, `/duel @someone 5`.
 
+## Deploy on Render
+
+On Render all bots run in one web service, `engine/web.py` (FastAPI). Telegram posts each
+bot's updates to `POST /tg/<bot>` (e.g. `/tg/cat`) and the service checks the
+`X-Telegram-Bot-Api-Secret-Token` header before handing the update to the same dispatcher the
+long-polling runner uses: wrong or missing secret → 401, unknown bot → 404. `GET /health` is
+the health check. Tables are created on startup, as with polling.
+
+Environment variables on the service:
+
+| Variable | Value |
+| --- | --- |
+| `DATABASE_URL` | Supabase **session pooler** URI: `postgresql://postgres.<ref>:<password>@aws-1-eu-central-1.pooler.supabase.com:5432/postgres` (port 5432; the transaction pooler on 6543 doesn't work with asyncpg) |
+| `WEBHOOK_SECRET` | Any long random string: `python -c "import secrets; print(secrets.token_urlsafe(32))"`. Each bot's webhook secret is an HMAC of its token with this key |
+| `BOT_TOKEN_CAT` | The cat bot's token; add `BOT_TOKEN_<NAME>` for each further bot |
+| `PYTHON_VERSION` | `3.11.9` (set by `render.yaml`) |
+
+Steps:
+
+1. In Render, **New → Blueprint**, pick this repo; `render.yaml` defines the service
+   (`uvicorn engine.web:app`, Frankfurt, health check `/health`). Fill in the three secrets.
+   Or create a Python web service by hand with build command `pip install -r requirements.txt`
+   and start command `uvicorn engine.web:app --host 0.0.0.0 --port $PORT`.
+2. Wait for the deploy, then check `https://<service>.onrender.com/health` returns `{"ok":true}`.
+3. Stop any local `engine.main` for the same bots, then register the webhooks. Locally, put
+   the same `WEBHOOK_SECRET` and `PUBLIC_URL=https://<service>.onrender.com` in `.env`:
+
+   ```bash
+   .venv/Scripts/python scripts/set_webhooks.py
+   .venv/Scripts/python scripts/set_webhooks.py --info   # check: URL set, no last_error
+   ```
+
+   It also sets each bot's command menu. (In a Render shell, `PUBLIC_URL` can be left out:
+   `RENDER_EXTERNAL_URL` is used.)
+
+A bot has either a webhook or long polling, not both. Starting `engine.main` deletes the
+bot's webhook, so to go back to Render afterwards, stop it and run `set_webhooks.py` again.
+On Render's free plan the service sleeps after 15 idle minutes: Telegram's retries wake it,
+but the first reply after a quiet spell takes about a minute. `render.yaml` uses Starter.
+
 ## Tests
 
 ```bash
@@ -49,7 +88,10 @@ they don't need Supabase or a real bot token.
 | `engine/service.py` | The `/play`, `/me`, `/top` and `/duel` flows |
 | `engine/texts.py` | Every message, in Farsi and English |
 | `engine/handlers.py` | aiogram handlers; one dispatcher serves every bot |
-| `engine/main.py` | Long-polling runner |
+| `engine/main.py` | Long-polling runner (local) |
+| `engine/web.py` | Webhook web service (Render): `POST /tg/<bot>`, `GET /health` |
+| `scripts/set_webhooks.py` | Registers every bot's webhook and command menu with Telegram |
+| `render.yaml` | Render Blueprint for the web service |
 | `themes/*.yaml` | One file per bot |
 | `migrations/*.sql` | Database schema (idempotent) |
 
@@ -93,3 +135,6 @@ by the floor.
    `fa`, `en` or `both`; every text needs each language it uses.
 2. Set `BOT_TOKEN_<NAME>` in `.env`.
 3. Run `python -m pytest` (it validates every theme), then `python -m engine.main --bot <name>`.
+4. To go live, add `BOT_TOKEN_<NAME>` on Render (and to `render.yaml`), let it redeploy, then
+   run `python scripts/set_webhooks.py --bot <name>`.
+

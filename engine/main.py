@@ -3,7 +3,9 @@
     python -m engine.main            # every theme that has a BOT_TOKEN_<NAME> set
     python -m engine.main --bot cat  # just one
 
-Webhooks for Render come in Phase 4; the router and middleware are shared.
+On Render the same bots run behind webhooks instead (engine/web.py); the router and
+middleware are shared. Starting this runner deletes any webhook, so stop the Render service
+(or re-run scripts/set_webhooks.py afterwards) when you switch back.
 """
 
 from __future__ import annotations
@@ -56,19 +58,27 @@ def bots_to_run(themes: dict[str, Theme], only: list[str] | None) -> list[tuple[
     return selected
 
 
-async def run(only: list[str] | None) -> None:
-    load_dotenv()
-    themes = load_themes()
-    selected = bots_to_run(themes, only)
+def new_bot(token: str) -> Bot:
+    return Bot(token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
+
+async def connect_store() -> Store:
+    """Connect to DATABASE_URL and apply the migrations."""
     dsn = os.environ.get("DATABASE_URL")
     if not dsn:
         raise SystemExit("DATABASE_URL is not set (see .env.example)")
     store = await Store.connect(dsn)
     await store.migrate()
+    return store
 
-    defaults = DefaultBotProperties(parse_mode=ParseMode.HTML)
-    bots = [Bot(token, default=defaults) for _, token in selected]
+
+async def run(only: list[str] | None) -> None:
+    load_dotenv()
+    themes = load_themes()
+    selected = bots_to_run(themes, only)
+    store = await connect_store()
+
+    bots = [new_bot(token) for _, token in selected]
     by_id = {bot.id: theme for bot, (theme, _) in zip(bots, selected)}
 
     dp = build_dispatcher(store, by_id)

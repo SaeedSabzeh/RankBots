@@ -1,5 +1,6 @@
 -r requirements.txt
 pytest
 pytest-asyncio
+httpx
 # Embedded Postgres for the database tests; they are skipped if it can't start.
 pgserver
