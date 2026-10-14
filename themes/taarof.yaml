@@ -6,6 +6,8 @@ name: taarof
 emoji: "🌹"
 # fa, en, or both. "both" sends every message in Farsi and then English.
 language: fa
+# Time between two /play turns. One round of "after you" at the door: 15 minutes between turns.
+cooldown_minutes: 15
 
 bot_name:
   en: Taarof Bot
@@ -27,26 +29,67 @@ score:
 
 gains:
   - { en: You insisted the guest take the last piece of cake, fa: اصرار کردی آخرین تیکه‌ی کیک مال مهمون باشه }
-  - { en: You told the taxi driver it's on you, fa: به راننده تاکسی گفتی کرایه با من }
+  - { en: You insisted on paying the taxi fare for everyone, fa: اصرار کردی کرایه‌ی تاکسی همه با تو باشه }
   - { en: You won the doorway battle over who goes in first, fa: دم در سر اینکه کی اول بره تو، تعارف کردی و بردی }
   - { en: You refused the fruit three times before taking one, fa: سه بار میوه رو رد کردی تا آخر یکی برداشتی }
   - { en: You walked the guests all the way to their car, fa: مهمون‌ها رو تا دم ماشین بدرقه کردی }
   - { en: You wrestled everyone for the restaurant bill, fa: تو رستوران سر حساب کردن با همه کشتی گرفتی }
   - { en: You said "befarmaid" so many times you lost count, fa: اون‌قدر گفتی «بفرمایید» که حسابش از دستت در رفت }
   - { en: They said not to bring anything and you brought sweets, fa: گفتن چیزی نیار، ولی شیرینی بردی }
+  - { en: 'The shopkeeper said "ghabel nadare" and you shot back "sahebesh ghabel dare"', fa: مغازه‌دار گفت «قابل نداره»، بی‌معطلی گفتی «صاحبش قابل داره» }
+  - { en: You offered the delivery driver tea and sweets at the door, fa: دم در به پیک چای و شیرینی تعارف کردی }
+  - { en: You stood up for every single person who walked in, fa: هر کی اومد تو، جلوش بلند شدی }
+  - { en: 'You told the person who poured your tea "dastet dard nakone"', fa: به کسی که برات چای ریخت گفتی «دستت درد نکنه» }
+  - { en: 'Your friend hadn''t even parked the new car and you said "cheshmet roshan"', fa: دوستت هنوز ماشین نوش رو پارک نکرده بود که گفتی «چشمت روشن» }
+  - { en: You gave the comfiest seat to the eldest guest, fa: بهترین جای مجلس رو دادی به بزرگ‌ترِ جمع }
+  - { en: 'You peeled a cucumber, salted it and handed it to the guest', fa: خیار پوست کندی، نمک زدی و دادی دست مهمون }
+  - { en: You refilled everyone's tea before their glasses were empty, fa: هنوز استکان‌ها خالی نشده بود که چای همه رو دوباره ریختی }
+  - { en: 'You didn''t return a neighbor''s dish empty. You filled it first', fa: ظرف همسایه رو خالی پس ندادی، پرش کردی و پس دادی }
+  - { en: You slipped off to the counter and paid while everyone was reading the menu, fa: تا بقیه داشتن منو رو می‌خوندن، یواشکی رفتی دم صندوق حساب کردی }
+  - { en: You offered your place in the bakery line to the old man behind you, fa: تو صف نونوایی نوبتت رو به پیرمرد پشت‌سری تعارف کردی }
+  - { en: You held the elevator and said "befarmaid" to the whole building, fa: در آسانسور رو نگه داشتی و به کل ساختمون گفتی «بفرمایید» }
+  - { en: You insisted the guest stay for just one more cup of tea, fa: اصرار کردی مهمون یه چای دیگه هم بخوره بعد بره }
+  - { en: You came back from your trip with a souvenir for everyone, fa: از سفر برای تک‌تک فامیل سوغاتی آوردی }
+  - { en: 'Someone thanked you and you said "it was nothing, my duty"', fa: یکی ازت تشکر کرد، گفتی «خواهش می‌کنم، وظیفه بود» }
+  - { en: You put the best piece of chicken on your guest's plate, fa: بهترین تیکه‌ی مرغ رو گذاشتی تو بشقاب مهمون }
+  - { en: You were eating a sandwich and offered it to a total stranger, fa: داشتی ساندویچ می‌خوردی، به یه غریبه هم تعارف کردی }
+  - { en: You stood up to take the tray out of the host's hands, fa: بلند شدی سینی رو از دست صاحب‌خونه بگیری }
+  - { en: You snuck into the kitchen and washed the dishes before anyone noticed, fa: یواشکی رفتی آشپزخونه و تا کسی بفهمه ظرف‌ها رو شستی }
+  - { en: You praised the host's cooking and asked for the recipe, fa: از دست‌پخت صاحب‌خونه تعریف کردی و دستور پختش رو پرسیدی }
+  - { en: 'A surprise guest showed up and you said "ghadametun ru cheshm"', fa: مهمون سرزده اومد، گفتی «قدمتون روی چشم» }
+  - { en: 'You told your elder "shoma bozorgvarid" and meant every word', fa: به بزرگ‌ترت گفتی «شما بزرگوارید» و از ته دل گفتی }
 
 losses:
-  - { en: You took the tea the very first time it was offered, fa: چای رو بار اول که تعارف کردن برداشتی. زشته! }
+  - { en: You took the tea the very first time it was offered, fa: چای رو بار اول که تعارف کردن برداشتی. زشته }
   - { en: You said "no thanks" and they actually believed you, fa: گفتی «نه ممنون» و طرف واقعاً باور کرد }
   - { en: You forgot to offer your food to the person next to you, fa: یادت رفت غذات رو به بغل‌دستیت تعارف کنی }
   - { en: You walked through the door first, fa: اول از همه از در رفتی تو }
   - { en: You let your uncle pay, fa: گذاشتی عموت حساب کنه }
   - { en: You left the party without saying goodbye to everyone, fa: بدون خداحافظی با تک‌تک مهمون‌ها رفتی }
   - { en: You ate the last piece of tahdig without offering it, fa: آخرین تیکه‌ی ته‌دیگ رو بدون تعارف خوردی }
+  - { en: You showed up to a dinner party empty-handed, fa: دست خالی رفتی مهمونی }
+  - { en: You said goodbye to the guests without getting up from the couch, fa: از روی مبل با مهمون‌ها خداحافظی کردی }
+  - { en: The host was offering fruit and you were glued to your phone, fa: صاحب‌خونه داشت میوه تعارف می‌کرد، سرت تو گوشی بود }
+  - { en: You split the restaurant bill down to the last toman, fa: حساب رستوران رو تا قرون آخر دنگی کردی }
+  - { en: 'You forgot to say "dastet dard nakone" after dinner', fa: بعد از شام یادت رفت بگی «دستت درد نکنه» }
+  - { en: 'You said "leaving so soon?" in the middle of a yawn', fa: وسط خمیازه به مهمون گفتی «حالا کجا؟» }
+  - { en: You picked the biggest slice of watermelon for yourself, fa: بزرگ‌ترین قاچ هندونه رو برای خودت برداشتی }
+  - { en: 'They said "befarmaid sham" and you started before the elders', fa: گفتن «بفرمایید شام»، تو قبل از بزرگ‌ترها شروع کردی }
+  - { en: You hung up without asking how every single relative is doing, fa: تلفن رو قطع کردی بدون اینکه حال تک‌تک فامیل رو بپرسی }
+  - { en: You waited for your elder to say hello first, fa: صبر کردی بزرگ‌ترت اول سلام کنه }
+  - { en: You let the guest carry their own suitcase up the stairs, fa: گذاشتی مهمون چمدونش رو خودش از پله‌ها بیاره بالا }
+  - { en: 'You said "it''s on me" and then "oh no, I forgot my wallet"', fa: گفتی «حساب با من»، بعد گفتی «وای، کیفم رو جا گذاشتم» }
+  - { en: You took the front seat without offering it to an elder, fa: بدون تعارف به بزرگ‌ترها نشستی صندلی جلو }
+  - { en: 'You answered the phone with "what?" instead of "jaanam?"', fa: گوشی رو برداشتی گفتی «چیه؟» به‌جای «جانم؟» }
+  - { en: You stretched your legs out toward the elders, fa: جلوی بزرگ‌ترها پاهات رو دراز کردی }
 
 neutral:
   - { en: You and your aunt are still standing at the door saying "after you", fa: تو و خاله‌ت هنوز دم در دارین می‌گین «اول شما» }
-  - { en: You said "it's nothing" and they said "you're everything". A draw, fa: گفتی «قابل نداره»، گفت «صاحبش قابل داره». مساوی }
+  - { en: Someone said "you must come over sometime" and nobody picked a date. As is tradition, fa: یکی گفت «یه روز بیاین خونه‌ی ما» و هیچ‌کس روزی رو مشخص نکرد. طبق سنت }
+  - { en: 'The host asked "tea or juice?" and you said "whatever you prefer". Neither of you will decide', fa: صاحب‌خونه پرسید «چای یا شربت؟»، گفتی «هر چی شما بفرمایید». هنوز هیچ‌کدوم تصمیم نگرفتین }
+  - { en: You offered the last date to everyone and it's still sitting on the plate, fa: آخرین خرما رو به همه تعارف کردی، هنوز تو بشقاب مونده }
+  - { en: You said goodbye at the door for so long the tea went cold, fa: اون‌قدر دم در خداحافظی کردین که چای یخ کرد }
+  - { en: 'You both grabbed the bill at once and it tore in half', fa: هر دوتون هم‌زمان صورت‌حساب رو گرفتین و از وسط پاره شد }
 
 # Rare events (5% of rolls) replace the normal roll with a big swing.
 events:
@@ -54,10 +97,20 @@ events:
     - { en: You won a twenty-minute taarof battle with your great-aunt, fa: یه جنگ تعارف بیست‌دقیقه‌ای رو با عمه‌خانم بردی }
     - { en: The taxi driver refused your money three times and you still paid, fa: راننده تاکسی سه بار پول رو قبول نکرد و تو آخرش حساب کردی }
     - { en: "You kept the guests for dinner, and then they stayed the night", fa: مهمون‌ها رو برای شام نگه داشتی، شب هم موندن }
+    - { en: 'In one day you out-taarofed a taxi driver, a shopkeeper and your aunt', fa: تو یه روز راننده تاکسی، مغازه‌دار و خاله‌ت رو تو تعارف شکست دادی }
+    - { en: 'Grandma told the whole family "now this one has manners"', fa: مامان‌بزرگ جلوی کل فامیل گفت «این بچه چقدر باادبه» }
+    - { en: 'You poured water behind the guests'' car and waved until it turned the corner', fa: پشت ماشین مهمون‌ها آب ریختی و تا سر کوچه دست تکون دادی }
+    - { en: You won the fight for the bill so gracefully that the whole restaurant clapped, fa: سر حساب رستوران اون‌قدر قشنگ بردی که کل رستوران برات دست زدن }
+    - { en: You sent the guests home with so many leftovers they needed a second car, fa: اون‌قدر برای مهمون‌ها غذا گذاشتی ببرن که یه ماشین دیگه لازم شد }
   bad:
     - { en: The taxi driver said "be my guest" and you got out without paying, fa: راننده تاکسی گفت «قابل نداره» و تو بی‌پول پیاده شدی }
     - { en: You said "you shouldn't have" and opened the gift on the spot, fa: گفتی «چرا زحمت کشیدین» و همون‌جا کادو رو باز کردی }
     - { en: Grandma offered once and you took the whole plate, fa: مامان‌بزرگ یه بار تعارف کرد و کل بشقاب رو برداشتی }
+    - { en: 'You said "no really, I''m full" and the host cleared the table. Dessert too', fa: گفتی «نه واقعاً سیرم»، صاحب‌خونه هم سفره رو جمع کرد. دسر هم رفت }
+    - { en: You fought for the bill so hard you knocked over the samovar, fa: سر حساب اون‌قدر کشتی گرفتی که سماور رو انداختی }
+    - { en: 'You walked into a family party and your first words were "what''s the Wi-Fi password?"', fa: وارد مهمونی فامیلی شدی و اولین حرفت «رمز وای‌فای چیه؟» بود }
+    - { en: The host said "stay for dinner" once and you stayed three days, fa: صاحب‌خونه یه بار گفت «شام بمونید» و تو سه روز موندی }
+    - { en: 'You told the guest "leaving already? OK, bye!" and shut the door', fa: به مهمون گفتی «دارین می‌رین؟ باشه، خداحافظ» و در رو بستی }
 
 # Each title is reached once the score is at least `at`.
 titles:
@@ -65,7 +118,7 @@ titles:
   - { at: 25, name: { en: Polite neighbor 🙂, fa: همسایه‌ی مؤدب 🙂 } }
   - { at: 60, name: { en: Professional host 🫖, fa: میزبان حرفه‌ای 🫖 } }
   - { at: 120, name: { en: Doorway champion 🚪, fa: قهرمان «اول شما» دم در 🚪 } }
-  - { at: 200, name: { en: Grandmaster of "qabel nadare" 🎩, fa: استاد بزرگ «قابل نداره» 🎩 } }
+  - { at: 200, name: { en: Grandmaster of "ghabel nadare" 🎩, fa: استاد بزرگ «قابل نداره» 🎩 } }
   - { at: 350, name: { en: Taarof legend 🌟, fa: اسطوره‌ی تعارف 🌟 } }
   - { at: 600, name: { en: Persian aunt level 👑, fa: در حد خاله‌ی ایرانی 👑 } }
 
@@ -77,3 +130,8 @@ hook:
     - { en: "You told the bot \"after you\" and it said \"no, after you!\" Your turn is gone", fa: "به ربات گفتی «اول شما»، ربات گفت «نه، اول شما!» نوبتت پرید" }
     - { en: The bot offered you a turn and you politely refused. It believed you, fa: ربات بهت نوبت تعارف کرد، تو مؤدبانه رد کردی، اونم باور کرد }
     - { en: "You and the bot spent twelve hours saying \"please, you first\"", fa: تو و ربات دوازده ساعت به هم گفتین «خواهش می‌کنم، اول شما» }
+    - { en: 'The bot said "I''m not worthy of your time" and you spent the whole turn talking it out of it', fa: ربات گفت «من لایق وقت شما نیستم» و تو کل نوبتت رو سر قانع کردنش گذروندی }
+    - { en: The bot walked you all the way to your car and your turn got left behind, fa: ربات تا دم ماشین بدرقه‌ت کرد، نوبتت جا موند }
+    - { en: You and the bot fought over who pays for this turn until the waiter took it away, fa: تو و ربات اون‌قدر سر حساب این نوبت دعوا کردین که گارسون نوبت رو برد }
+    - { en: The bot offered you tea first. You refused three times and your turn went cold, fa: ربات اول به تو چای تعارف کرد، سه بار رد کردی تا نوبتت سرد شد }
+    - { en: The bot insisted you stay for dinner. By dessert your turn was over, fa: ربات اصرار کرد شام بمونی، تا دسر رسید نوبتت تموم شده بود }

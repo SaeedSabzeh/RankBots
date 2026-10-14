@@ -87,15 +87,18 @@ class Store:
             for path in sorted(MIGRATIONS_DIR.glob("*.sql")):
                 await conn.execute(path.read_text(encoding="utf-8"))
 
-    async def touch_chat(self, bot: str, chat_id: int, title: str | None, default_cooldown: int) -> int:
-        """Register the group (or refresh its title) and return its cooldown in hours."""
+    async def touch_chat(self, bot: str, chat_id: int, title: str | None) -> int | None:
+        """Register the group (or refresh its title).
+
+        Returns the group's own cooldown in minutes, or None to use the theme's.
+        """
         return await self.pool.fetchval(
             """
-            INSERT INTO chats (bot, chat_id, title, cooldown_hours) VALUES ($1, $2, $3, $4)
-            ON CONFLICT (bot, chat_id) DO UPDATE SET title = EXCLUDED.title
-            RETURNING cooldown_hours
+            INSERT INTO chats (bot, chat_id, title) VALUES ($1, $2, $3)
+            ON CONFLICT (bot, chat_id) DO UPDATE SET title = COALESCE(EXCLUDED.title, chats.title)
+            RETURNING cooldown_minutes
             """,
-            bot, chat_id, title, default_cooldown,
+            bot, chat_id, title,
         )
 
     async def ensure_player(
@@ -138,7 +141,7 @@ class Store:
         *,
         now: datetime,
         today: date,
-        cooldown_hours: int,
+        cooldown_minutes: int,
         seen_last_play_at: datetime | None,
         delta: int,
         min_score: int,
@@ -162,10 +165,10 @@ class Store:
                     last_play_date = $8::date
                 WHERE bot = $1 AND chat_id = $2 AND user_id = $3
                   AND last_play_at IS NOT DISTINCT FROM $9::timestamptz
-                  AND (last_play_at IS NULL OR last_play_at <= $7::timestamptz - make_interval(hours => $10::int))
+                  AND (last_play_at IS NULL OR last_play_at <= $7::timestamptz - make_interval(mins => $10::int))
                 RETURNING score
                 """,
-                bot, chat_id, user_id, min_score, delta, streak, now, today, seen_last_play_at, cooldown_hours,
+                bot, chat_id, user_id, min_score, delta, streak, now, today, seen_last_play_at, cooldown_minutes,
             )
             if score is None:
                 return None
@@ -206,6 +209,42 @@ class Store:
             bot, chat_id, limit,
         )
         return [_player(r) for r in rows]
+
+    async def active_chats(self, bot: str, since: datetime) -> list[int]:
+        """Groups where someone has played since `since`."""
+        rows = await self.pool.fetch(
+            "SELECT DISTINCT chat_id FROM plays WHERE bot = $1 AND created_at >= $2", bot, since
+        )
+        return [r["chat_id"] for r in rows]
+
+    async def weekly_gains(
+        self, bot: str, chat_id: int, since: datetime, higher_is_better: bool, limit: int = 3
+    ) -> list[tuple[Player, int]]:
+        """Players by how much their score moved the good way since `since` (rolls and duels)."""
+        order = "DESC" if higher_is_better else "ASC"
+        rows = await self.pool.fetch(
+            f"""
+            SELECT {", ".join("pl." + c.strip() for c in _PLAYER_COLS.split(","))}, sum(p.delta) AS gained
+            FROM plays p JOIN players pl USING (bot, chat_id, user_id)
+            WHERE p.bot = $1 AND p.chat_id = $2 AND p.created_at >= $3
+            GROUP BY pl.bot, pl.chat_id, pl.user_id  -- the primary key, so every player column may be selected
+            ORDER BY gained {order}
+            LIMIT $4
+            """,
+            bot, chat_id, since, limit,
+        )
+        return [(_player({k: v for k, v in dict(r).items() if k != "gained"}), r["gained"]) for r in rows]
+
+    async def claim_champion_post(self, bot: str, chat_id: int, today: date) -> bool:
+        """Mark this week's champion post as done; False if it was already posted today."""
+        return bool(await self.pool.fetchval(
+            """
+            UPDATE chats SET champion_posted_on = $3
+            WHERE bot = $1 AND chat_id = $2 AND (champion_posted_on IS NULL OR champion_posted_on < $3)
+            RETURNING 1
+            """,
+            bot, chat_id, today,
+        ))
 
     async def create_duel(
         self,

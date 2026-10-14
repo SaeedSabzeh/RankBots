@@ -1,0 +1,119 @@
+# Konkur bot: improve your konkur rank. Lower is better, and ranks move in thousands.
+# Messages are written without numbers; the engine adds ": −3,000" after them
+# (a rank has no unit, so it's just the number).
+# Farsi copy is a first draft for Simin to review.
+
+name: konkur
+emoji: "📚"
+# fa, en, or both. "both" sends every message in Farsi and then English.
+language: fa
+# Time between two /play turns. One study session: 2 hours.
+cooldown_minutes: 120
+
+bot_name:
+  en: Konkur Bot
+  fa: ربات کنکور
+tagline:
+  en: Get the best konkur rank in the group. Lower is better!
+  fa: بهترین رتبه‌ی کنکور گروه رو بگیر. هرچی کمتر، بهتر!
+leaderboard_title:
+  en: Top ranks in the group
+  fa: رتبه‌برترهای گروه
+
+score:
+  name: { en: Konkur rank, fa: رتبه‌ی کنکور }
+  # A rank is just a number.
+  unit: { en: "", fa: "" }
+  start: 500000
+  direction: lower
+  # Every rolled point moves the rank by 1,000.
+  scale: 1000
+  # Rank 1 is as good as it gets.
+  min: 1
+
+gains:
+  - { en: You finished a whole Gaj test book, fa: یه کتاب تست گاج رو کامل زدی }
+  - { en: You studied all day without touching your phone, fa: کل روز بدون دست زدن به گوشی درس خوندی }
+  - { en: You finally understood integrals, fa: بالاخره انتگرال رو فهمیدی }
+  - { en: You crushed the mock exam, fa: تو آزمون آزمایشی ترکوندی }
+  - { en: You deleted Instagram for a week, fa: یه هفته اینستاگرام رو پاک کردی }
+  - { en: Your study plan actually worked, fa: برنامه‌ی مطالعاتیت واقعاً جواب داد }
+  - { en: You memorized all the Arabic grammar, fa: کل قواعد عربی رو حفظ کردی }
+  - { en: You woke up at dawn to study, fa: سحر بیدار شدی درس بخونی }
+  - { en: You read the Kheili Sabz biology book cover to cover, fa: زیست خیلی سبز رو از اول تا آخرش خوندی }
+  - { en: Your taraz went up in the Ghalamchi exam, fa: ترازت تو آزمون قلم‌چی رفت بالا }
+  - { en: You left the hard questions blank instead of guessing, fa: سؤال‌های سخت رو به‌جای شانسی زدن سفید گذاشتی }
+  - { en: 'Your advisor said "keep going just like this"', fa: مشاورت گفت «همین‌جوری ادامه بده» }
+  - { en: 'You solved a physics question your teacher couldn''t', fa: یه تست فیزیک رو حل کردی که معلمتون نتونست }
+  - { en: You finally got the hang of literary devices, fa: بالاخره آرایه‌های ادبی دستت اومد }
+  - { en: You memorized the whole periodic table, fa: جدول تناوبی رو کامل از بر کردی }
+  - { en: You muted every Telegram group except this one, fa: همه‌ی گروه‌های تلگرام رو میوت کردی جز همین یکی }
+  - { en: Your konkur-class teacher taught you a test-taking shortcut, fa: استاد کلاس کنکور یه روش تستی خفن یادت داد }
+  - { en: You sat in the library all day and didn't budge, fa: کل روز تو کتابخونه نشستی و جم نخوردی }
+  - { en: You analyzed your wrong answers instead of just checking your score, fa: به‌جای اینکه فقط نمره‌ت رو ببینی غلط‌هات رو تحلیل کردی }
+  - { en: Your mom brought tea and fruit to your desk, fa: مامانت برات چای و میوه آورد سر میز درس }
+  - { en: You topped your class in the Gozine Do mock exam, fa: تو آزمون گزینه دو اول کلاس شدی }
+  - { en: You finally finished the stoichiometry chapter, fa: بالاخره فصل استوکیومتری شیمی رو تموم کردی }
+  - { en: You explained a lesson to a friend and understood it better yourself, fa: درس رو برای دوستت توضیح دادی و خودت بهتر فهمیدی }
+  - { en: You took a full timed practice exam with a real answer sheet, fa: یه آزمون کامل با تایمر و پاسخ‌نامه‌ی واقعی زدی }
+  - { en: You stopped comparing yourself with the neighbor's kid, fa: دیگه خودت رو با بچه‌ی همسایه مقایسه نکردی }
+
+losses:
+  - { en: 'You said "just one episode" and watched the whole season', fa: گفتی «فقط یه قسمت» و کل فصل رو دیدی }
+  - { en: You got lost in konkur Telegram channels, fa: تو کانال‌های تلگرامی کنکور گم شدی }
+  - { en: You guessed and got negative marks, fa: شانسی زدی و نمره‌ی منفی خوردی }
+  - { en: The neighbor's kid got a better mock-exam rank, fa: بچه‌ی همسایه تو آزمون آزمایشی رتبه‌ی بهتری آورد }
+  - { en: You fell asleep on your chemistry book, fa: رو کتاب شیمی خوابت برد }
+  - { en: You bought another test book instead of studying, fa: به‌جای درس خوندن یه کتاب تست دیگه خریدی }
+  - { en: You spent the whole day drawing a beautiful study plan, fa: کل روز رو گذاشتی رو کشیدن یه برنامه‌ی مطالعاتی خوشگل }
+  - { en: You pulled an all-nighter and slept through the mock exam, fa: شب تا صبح بیدار موندی و سر آزمون آزمایشی خواب موندی }
+  - { en: Every relative at the family party asked about your rank, fa: تو مهمونی فامیلی همه ازت رتبه‌ت رو پرسیدن }
+  - { en: You watched konkur motivation videos instead of studying, fa: به‌جای درس خوندن ویدیوی انگیزشی کنکور دیدی }
+  - { en: Your taraz dropped and you moped around all day, fa: ترازت افت کرد و کل روز غمبرک زدی }
+  - { en: You got into an argument under a konkur Instagram post, fa: زیر پست یه پیج کنکوری تو اینستاگرام دعوات شد }
+  - { en: You mixed up mitosis and meiosis again, fa: باز میتوز و میوز رو قاطی کردی }
+  - { en: You saw the question and forgot every physics formula, fa: تا سؤال رو دیدی همه‌ی فرمول‌های فیزیک از یادت پرید }
+  - { en: A friend sent a voice message saying "just one quick question" and it ate your whole evening, fa: دوستت یه ویس فرستاد که «فقط یه سؤال کوتاه» و کل عصرت رفت }
+  - { en: Your parents compared you with your cousin who got into medicine, fa: مامان‌بابات تو رو با دخترخاله‌ت که پزشکی قبول شده مقایسه کردن }
+  - { en: You spent hours planning your major choices before even taking the exam, fa: هنوز کنکور ندادی ولی ساعت‌ها نشستی انتخاب رشته‌ت رو چیدی }
+  - { en: 'Your "quick nap" lasted until dinner', fa: «چرت کوتاهت» تا وقت شام طول کشید }
+  - { en: You translated an Arabic sentence into something completely different, fa: یه جمله‌ی عربی رو ترجمه کردی و یه معنی دیگه دراومد }
+  - { en: 'You opened the group "just for a peek" and you''re still here', fa: گروه رو باز کردی «فقط یه نگاه» و هنوز اینجایی }
+
+neutral:
+  - { en: You opened the book and stared at the first page, fa: کتاب رو باز کردی و به صفحه‌ی اول زل زدی }
+  - { en: You highlighted everything in yellow, fa: همه‌چیز رو با ماژیک زرد هایلایت کردی }
+  - { en: You tidied your desk and admired it instead of studying, fa: میز تحریرت رو مرتب کردی و نشستی به تماشاش }
+  - { en: You read the same paragraph again and again, fa: یه پاراگراف رو هی خوندی و هنوز مطمئن نیستی چی گفت }
+  - { en: You asked your advisor for tips and heard the usual speech, fa: از مشاورت راهنمایی خواستی و همون حرف‌های همیشگی رو شنیدی }
+
+# Rare events (5% of rolls) replace the normal roll with a big swing.
+events:
+  good:
+    - { en: You got into Sharif, fa: شریف قبول شدی }
+    - { en: The answer key had a mistake and it went your way, fa: کلید سؤال‌ها اشتباه داشت و به نفع تو شد }
+    - { en: Every single guess you made was right, fa: همه‌ی شانسی‌هات درست دراومد }
+    - { en: You got into medicine at the University of Tehran, fa: پزشکی دانشگاه تهران قبول شدی }
+    - { en: Your name made the national top-ranks list, fa: اسمت تو لیست رتبه‌برترهای کشور اومد }
+    - { en: The konkur had exactly the questions you studied the night before, fa: سؤال‌های کنکور دقیقاً همونایی بود که شب قبلش خونده بودی }
+    - { en: TV interviewed you as a top ranker, fa: تلویزیون به‌عنوان رتبه‌برتر باهات مصاحبه کرد }
+    - { en: The neighbor's kid came to you for study advice, fa: بچه‌ی همسایه اومد ازت مشاوره گرفت }
+  bad:
+    - { en: You filled in the answer sheet one row off, fa: پاسخ‌نامه رو یه ردیف جابه‌جا پر کردی }
+    - { en: You overslept on konkur day, fa: روز کنکور خواب موندی }
+    - { en: Your pencil broke and you had no spare, fa: مدادت شکست و یدک نداشتی }
+    - { en: You realized you spent the whole year on the old textbooks, fa: فهمیدی کل سال کتاب‌های چاپ قدیم رو خوندی }
+    - { en: You entered the wrong codes when choosing your majors, fa: تو انتخاب رشته کدها رو اشتباه وارد کردی }
+    - { en: The air conditioning broke down in the exam hall, fa: کولر حوزه‌ی امتحانی وسط کنکور خراب شد }
+    - { en: You went to the wrong exam center on konkur day, fa: روز کنکور رفتی یه حوزه‌ی دیگه }
+    - { en: You left your exam entry card at home, fa: کارت ورود به جلسه‌ت رو خونه جا گذاشتی }
+
+# Lower is better: each title is reached once the rank is at or below `at`.
+titles:
+  - { at: 500000, name: { en: Retaking the konkur 😴, fa: پشت‌کنکوری 😴 } }
+  - { at: 300000, name: { en: Finally getting serious 📖, fa: تازه جدی شده 📖 } }
+  - { at: 150000, name: { en: Mock-exam regular 📝, fa: پای ثابت آزمون آزمایشی 📝 } }
+  - { at: 50000, name: { en: State university material 🏫, fa: در حد دانشگاه سراسری 🏫 } }
+  - { at: 10000, name: { en: Top of the class 🎓, fa: شاگرد اول کلاس 🎓 } }
+  - { at: 2000, name: { en: Medicine in Tehran 🩺, fa: پزشکی تهران 🩺 } }
+  - { at: 100, name: { en: Sharif genius 🧠, fa: نابغه‌ی شریف 🧠 } }

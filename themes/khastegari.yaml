@@ -1,0 +1,116 @@
+# Khastegari bot: grow the mehrieh, in gold coins (sekkeh), to absurd numbers.
+# Messages are written without numbers; the engine adds ": +90 coins" after them.
+# Farsi copy is a first draft for Simin to review.
+
+name: khastegari
+emoji: "💍"
+# fa, en, or both. "both" sends every message in Farsi and then English.
+language: fa
+# Time between two /play turns. One khastegari visit: about 3 hours.
+cooldown_minutes: 180
+
+bot_name:
+  en: Khastegari Bot
+  fa: ربات خواستگاری
+tagline:
+  en: Negotiate the most absurd mehrieh in the group!
+  fa: عجیب‌ترین مهریه‌ی گروه رو تو ببند!
+leaderboard_title:
+  en: Biggest mehriehs
+  fa: سنگین‌ترین مهریه‌ها
+
+score:
+  name: { en: Mehrieh, fa: مهریه }
+  unit: { en: coins, fa: سکه }
+  start: 0
+  direction: higher
+  # Coins move in tens, so numbers get absurd fast (1,380 coins is a title).
+  scale: 10
+  min: 0
+
+gains:
+  - { en: The aunts joined the negotiation, fa: عمه‌ها وارد مذاکره شدن }
+  - { en: Someone brought up how much the cousin's mehrieh was, fa: یکی مهریه‌ی دخترخاله رو یادآوری کرد }
+  - { en: 'Grandma said "in our day it was more"', fa: مامان‌بزرگ گفت «زمان ما بیشتر بود» }
+  - { en: The gold price jumped overnight, fa: قیمت سکه یه‌شبه رفت بالا }
+  - { en: The tea was served perfectly and everyone was impressed, fa: چای بی‌نقص اومد و همه کف کردن }
+  - { en: Dad cleared his throat meaningfully, fa: بابا یه سرفه‌ی معنی‌دار کرد }
+  - { en: The uncle who's a lawyer showed up, fa: عموی وکیل هم سر رسید }
+  - { en: 'Someone said "it''s just a number" so a zero got added', fa: یکی گفت «حالا یه عدده دیگه» و یه صفر اضافه شد }
+  - { en: The groom's family brought a flower basket taller than the groom, fa: خانواده‌ی داماد یه سبد گل آوردن قد خود داماد }
+  - { en: The bride walked in with the tea tray and the whole room went quiet, fa: عروس با سینی چای اومد تو و کل مجلس ساکت شد }
+  - { en: An aunt whispered something to Mom and Mom slowly nodded, fa: خاله یه چیزی در گوش مامان گفت و مامان آروم سر تکون داد }
+  - { en: Uncle listed every university degree in the family one by one, fa: دایی همه‌ی مدرک‌های دانشگاهی فامیل رو یکی‌یکی شمرد }
+  - { en: The bride's side casually dropped the price of a two-bedroom apartment into the conversation, fa: طرف عروس همین‌جوری قیمت یه آپارتمان دوخوابه رو وسط حرف انداخت }
+  - { en: 'The bride''s dad asked about the groom''s plans for the future and the groom said "we''ll see"', fa: بابای عروس از داماد پرسید برنامه‌ت برای آینده چیه، گفت «حالا ببینیم» }
+  - { en: The fruit bowl had out-of-season cherries and expectations rose, fa: تو ظرف میوه گیلاس خارج از فصل بود و توقع‌ها رفت بالا }
+  - { en: Dad's uncle said that in his day the mehrieh was a whole flock of sheep, fa: عموی بابا گفت زمان خودش مهریه یه گله گوسفند بوده }
+  - { en: The aunt who lives abroad joined by video call, fa: خاله‌ی خارج‌نشین تصویری به جلسه وصل شد }
+  - { en: Someone reminded everyone what an aineh va shamdoon costs these days, fa: یکی یادآوری کرد این روزها آینه و شمعدون چند درمیاد }
+  - { en: 'The bride''s grandpa said "it should be a number we can say with pride"', fa: بابابزرگ عروس گفت «باید عددی باشه که جلوی فامیل بشه با افتخار گفتش» }
+  - { en: 'The groom''s dad said "whatever they want" a little too quickly', fa: بابای داماد یه‌کم زیادی سریع گفت «هرچی خودشون بگن» }
+  - { en: Mom brought out the good china from the top of the cabinet, fa: مامان ظرف‌های چینی طبقه‌ی بالای بوفه رو آورد }
+  - { en: 'Someone said "gold never loses value" and nobody argued', fa: یکی گفت «طلا هیچ‌وقت ضرر نمی‌کنه» و کسی مخالفت نکرد }
+  - { en: The bride's little brother asked for a PlayStation for himself too, fa: برادر کوچیکه‌ی عروس یه پلی‌استیشن هم برای خودش خواست }
+  - { en: Someone casually brought up last year's other suitor, fa: یکی همین‌جوری حرف خواستگار پارسال رو پیش کشید }
+  - { en: The sweets came from the most famous bakery in town, fa: شیرینی از معروف‌ترین قنادی شهر بود }
+
+losses:
+  - { en: 'Someone said "love is all you need"', fa: یکی گفت «عشق کافیه» }
+  - { en: The sweets came from the cheap bakery, fa: شیرینی از قنادی ارزونه بود }
+  - { en: The gold price dropped, fa: قیمت سکه اومد پایین }
+  - { en: Grandpa fell asleep in the middle of the negotiation, fa: بابابزرگ وسط مذاکره خوابش برد }
+  - { en: The tea arrived cold, fa: چای سرد رسید }
+  - { en: The groom's mother started crying and everyone softened, fa: مادر داماد زد زیر گریه و همه کوتاه اومدن }
+  - { en: 'Someone said "shall we move on to the fruit?" and changed the subject', fa: یکی گفت «بریم سراغ میوه؟» و بحث رو عوض کرد }
+  - { en: The groom's side mentioned how expensive rent is these days, fa: طرف داماد یادآوری کرد این روزها اجاره‌خونه چقدر گرونه }
+  - { en: The flowers were obviously from the kiosk at the end of the street, fa: معلوم بود گل‌ها رو از دکه‌ی سر کوچه خریدن }
+  - { en: The uncle who's a lawyer had to leave early, fa: عموی وکیل مجبور شد زودتر بره }
+  - { en: Someone spilled tea on the Persian rug and everyone lost the thread, fa: چای ریخت رو فرش و رشته‌ی بحث از دست همه در رفت }
+  - { en: The groom's grandma recited a Hafez poem and everyone got emotional, fa: مامان‌بزرگ داماد یه شعر از حافظ خوند و همه احساساتی شدن }
+  - { en: 'The bride''s dad said "we haven''t opened a shop here"', fa: بابای عروس گفت «ما که اینجا دکون باز نکردیم» }
+  - { en: Someone pointed out that this many coins won't fit in a safe deposit box, fa: یکی گفت این‌همه سکه تو صندوق امانات جا نمی‌شه }
+  - { en: The aunts started arguing about ghormeh sabzi and forgot the mehrieh, fa: عمه‌ها سر دستور قورمه‌سبزی بحثشون شد و مهریه یادشون رفت }
+  - { en: The groom's family arrived late because of traffic on the Hemmat highway, fa: خانواده‌ی داماد به‌خاطر ترافیک همت دیر رسیدن }
+  - { en: 'A relative said "in our family the mehrieh is symbolic"', fa: یکی از فامیل گفت «تو خانواده‌ی ما مهریه نمادینه» }
+  - { en: Someone suggested a group photo in the middle of the negotiation and everyone went to fix their hair, fa: یکی وسط مذاکره گفت عکس یادگاری بگیریم و همه رفتن موهاشون رو درست کنن }
+  - { en: Dad took a phone call and forgot which number he was defending, fa: بابا تلفنش زنگ خورد و یادش رفت از چه عددی دفاع می‌کرد }
+  - { en: Someone remembered the groom once fixed their car for free, fa: یکی یادش اومد داماد یه بار ماشینش رو مجانی درست کرده }
+
+neutral:
+  - { en: 'Everyone said "whatever the elders decide"', fa: همه گفتن «هرچی بزرگ‌ترها بگن» }
+  - { en: 'The visit ended with "we''ll think about it"', fa: جلسه با «فکرامون رو می‌کنیم» تموم شد }
+  - { en: Everyone talked about the weather for an hour, fa: یه ساعت همه درباره‌ی آب‌وهوا حرف زدن }
+  - { en: 'The bride and groom went to the other room "to talk" and came back saying nothing', fa: عروس و داماد رفتن تو اتاق «حرفاشون رو بزنن» و بی‌حرف برگشتن }
+  - { en: 'Someone asked about the groom''s job and the answer was "freelance"', fa: یکی شغل داماد رو پرسید و جواب اومد «کار آزاد» }
+
+# Rare events (5% of rolls) replace the normal roll with a big swing.
+events:
+  good:
+    - { en: Someone suggested the birth year in coins and everyone agreed, fa: یکی گفت «به تعداد سال تولد سکه» و همه قبول کردن }
+    - { en: A villa in Lavasan got added to the mehrieh, fa: یه ویلا تو لواسون هم به مهریه اضافه شد }
+    - { en: Grandma took out her calculator, fa: مامان‌بزرگ ماشین‌حسابش رو درآورد }
+    - { en: '"Baleh boroon" was announced and the aunts doubled everything out of joy', fa: «بله‌برون» اعلام شد و عمه‌ها از خوشحالی همه‌چی رو دوبرابر کردن }
+    - { en: Grandma brought out her secret tin of old Bahar Azadi coins from under the bed, fa: مامان‌بزرگ قوطی سکه‌های بهار آزادی قدیمیش رو از زیر تخت درآورد }
+    - { en: 'The bride finally broke her silence and said "and a trip to Kish"', fa: 'عروس بالاخره سکوتش رو شکست و گفت «یه سفر کیش هم باشه»' }
+    - { en: The TV news announced a record gold price right in the middle of the visit, fa: وسط جلسه اخبار تلویزیون گفت قیمت سکه رکورد زد }
+    - { en: 'Uncle proposed the height of Damavand in coins and Grandma said "make it Everest"', fa: دایی گفت «به ارتفاع دماوند سکه»، مامان‌بزرگ گفت «اورست باشه بهتره» }
+  bad:
+    - { en: 'The groom said "I''m still a student"', fa: داماد گفت «من هنوز دانشجوام» }
+    - { en: Both families settled on one coin and a stick of nabat, fa: دو خانواده سر یه سکه و یه شاخه نبات توافق کردن }
+    - { en: The negotiation moved to WhatsApp and nobody remembers what was agreed, fa: مذاکره رفت تو واتس‌اپ و هیچ‌کس یادش نیست سر چی توافق شد }
+    - { en: The two grandmas turned out to be old classmates and waived everything, fa: دو تا مامان‌بزرگ فهمیدن هم‌کلاسی قدیمی‌ان و قید همه‌چی رو زدن }
+    - { en: The power went out and the negotiation started over from scratch, fa: برق رفت و مذاکره از صفر شروع شد }
+    - { en: The bride's lawyer uncle and the groom's lawyer cousin cancelled each other out, fa: عموی وکیل عروس و پسرخاله‌ی وکیل داماد همدیگه رو خنثی کردن }
+    - { en: The paper with the agreed figure flew out the window, fa: کاغذی که عدد توافقی روش نوشته شده بود از پنجره پرید بیرون }
+    - { en: Everything was put off until after the cousin's Konkur results, fa: همه‌چی موکول شد به بعد از جواب کنکور پسرخاله }
+
+# Each title is reached once the score is at least `at`.
+titles:
+  - { at: 0, name: { en: Mirror and candlesticks 🪞, fa: آینه و شمعدون 🪞 } }
+  - { at: 200, name: { en: A sensible bag of coins 💰, fa: یه کیسه سکه‌ی معقول 💰 } }
+  - { at: 500, name: { en: Approved by the aunts 👵, fa: مورد تأیید عمه‌ها 👵 } }
+  - { at: 1000, name: { en: Four-digit mehrieh 🔢, fa: مهریه‌ی چهاررقمی 🔢 } }
+  - { at: 1380, name: { en: Birth-year mehrieh 🎂, fa: مهریه به سال تولد 🎂 } }
+  - { at: 2500, name: { en: The lawyer-uncle special ⚖️, fa: ویژه‌ی عموی وکیل ⚖️ } }
+  - { at: 5000, name: { en: Mehrieh with a villa in Lavasan 🏡, fa: مهریه با ویلای لواسون 🏡 } }

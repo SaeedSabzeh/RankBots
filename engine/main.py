@@ -20,6 +20,7 @@ from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
+from engine.champion import champion_loop
 from engine.db import Store
 from engine.handlers import build_dispatcher, set_commands
 from engine.theme import Theme, load_themes
@@ -89,9 +90,12 @@ async def run(only: list[str] | None) -> None:
         await bot.delete_webhook(drop_pending_updates=True)
         logging.info("Running %s as @%s", theme.name, me.username)
 
+    # Sunday-evening weekly champion posts, alongside the bots.
+    champions = asyncio.create_task(champion_loop([(bot, theme) for bot, (theme, _) in zip(bots, selected)], store))
     try:
         await dp.start_polling(*bots)
     finally:
+        champions.cancel()
         await store.close()
         for bot in bots:
             await bot.session.close()

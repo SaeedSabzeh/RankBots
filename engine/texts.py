@@ -13,7 +13,7 @@ from html import escape, unescape
 
 from engine import game
 from engine.db import Player
-from engine.service import Board, DuelClosed, DuelOffer, DuelRefused, DuelResult, Played, Stats
+from engine.service import Board, DuelClosed, DuelOffer, DuelRefused, DuelResult, Played, Stats, WeeklyReport
 from engine.theme import Lang, Theme
 
 _FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
@@ -24,6 +24,15 @@ STRINGS: dict[Lang, dict[str, str]] = {
     "en": {
         "rare_good": "✨ Rare event! ",
         "rare_bad": "💥 Rare event! ",
+        "boost_lucky_hour": "🍀 Lucky hour! Gains are doubled right now",
+        "weekly_title": "🏆 <b>Champion of the week</b>",
+        "weekly_mover": "{medal} {name}: <b>{gained}</b> this week",
+        "weekly_leader": "👑 Top of the board: {name} with <b>{score}</b>",
+        "weekly_footer": "A new week starts now. /play",
+        "boost_yalda": "🍉 It's Shab-e Yalda! Gains are doubled on the longest night",
+        "boost_chaharshanbe_suri": "🔥 Chaharshanbe Suri! Rare events are four times as likely tonight",
+        "boost_nowruz": "🌸 Happy Nowruz! Rare events are three times as likely",
+        "boost_sizdah_bedar": "🌿 Sizdah Bedar! Bad luck goes out the door: no losses today",
         "streak_bonus": "🔥 {days}-day streak: {bonus} included",
         "next_try": "⏳ Next try in {time}",
         "cooldown": "⏳ {name}, not yet! Next try in {time}.",
@@ -38,7 +47,7 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "next_in": "⏳ Next try in {time}",
         "you": "You",
         "help": (
-            "/play: roll once every {hours} hours\n"
+            "/play: roll once every {every}\n"
             "/me: your score, rank, title and streak\n"
             "/top: this group's leaderboard\n"
             "/duel @user &lt;stake&gt;: bet points against someone, 50/50 "
@@ -46,6 +55,8 @@ STRINGS: dict[Lang, dict[str, str]] = {
             "/help: this message\n\n"
             "Play on consecutive days for a streak bonus. "
             "Rare events can swing your score a lot, either way. "
+            "Every day has a secret lucky hour, Persian holidays bring surprises, "
+            "and every Sunday evening the champion of the week is announced. "
             "One duel every {duel_hours} hours; it doesn't use your /play turn."
         ),
         "duel_usage": (
@@ -79,6 +90,15 @@ STRINGS: dict[Lang, dict[str, str]] = {
     "fa": {
         "rare_good": "✨ اتفاق نادر! ",
         "rare_bad": "💥 اتفاق نادر! ",
+        "boost_lucky_hour": "🍀 ساعت شانس! الان امتیازهای مثبت دوبرابره",
+        "weekly_title": "🏆 <b>قهرمان این هفته</b>",
+        "weekly_mover": "{medal} {name}: <b>{gained}</b> این هفته",
+        "weekly_leader": "👑 صدرنشین جدول: {name} با <b>{score}</b>",
+        "weekly_footer": "هفته‌ی جدید از همین الان شروع شد. /play",
+        "boost_yalda": "🍉 شب یلداست! تو بلندترین شب سال امتیازهای مثبت دوبرابره",
+        "boost_chaharshanbe_suri": "🔥 چهارشنبه‌سوریه! امشب اتفاق‌های نادر چهار برابر بیشتر میفتن",
+        "boost_nowruz": "🌸 نوروز مبارک! اتفاق‌های نادر سه برابر بیشتر میفتن",
+        "boost_sizdah_bedar": "🌿 سیزده‌به‌در! نحسی رو بنداز بیرون: امروز ضرر نداریم",
         "streak_bonus": "🔥 {days} روز پشت سر هم: {bonus} جایزه حساب شد",
         "next_try": "⏳ نوبت بعدی: {time} دیگه",
         "cooldown": "⏳ {name}، هنوز نوبتت نشده! {time} دیگه دوباره امتحان کن.",
@@ -93,7 +113,7 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "next_in": "⏳ نوبت بعدی: {time} دیگه",
         "you": "تو",
         "help": (
-            "/play: هر {hours} ساعت یه بار بازی کن\n"
+            "/play: هر {every} یه بار بازی کن\n"
             "/me: امتیاز، رتبه، لقب و روزهای پشت سر همت\n"
             "/top: جدول این گروه\n"
             "/duel @user &lt;امتیاز&gt;: سر امتیاز با یکی دوئل کن، پنجاه‌پنجاه "
@@ -101,6 +121,8 @@ STRINGS: dict[Lang, dict[str, str]] = {
             "/help: همین راهنما\n\n"
             "اگه چند روز پشت سر هم بازی کنی جایزه می‌گیری. "
             "اتفاق‌های نادر می‌تونن امتیازت رو حسابی بالا یا پایین ببرن. "
+            "هر روز یه ساعت شانس مخفی داریم، عیدهای ایرانی سورپرایز دارن، "
+            "و یکشنبه‌ها عصر قهرمان هفته اعلام می‌شه. "
             "هر {duel_hours} ساعت یه دوئل می‌تونی بکنی و نوبت /play رو نمی‌سوزونه."
         ),
         "duel_usage": (
@@ -148,13 +170,14 @@ def num(n: int, lang: Lang) -> str:
 
 
 def amount(theme: Theme, n: int, lang: Lang, signed: bool = False) -> str:
-    """A score value with its unit, e.g. '120 g', or '+9 g' when signed."""
+    """A score value with its unit, e.g. '120 g', or '+9 g' when signed. No unit, just the number."""
     text = num(n, lang)
     if signed and n > 0:
         text = f"+{text}"
     if lang == "fa":
         text = f"{_LTR_START}{text}{_LTR_END}"
-    return f"{text} {theme.score.unit[lang]}"
+    unit = theme.score.unit[lang].strip()
+    return f"{text} {unit}" if unit else text
 
 
 def duration(left: timedelta, lang: Lang) -> str:
@@ -179,6 +202,7 @@ def play_result(theme: Theme, name: str, r: Played) -> str:
     def build(lang: Lang) -> str:
         s = STRINGS[lang]
         lines = [f"{theme.emoji} <b>{name}</b>"]
+        lines += [s[f"boost_{b}"] for b in r.roll.boosts]
         if r.roll.event == "lost_turn":
             # The hook's message is the whole joke: no "+0" after it.
             lines.append(f"🙏 {escape(r.roll.message[lang])}")
@@ -258,7 +282,7 @@ def top(theme: Theme, b: Board) -> str:
 def help_text(theme: Theme) -> str:
     def build(lang: Lang) -> str:
         body = STRINGS[lang]["help"].format(
-            hours=num(game.DEFAULT_COOLDOWN_HOURS, lang), duel_hours=num(game.DUEL_COOLDOWN_HOURS, lang)
+            every=duration(theme.cooldown, lang), duel_hours=num(game.DUEL_COOLDOWN_HOURS, lang)
         )
         return f"{theme.emoji} <b>{theme.bot_name[lang]}</b>\n{theme.tagline[lang]}\n\n{body}"
 
@@ -343,3 +367,19 @@ def popup(text: str) -> str:
 
 def duel_popup(theme: Theme, key: str) -> str:
     return popup(_join(theme, lambda lang: STRINGS[lang][key]))
+
+
+def weekly_champion(theme: Theme, report: WeeklyReport) -> str:
+    def build(lang: Lang) -> str:
+        s = STRINGS[lang]
+        lines = [f"{theme.emoji} {s['weekly_title']}", ""]
+        for medal, (p, gained) in zip(_MEDALS, report.movers):
+            name = display_name(p.first_name, p.username)
+            lines.append(s["weekly_mover"].format(medal=medal, name=name, gained=amount(theme, gained, lang, signed=True)))
+        if report.leader is not None:
+            name = display_name(report.leader.first_name, report.leader.username)
+            lines += ["", s["weekly_leader"].format(name=name, score=amount(theme, report.leader.score, lang))]
+        lines += ["", s["weekly_footer"]]
+        return "\n".join(lines)
+
+    return _join(theme, build)

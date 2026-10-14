@@ -40,7 +40,7 @@ class Pick(random.Random):
 
 
 async def _seed(store, user_id, score, theme=CAT, played=True):
-    await store.touch_chat(theme.name, CHAT, "Test group", 12)
+    await store.touch_chat(theme.name, CHAT, "Test group")
     await store.ensure_player(theme.name, CHAT, user_id, f"user{user_id}", f"User {user_id}", theme.score.start)
     await store.pool.execute(
         "UPDATE players SET score = $1, last_play_at = $2 WHERE bot = $3 AND chat_id = $4 AND user_id = $5",

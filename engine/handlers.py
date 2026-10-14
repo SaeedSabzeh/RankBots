@@ -34,14 +34,14 @@ _rng = random.SystemRandom()
 GROUPS = F.chat.type.in_({ChatType.GROUP, ChatType.SUPERGROUP})
 COMMANDS = {
     "en": [
-        BotCommand(command="play", description="Roll once (every 12 hours)"),
+        BotCommand(command="play", description="Roll once (every {every})"),
         BotCommand(command="me", description="Your score, rank and streak"),
         BotCommand(command="top", description="Group leaderboard"),
         BotCommand(command="duel", description="Duel someone: /duel @user <stake>"),
         BotCommand(command="help", description="Rules and commands"),
     ],
     "fa": [
-        BotCommand(command="play", description="بازی کن (هر ۱۲ ساعت)"),
+        BotCommand(command="play", description="بازی کن (هر {every})"),
         BotCommand(command="me", description="امتیاز، رتبه و روزهای پشت سر هم"),
         BotCommand(command="top", description="جدول گروه"),
         BotCommand(command="duel", description="دوئل: /duel @user <امتیاز>"),
@@ -72,10 +72,13 @@ class ThemeMiddleware(BaseMiddleware):
 
 
 async def set_commands(bot: Bot, theme: Theme) -> None:
-    primary = theme.langs[0]
-    await bot.set_my_commands(COMMANDS[primary])
+    def commands(lang: str) -> list[BotCommand]:
+        every = texts.duration(theme.cooldown, lang)
+        return [c.model_copy(update={"description": c.description.format(every=every)}) for c in COMMANDS[lang]]
+
+    await bot.set_my_commands(commands(theme.langs[0]))
     for lang in theme.langs:
-        await bot.set_my_commands(COMMANDS[lang], language_code=lang)
+        await bot.set_my_commands(commands(lang), language_code=lang)
 
 
 def _now() -> datetime:

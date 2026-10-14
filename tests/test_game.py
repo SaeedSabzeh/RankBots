@@ -110,9 +110,16 @@ def test_titles_by_tier():
 
 def test_cooldown_left():
     now = datetime(2026, 10, 14, 12, tzinfo=timezone.utc)
-    assert game.cooldown_left(None, 12, now) == timedelta(0)
-    assert game.cooldown_left(now - timedelta(hours=3), 12, now) == timedelta(hours=9)
-    assert game.cooldown_left(now - timedelta(hours=13), 12, now) < timedelta(0)
+    twelve = timedelta(hours=12)
+    assert game.cooldown_left(None, twelve, now) == timedelta(0)
+    assert game.cooldown_left(now - timedelta(hours=3), twelve, now) == timedelta(hours=9)
+    assert game.cooldown_left(now - timedelta(hours=13), twelve, now) < timedelta(0)
+
+
+def test_each_theme_has_its_own_cooldown():
+    themes = load_themes()
+    assert themes["chai"].cooldown == timedelta(minutes=5)
+    assert themes["cat"].cooldown == timedelta(minutes=90)
 
 
 def test_durations_read_naturally():
@@ -151,3 +158,13 @@ def test_duel_winner_moves_in_the_good_direction():
     assert game.duel_winner_delta(CAT, 30) == 30
     # Konkur: winning lowers the rank. Stakes are typed in score units, so no scaling.
     assert game.duel_winner_delta(KONKUR, 30) == -30
+
+
+def test_konkur_rank_has_no_unit_and_moves_in_thousands():
+    from engine.texts import amount
+
+    konkur = load_themes()["konkur"]
+    assert konkur.score.start == 500_000 and not konkur.higher_is_better
+    assert game.score_delta(konkur, 3) == -3000
+    assert amount(konkur, 492_000, "en") == "492,000"
+    assert amount(konkur, -3000, "en", signed=True) == "−3,000"

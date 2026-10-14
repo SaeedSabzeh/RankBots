@@ -42,6 +42,12 @@ class Board:
     my_rank: int | None
 
 
+async def _cooldown(store: Store, theme: Theme, chat_id: int, chat_title: str | None) -> timedelta:
+    """The group's own cooldown if it has one, otherwise the theme's."""
+    minutes = await store.touch_chat(theme.name, chat_id, chat_title)
+    return timedelta(minutes=minutes) if minutes else theme.cooldown
+
+
 async def play(
     store: Store,
     theme: Theme,
@@ -54,43 +60,43 @@ async def play(
     now: datetime,
     rng: random.Random,
 ) -> Played | OnCooldown:
-    cooldown_hours = await store.touch_chat(theme.name, chat_id, chat_title, game.DEFAULT_COOLDOWN_HOURS)
+    cooldown = await _cooldown(store, theme, chat_id, chat_title)
     player = await store.ensure_player(theme.name, chat_id, user_id, username, first_name, theme.score.start)
 
-    left = game.cooldown_left(player.last_play_at, cooldown_hours, now)
+    left = game.cooldown_left(player.last_play_at, cooldown, now)
     if left > timedelta(0):
         return OnCooldown(left)
 
     today = game.local_day(now)
     streak = game.next_streak(player.streak, player.last_play_date, today)
-    roll = game.roll(theme, streak, rng)
+    roll = game.roll(theme, streak, rng, game.active_boosts(theme.name, now))
     delta = game.score_delta(theme, roll.points)
 
     score = await store.try_play(
         theme.name, chat_id, user_id,
-        now=now, today=today, cooldown_hours=cooldown_hours,
+        now=now, today=today, cooldown_minutes=int(cooldown.total_seconds() // 60),
         seen_last_play_at=player.last_play_at, delta=delta, min_score=theme.score.min,
         streak=streak, event=roll.event,
     )
     if score is None:
         # Another /play from the same person won the race.
         fresh = await store.get_player(theme.name, chat_id, user_id)
-        return OnCooldown(game.cooldown_left(fresh.last_play_at, cooldown_hours, now))
+        return OnCooldown(game.cooldown_left(fresh.last_play_at, cooldown, now))
 
     rank = await store.rank_of(theme.name, chat_id, score, theme.higher_is_better)
-    return Played(roll, delta, score, streak, rank, timedelta(hours=cooldown_hours))
+    return Played(roll, delta, score, streak, rank, cooldown)
 
 
 async def stats(store: Store, theme: Theme, *, chat_id: int, user_id: int, now: datetime) -> Stats | None:
     player = await store.get_player(theme.name, chat_id, user_id)
     if player is None or player.last_play_at is None:
         return None
-    cooldown_hours = await store.touch_chat(theme.name, chat_id, None, game.DEFAULT_COOLDOWN_HOURS)
+    cooldown = await _cooldown(store, theme, chat_id, None)
     rank = await store.rank_of(theme.name, chat_id, player.score, theme.higher_is_better)
     players = await store.player_count(theme.name, chat_id)
     streak = game.live_streak(player.streak, player.last_play_date, game.local_day(now))
     player = Player(**{**player.__dict__, "streak": streak})
-    left = game.cooldown_left(player.last_play_at, cooldown_hours, now)
+    left = game.cooldown_left(player.last_play_at, cooldown, now)
     return Stats(player, rank, players, left)
 
 
@@ -160,7 +166,7 @@ def _duel_check(theme: Theme, p: Player, stake: int, now: datetime) -> DuelRefus
     headroom = game.duel_headroom(theme, p.score)
     if headroom < stake:
         return DuelRefused("short", p.first_name, p.username, max_stake=max(headroom, 0))
-    left = game.cooldown_left(p.last_duel_at, game.DUEL_COOLDOWN_HOURS, now)
+    left = game.cooldown_left(p.last_duel_at, timedelta(hours=game.DUEL_COOLDOWN_HOURS), now)
     if left > timedelta(0):
         return DuelRefused("cooldown", p.first_name, p.username, left=left)
     return None
@@ -178,7 +184,7 @@ async def challenge(
     now: datetime,
 ) -> DuelOffer | DuelRefused:
     """Open a duel. `target` is a user from a reply or mention, or a bare @username."""
-    await store.touch_chat(theme.name, chat_id, chat_title, game.DEFAULT_COOLDOWN_HOURS)
+    await store.touch_chat(theme.name, chat_id, chat_title)
     me = await store.ensure_player(
         theme.name, chat_id, challenger.user_id, challenger.username, challenger.first_name, theme.score.start
     )
@@ -255,3 +261,21 @@ async def answer_duel(
         refused = _duel_check(theme, settled.player, duel.stake, now)
         return refused or DuelGone()
     return DuelResult(settled.winner, settled.loser, duel.stake, delta)
+
+
+@dataclass(frozen=True)
+class WeeklyReport:
+    # The week's biggest movers in the good direction, best first, with how far they moved.
+    movers: list[tuple[Player, int]]
+    leader: Player | None
+
+
+async def weekly_report(store: Store, theme: Theme, *, chat_id: int, now: datetime) -> WeeklyReport | None:
+    """Who did best this week in one group, or None if nobody moved forward."""
+    since = now - timedelta(days=7)
+    gains = await store.weekly_gains(theme.name, chat_id, since, theme.higher_is_better)
+    movers = [(p, g) for p, g in gains if (g > 0 if theme.higher_is_better else g < 0)]
+    if not movers:
+        return None
+    leader = await store.top(theme.name, chat_id, theme.higher_is_better, 1)
+    return WeeklyReport(movers, leader[0] if leader else None)

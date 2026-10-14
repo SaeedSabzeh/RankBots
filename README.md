@@ -88,22 +88,46 @@ they don't need Supabase or a real bot token.
 | `engine/service.py` | The `/play`, `/me`, `/top` and `/duel` flows |
 | `engine/texts.py` | Every message, in Farsi and English |
 | `engine/handlers.py` | aiogram handlers; one dispatcher serves every bot |
-| `engine/main.py` | Long-polling runner (local) |
+| `engine/main.py` | Long-polling runner (local); also runs the weekly champion scheduler |
+| `engine/champion.py` | The Sunday weekly champion post |
 | `engine/web.py` | Webhook web service (Render): `POST /tg/<bot>`, `GET /health` |
 | `scripts/set_webhooks.py` | Registers every bot's webhook and command menu with Telegram |
+| `scripts/weekly_champion.py` | Posts the weekly champion once; for a Render cron job |
 | `render.yaml` | Render Blueprint for the web service |
 | `themes/*.yaml` | One file per bot |
 | `migrations/*.sql` | Database schema (idempotent) |
 
 ## Rules (starting values, in `engine/game.py`)
 
-- Cooldown 12 hours per user per group. Base roll −5 to +10. Score never goes below the theme's `min`.
+- Cooldown per user per group, set by each theme's `cooldown_minutes` to match the joke: chai 5 min,
+  taarof 15, mom 30, tahdig 60, cat 90, khastegari 180 (default 12 hours). A group's own
+  `chats.cooldown_minutes` overrides it. Base roll −5 to +10. Score never goes below the theme's `min`.
 - Streak: +1 for each consecutive calendar day (Europe/Rome), reset after a missed day.
   Bonus +1 per 3 streak days, capped at +5.
 - Rare events: 5% of rolls, replacing the base roll with ±20 to ±50 and the theme's event message.
 - Theme hook (optional, one per theme): `kind: lost_turn` with a `chance` and `messages`. When it
   fires the turn is lost: the cooldown is used and the streak counts the day, but the score
   doesn't move. The taarof bot will use it at 10% (see the example at the end of `themes/cat.yaml`).
+
+## Surprises
+
+All in `engine/game.py` (boosts, Persian calendar) and `engine/champion.py`. Active boosts show as a
+banner line at the top of the `/play` reply, and they stack (Yalda in the lucky hour = gains ×4).
+
+- **🍀 Lucky hour:** every day each bot has one secret hour between 9:00 and 22:59 (Rome) when
+  gains are doubled. It's a hash of the bot and the date, so it's the same for every group and
+  different for every bot and day. Losses are never doubled.
+- **Persian holidays,** from the Jalali calendar (the jalaali-js algorithm, checked against
+  known Nowruz dates):
+  - 🔥 Chaharshanbe Suri (the Tuesday before the last Wednesday of Esfand): rare events at 20%.
+  - 🌸 Nowruz (1–12 Farvardin): rare events at 15%.
+  - 🌿 Sizdah Bedar (13 Farvardin): no losses; bad rolls turn into gains and no bad events.
+  - 🍉 Shab-e Yalda (30 Azar): gains doubled.
+- **🏆 Weekly champion:** every Sunday from 20:00 (Rome), each group that played that week gets
+  a post with the week's top three movers (sum of `plays.delta` in the good direction over 7
+  days, rolls and duels) and the overall leader. The polling runner checks every 5 minutes. On
+  Render, run `python scripts/weekly_champion.py` as a cron job on Sundays at 18:05 and 19:05 UTC
+  (covers summer and winter time). `chats.champion_posted_on` makes sure a group is posted once.
 
 ## Duels
 

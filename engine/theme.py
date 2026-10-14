@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+from datetime import timedelta
 from typing import Literal
 
 import yaml
@@ -67,6 +68,8 @@ class Theme(_Strict):
     name: str
     emoji: str
     language: Literal["fa", "en", "both"]
+    # Time between two /play turns, chosen to match the theme (a glass of tea vs. a cat nap).
+    cooldown_minutes: int = Field(12 * 60, ge=1, le=7 * 24 * 60)
     bot_name: Text
     tagline: Text
     leaderboard_title: Text
@@ -91,6 +94,10 @@ class Theme(_Strict):
         return ("fa", "en") if self.language == "both" else (self.language,)
 
     @property
+    def cooldown(self) -> timedelta:
+        return timedelta(minutes=self.cooldown_minutes)
+
+    @property
     def higher_is_better(self) -> bool:
         return self.score.direction == "higher"
 
@@ -112,8 +119,11 @@ class Theme(_Strict):
             ("tagline", self.tagline),
             ("leaderboard_title", self.leaderboard_title),
             ("score.name", self.score.name),
-            ("score.unit", self.score.unit),
         ]
+        # The unit may be empty (a konkur rank is just a number), but every language must list it.
+        for lang in self.langs:
+            if lang not in self.score.unit:
+                raise ValueError(f"score.unit is missing its '{lang}' text")
         for field in ("gains", "losses", "neutral"):
             texts += [(f"{field}[{i}]", t) for i, t in enumerate(getattr(self, field))]
         texts += [(f"events.good[{i}]", t) for i, t in enumerate(self.events.good)]

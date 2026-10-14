@@ -6,6 +6,8 @@ name: chai
 emoji: "🫖"
 # fa, en, or both. "both" sends every message in Farsi and then English.
 language: fa
+# Time between two /play turns. One glass of tea: 5 minutes between turns.
+cooldown_minutes: 5
 
 bot_name:
   en: Chai Bot
@@ -28,25 +30,76 @@ score:
 gains:
   - { en: "You had tea with breakfast, lunch and dinner", fa: با صبحونه و ناهار و شام چای خوردی }
   - { en: You drank a glass with a sugar cube in your mouth, fa: یه استکان چای قند به دهن خوردی }
-  - { en: 'Someone asked "shall I make tea?" and you said yes before they finished', fa: یکی گفت «چای بذارم؟» هنوز حرفش تموم نشده بود گفتی آره }
+  - { en: 'Someone asked "shall I make tea?" and you said yes before they finished', fa: یکی گفت «چای بذارم؟» و تو هنوز حرفش تموم نشده گفتی آره }
   - { en: You had tea at the neighbors' too, fa: خونه‌ی همسایه هم چای خوردی }
   - { en: "You drank it so hot you burned your tongue, no regrets", fa: اون‌قدر داغ خوردی که زبونت سوخت، ولی ارزشش رو داشت }
   - { en: You had a glass with saffron nabat, fa: یه استکان چای با نبات زعفرونی خوردی }
   - { en: You brewed a fresh pot just for yourself, fa: یه قوری تازه فقط برای خودت دم کردی }
   - { en: You had tea after tea at a mehmooni, fa: تو مهمونی چای پشت چای خوردی }
+  - { en: 'You had tea with dates and it was heaven', fa: با خرما چای خوردی، بهشت بود }
+  - { en: The office tea man brought you an extra glass, fa: آبدارچی اداره یه استکان اضافه برات آورد }
+  - { en: 'Scorching summer and you drank it boiling hot, because "hot tea cools you down"', fa: وسط گرمای تابستون چای داغ‌داغ خوردی، چون «چای داغ آدم رو خنک می‌کنه» }
+  - { en: You sat in a traditional tea-house and ordered a second pot, fa: تو قهوه‌خونه‌ی سنتی نشستی و قوری دوم رو هم سفارش دادی }
+  - { en: 'You had a strong tea, the color of pigeon blood', fa: یه چای پررنگ و خوش‌رنگ خوردی، عین خون کبوتر }
+  - { en: You let it brew on the samovar for exactly the right time, fa: چای رو گذاشتی رو سماور تا درست به اندازه دم بکشه }
+  - { en: Mom poured you a glass the moment you walked in, fa: تا پات رو گذاشتی تو خونه مامان برات چای ریخت }
+  - { en: You had tea with a piece of sohan, fa: چای رو با یه تیکه سوهان خوردی و حسابی چسبید }
+  - { en: You dipped a biscuit in your tea and it didn't fall in, fa: بیسکویت رو زدی تو چای و نیفتاد تو استکان }
+  - { en: You drank a glass in every single office meeting, fa: تو هر جلسه‌ی اداره یه استکان چای خوردی }
+  - { en: You poured it into the saucer to cool it like Grandpa does, fa: مثل آقاجون چای رو ریختی تو نعلبکی که خنک شه }
+  - { en: 'After chelo kabab, tea was mandatory', fa: بعد از چلوکباب، چای واجب بود }
+  - { en: You added cardamom and the whole house smelled amazing, fa: یه کم هل ریختی و بوش کل خونه رو برداشت }
+  - { en: You got the very first glass of the fresh pot, fa: استکان اولِ قوری تازه‌دم به تو رسید }
+  - { en: 'Your aunt said "just one more, it''s nothing" and you gave in', fa: خاله گفت «یه دونه دیگه بخور، چیزی نیست» و قبول کردی }
+  - { en: You came back from the north with a sack of Lahijan tea, fa: از سفر شمال یه کیسه چای لاهیجان سوغاتی آوردی }
+  - { en: At the khastegari you were the only one who finished their tea, fa: تو مراسم خواستگاری تنها کسی بودی که چاییش رو تا ته خورد }
+  - { en: You studied all night with a thermos of tea for company, fa: تا صبح درس خوندی و یه فلاسک چای همدمت بود }
+  - { en: On a road trip you pulled over for tea from the thermos, fa: تو سفر جاده‌ای کنار جاده وایسادی و از فلاسک چای خوردی }
+  - { en: 'At a picnic you made smoky fire tea, the real deal', fa: تو پیک‌نیک چای آتیشی دم کردی، با همون بوی دود }
+  - { en: You watched football and drank a glass for every goal, fa: فوتبال دیدی و برای هر گل یه استکان چای خوردی }
+  - { en: You drank from a slim-waisted estekan and it tasted twice as good, fa: تو استکان کمرباریک خوردی و دوبرابر مزه داد }
+  - { en: You had a glass on the balcony watching the rain, fa: تو بالکن بارون رو تماشا کردی و چای خوردی }
+  - { en: In the bazaar the shopkeeper brought you tea while you haggled, fa: تو بازار مغازه‌دار وسط چونه‌زدن برات چای آورد }
+  - { en: You poured from up high and didn't spill a drop, fa: چای رو از بالا ریختی و یه قطره هم بیرون نریخت }
+  - { en: The tea-house guy round the corner knows your order by heart, fa: آقای قهوه‌خونه‌ی سر کوچه دیگه سفارشت رو از حفظه }
+  - { en: You stirred your tea so loudly the whole office got cravings, fa: اون‌قدر با سروصدا چاییت رو هم زدی که کل اداره هوس چای کردن }
 
 losses:
   - { en: Someone gave you a teabag. You're in mourning, fa: بهت چای کیسه‌ای دادن. عزای عمومی }
   - { en: You talked so much your tea went cold, fa: اون‌قدر حرف زدی که چاییت یخ کرد }
-  - { en: They served you tea that hadn't brewed yet, fa: بهت چای دم‌نکشیده دادن }
-  - { en: You drank coffee for a whole day. Traitor, fa: یه روز کامل قهوه خوردی. خائن! }
+  - { en: The boiling water cracked your glass and the tea ran down your hand, fa: استکان از آب جوش ترک خورد و چای ریخت رو دستت }
+  - { en: You drank coffee for a whole day. Traitor, fa: یه روز کامل قهوه خوردی. خائن }
   - { en: The tea ran out at home, fa: چای خونه تموم شد }
   - { en: The samovar broke, fa: سماور خراب شد }
   - { en: The doctor said to cut down on tea, fa: دکتر گفت چایی رو کم کن }
+  - { en: No strainer. You got a mouthful of tea leaves, fa: صافی نبود و یه دهن تفاله‌ی چای خوردی }
+  - { en: They served you tea so weak it was basically water, fa: بهت چای کم‌رنگ دادن، عین آب‌زیپو }
+  - { en: You drank it so strong you couldn't sleep all night, fa: اون‌قدر پررنگ خوردی که تا صبح خوابت نبرد }
+  - { en: 'You stepped away for a second and someone drank your tea', fa: یه لحظه رفتی، یکی چاییت رو خورد }
+  - { en: The tea had sat on the samovar since morning and turned bitter, fa: چای از صبح رو سماور مونده بود و تلخ شده بود }
+  - { en: You bit the sugar cube too hard and your tooth hurt, fa: قند رو محکم گاز زدی و دندونت درد گرفت }
+  - { en: The office tea man is on leave, fa: آبدارچی اداره مرخصیه }
+  - { en: You knocked your glass over on the carpet. Mom's look said it all, fa: استکان رو روی فرش برگردوندی. نگاه مامان همه‌چی رو گفت }
+  - { en: By the time you arrived the guests had finished the whole pot, fa: تا تو برسی مهمون‌ها کل قوری رو خورده بودن }
+  - { en: You forgot the kettle on the stove and it boiled dry, fa: کتری رو گذاشتی و یادت رفت، آبش ته کشید }
+  - { en: Someone offered you iced tea. With a straw, fa: بهت چای سرد با نی تعارف کردن }
+  - { en: You brewed it with tap water and it tasted of chlorine, fa: با آب لوله‌کشی دم کردی و بوی کلر داد }
+  - { en: 'You bought cheap imported tea and it tasted like sawdust', fa: چای خارجی ارزون خریدی، مزه‌ی خاک‌اره می‌داد }
+  - { en: Someone said green tea is healthier and made you drink it, fa: یکی گفت چای سبز سالم‌تره و به زور بهت داد }
+  - { en: A fly fell into your tea, fa: یه مگس افتاد تو چاییت }
+  - { en: At the mehmooni you were too shy to ask for a second glass, fa: تو مهمونی از رودربایستی روت نشد استکان دوم رو بخوای }
+  - { en: 'The host said "I''ll put the tea on" and never did', fa: صاحب‌خونه گفت «الان چای می‌ذارم» و هیچ‌وقت نذاشت }
+  - { en: Your dentist saw your tea-stained teeth and lectured you for ages, fa: دندون‌پزشک رنگ دندون‌هات رو دید و کلی برات سخنرانی کرد }
 
 neutral:
   - { en: You poured a glass and forgot it on the windowsill, fa: یه استکان ریختی و لب پنجره یادت رفت }
   - { en: The phone rang and you only drank half, fa: تلفن زنگ زد و فقط نصفش رو خوردی }
+  - { en: You stared at the samovar waiting for it to boil, fa: زل زدی به سماور تا جوش بیاد }
+  - { en: You couldn't choose between nabat and sugar cubes, fa: بین نبات و قند نتونستی انتخاب کنی }
+  - { en: You washed all the estekans. Nobody said thank you, fa: همه‌ی استکان‌ها رو شستی. هیچ‌کس تشکر نکرد }
+  - { en: 'You were about to drink, then remembered you just had one', fa: داشتی می‌خوردی، یادت افتاد همین الان یکی خوردی }
+  - { en: You blew on it for so long it went lukewarm, fa: اون‌قدر فوتش کردی که ولرم شد }
+  - { en: You argued with your cousin about Lahijan versus imported tea. No winner, fa: با پسرخاله سر چای لاهیجان یا خارجی بحث کردی. برنده نداشت }
 
 # Rare events (5% of rolls) replace the normal roll with a big swing.
 events:
@@ -54,10 +107,24 @@ events:
     - { en: Grandma refilled your glass without asking. Again. And again, fa: مامان‌بزرگ بی‌اینکه بپرسه دوباره چاییت رو پر کرد. و دوباره. و دوباره }
     - { en: You found the good Lahijan tea at the back of the cupboard, fa: چای لاهیجان اعلا رو ته کابینت پیدا کردی }
     - { en: At the family gathering a whole samovar was all yours, fa: تو دورهمی فامیلی یه سماور کامل مال خودت شد }
+    - { en: The old tea-house owner took a liking to you and kept the pots coming all night, fa: صاحب قهوه‌خونه ازت خوشش اومد و تا آخر شب قوری پشت قوری آورد }
+    - { en: You visited the tea gardens of Lahijan and drank it straight from the source, fa: رفتی باغ‌های چای لاهیجان و چای رو سر منبع خوردی }
+    - { en: The boss ordered tea for the whole office and you got the share of everyone who said no, fa: رئیس برای کل اداره چای سفارش داد و سهم همه‌ی اونایی که نخواستن به تو رسید }
+    - { en: The mehmooni went on till dawn and the samovar never once went cold, fa: مهمونی تا خود صبح طول کشید و سماور یه لحظه هم خاموش نشد }
+    - { en: The whole family officially named you the tea-maker, fa: کل فامیل رسماً تو رو مسئول چای‌دم‌کردن اعلام کردن }
+    - { en: During a blackout the neighbor showed up with a hot charcoal samovar, fa: وسط خاموشی همسایه با یه سماور ذغالی داغ اومد درِ خونه }
+    - { en: Grandma finally taught you her secret brewing trick, fa: مامان‌بزرگ بالاخره فوت‌وفن دم‌کردن چاییش رو بهت یاد داد }
   bad:
     - { en: You dropped the whole tea tray in front of the guests, fa: سینی چای رو جلوی مهمون‌ها برگردوندی }
     - { en: Someone put milk in your tea, fa: یکی تو چاییت شیر ریخت }
     - { en: The power went out and there was no tea all day, fa: برق رفت و کل روز چای نبود }
+    - { en: The samovar tap snapped and flooded the kitchen, fa: شیر سماور شکست و آشپزخونه رو آب برداشت }
+    - { en: You broke Grandma's favorite slim-waisted estekan, fa: استکان کمرباریک محبوب مامان‌بزرگ رو شکستی }
+    - { en: The whole household switched to coffee and called it modern, fa: کل خونه رفتن سراغ قهوه و گفتن این کلاسش بالاتره }
+    - { en: Your cousin borrowed your samovar and never gave it back, fa: پسرعمو سماورت رو قرض گرفت و دیگه پس نداد }
+    - { en: At the mehmooni you were served last. And it was cold, fa: تو مهمونی آخر از همه بهت چای دادن، اونم یخ‌کرده }
+    - { en: You put salt in your tea instead of sugar and took a big gulp, fa: جای قند نمک ریختی تو چای و یه قلپ گنده زدی }
+    - { en: Someone made tea in the microwave, fa: یکی چای رو تو مایکروویو درست کرد }
 
 # Each title is reached once the score is at least `at`.
 titles:

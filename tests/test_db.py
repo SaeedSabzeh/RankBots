@@ -7,7 +7,9 @@ from datetime import datetime, timedelta, timezone
 from engine import service, texts
 from engine.theme import Theme, load_themes
 
-CAT = load_themes()["cat"]
+# These tests are written for a 12-hour cooldown; the real cat naps for 1.5 hours.
+CAT = load_themes()["cat"].model_copy(update={"cooldown_minutes": 12 * 60})
+CHAI = load_themes()["chai"]
 TAAROF = Theme.model_validate({
     **CAT.model_dump(),
     "name": "taarof",
@@ -79,7 +81,7 @@ async def test_score_floor_is_enforced_in_sql(store):
     p = await store.get_player("cat", CHAT, 1)
     score = await store.try_play(
         "cat", CHAT, 1,
-        now=T0 + timedelta(hours=13), today=T0.date(), cooldown_hours=12,
+        now=T0 + timedelta(hours=13), today=T0.date(), cooldown_minutes=12 * 60,
         seen_last_play_at=p.last_play_at, delta=-10_000, min_score=0, streak=0, event=None,
     )
     assert score == 0
@@ -96,7 +98,7 @@ async def test_scores_are_per_group_and_per_bot(store):
 
 async def test_leaderboard_and_my_rank(store):
     for user_id, score in [(1, 50), (2, 120), (3, 10), (4, 120)]:
-        await store.touch_chat("cat", CHAT, "g", 12)
+        await store.touch_chat("cat", CHAT, "g")
         await store.ensure_player("cat", CHAT, user_id, None, f"U{user_id}", 0)
         await store.pool.execute(
             "UPDATE players SET score = $1, last_play_at = $2 WHERE user_id = $3", score, T0, user_id
@@ -147,3 +149,18 @@ async def test_taarof_lost_turn_uses_the_cooldown_but_not_the_score(store):
     out = texts.play_result(TAAROF.model_copy(update={"language": "both"}), "Simin", r)
     assert "after you" in out and "نوبتت پرید" in out
     assert "+" not in out.split("\n")[1]  # no "+0 g" after the joke
+
+
+async def test_chai_cooldown_is_five_minutes(store):
+    assert isinstance(await _play(store, theme=CHAI), service.Played)
+    assert await _play(store, theme=CHAI, now=T0 + timedelta(minutes=4)) == service.OnCooldown(timedelta(minutes=1))
+    played = await _play(store, theme=CHAI, now=T0 + timedelta(minutes=5))
+    assert isinstance(played, service.Played) and played.cooldown == timedelta(minutes=5)
+    assert "۵ دقیقه" in texts.play_result(CHAI, "Simin", played)
+
+
+async def test_a_group_cooldown_overrides_the_theme(store):
+    await store.touch_chat("chai", CHAT, "g")
+    await store.pool.execute("UPDATE chats SET cooldown_minutes = 30 WHERE bot = 'chai'")
+    await _play(store, theme=CHAI)
+    assert await _play(store, theme=CHAI, now=T0 + timedelta(minutes=10)) == service.OnCooldown(timedelta(minutes=20))

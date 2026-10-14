@@ -6,6 +6,8 @@ name: cat
 emoji: "🐱"
 # fa, en, or both. "both" sends every message in Farsi and then English.
 language: fa
+# Time between two /play turns. A cat nap: 1.5 hours between turns.
+cooldown_minutes: 90
 
 bot_name:
   en: Cat Bot
@@ -35,6 +37,23 @@ gains:
   - { en: Your cat licked the yogurt bowl clean, fa: گربه‌ت کاسه‌ی ماست رو تا ته لیس زد }
   - { en: Your cat swiped a piece of chicken off the sofreh, fa: گربه‌ت یه تیکه مرغ از سر سفره کش رفت }
   - { en: Your cat's winter coat came in, fa: پشم زمستونی گربه‌ت دراومد }
+  - { en: Your cat waited by the stove and got the first kotlet, fa: گربه‌ت دم گاز کشیک داد تا اولین کتلت مال خودش شد }
+  - { en: Your cat slept on the radiator all night, fa: گربه‌ت کل شب روی شوفاژ خوابید }
+  - { en: Grandpa shared his bread and cheese with your cat, fa: بابابزرگ لقمه‌ی نون‌وپنیرش رو با گربه‌ت نصف کرد }
+  - { en: Your cat cleaned out the tuna can, fa: گربه‌ت ته قوطی تن ماهی رو درآورد }
+  - { en: 'Your uncle brought fish back from the north, and your cat got the head', fa: دایی از شمال ماهی آورد و سر ماهی رسید به گربه‌ت }
+  - { en: Your cat crawled under the korsi and puffed right up, fa: گربه‌ت رفت زیر کرسی و حسابی پف کرد }
+  - { en: Your cat jumped into the fridge the second you opened it, fa: تا در یخچال رو باز کردی گربه‌ت پرید توش }
+  - { en: 'Mom said "this cat is too skinny" and doubled its food', fa: مامانت گفت «این گربه چقدر لاغره» و غذاش رو دوبرابر کرد }
+  - { en: Your cat ate the breakfast sarshir in one go, fa: گربه‌ت سرشیرِ صبحونه رو یه‌جا خورد }
+  - { en: Your cat napped in a basket of warm clean laundry, fa: گربه‌ت توی سبد لباس‌های گرم و تازه‌شسته چرت زد }
+  - { en: Your cat caught a moth and is very proud of itself, fa: گربه‌ت یه پروانه گرفت و کلی به خودش می‌نازه }
+  - { en: Guests came over and everyone petted your cat, fa: مهمون اومد و همه گربه‌ت رو ناز کردن }
+  - { en: Your cat found a cardboard box and wants nothing more from life, fa: گربه‌ت یه کارتن پیدا کرد و دیگه هیچی از زندگی نمی‌خواد }
+  - { en: Your cat sat on your warm laptop all afternoon, fa: گربه‌ت کل بعدازظهر روی لپ‌تاپ داغت نشست }
+  - { en: The neighbor's kid passed your cat some pofak through the railing, fa: بچه‌ی همسایه از لای نرده به گربه‌ت پفک داد }
+  - { en: Your cat kneaded the blanket for an hour and then slept on it, fa: گربه‌ت یه ساعت پتو رو ورز داد و آخرش روش خوابید }
+  - { en: Grandma knitted your cat a tiny scarf, fa: مامان‌بزرگ برای گربه‌ت یه شال‌گردن کوچولو بافت }
 
 losses:
   - { en: Your cat got caught in the rain, fa: گربه‌ت زیر بارون موند }
@@ -44,10 +63,26 @@ losses:
   - { en: Your cat shed all over the sofa, fa: گربه‌ت کل پشمش رو ریخت روی مبل }
   - { en: Your cat got a summer haircut, fa: موی گربه‌ت رو تابستونی زدن }
   - { en: The neighbor's cat ate your cat's food, fa: گربه‌ی همسایه غذای گربه‌ت رو خورد }
+  - { en: Your cat got its head stuck in the jam jar, fa: سر گربه‌ت توی شیشه‌ی مربا گیر کرد }
+  - { en: Nowruz spring cleaning. The vacuum sucked up your cat's fluff, fa: خونه‌تکونی عید بود؛ جاروبرقی پشم گربه‌ت رو کشید }
+  - { en: Your cat stuck its face in the pot of ash soup and singed its whiskers, fa: گربه‌ت سرش رو کرد تو قابلمه‌ی آش و سبیلش سوخت }
+  - { en: Your cat climbed the tree in the yard and stayed up there all night, fa: گربه‌ت رفت بالای درخت حیاط و تا صبح پایین نیومد }
+  - { en: Your cat ate the houseplant and threw up on grandma's rug, fa: گربه‌ت گلدون رو خورد و روی فرش دستباف مامان‌بزرگ بالا آورد }
+  - { en: It was Chaharshanbe Suri and the firecrackers kept your cat under the bed all night, fa: چهارشنبه‌سوری بود و گربه‌ت از صدای ترقه تا صبح زیر تخت لرزید }
+  - { en: Your cat jumped for the counter and missed, fa: گربه‌ت پرید روی اپن و نرسید }
+  - { en: You stepped on your cat's tail, fa: پات رفت روی دم گربه‌ت }
+  - { en: Your cat spent the night on the roof and caught a cold, fa: گربه‌ت شب رو پشت‌بوم موند و سرما خورد }
+  - { en: Mom found cat hair on the sofreh and banned your cat from the kitchen, fa: مامانت روی سفره پشم گربه دید و گربه‌ت رو از آشپزخونه بیرون کرد }
+  - { en: Your cat picked a fight with a plastic bag and lost, fa: گربه‌ت با یه کیسه فریزر دعوا کرد و باخت }
+  - { en: Your cat watched the pigeons from the window so long it forgot to eat, fa: گربه‌ت از بس از پشت پنجره کفترها رو دید زد یادش رفت غذا بخوره }
+  - { en: You drove up north and your cat was carsick the whole Chalus road, fa: رفتید شمال و گربه‌ت کل جاده‌ی چالوس حالش به هم خورد }
 
 neutral:
   - { en: Your cat stared at the wall all day, fa: گربه‌ت کل روز به دیوار زل زد }
   - { en: Your cat knocked a glass off the table and felt nothing, fa: گربه‌ت یه لیوان رو از روی میز انداخت و هیچ عذاب وجدانی نداشت }
+  - { en: Your cat sat in the sabzi basket and gave everyone side-eye, fa: گربه‌ت نشست تو سبد سبزی و به همه چپ‌چپ نگاه کرد }
+  - { en: Your cat sprinted through the whole house at midnight for no reason, fa: گربه‌ت نصفه‌شب بی‌دلیل کل خونه رو دوید }
+  - { en: Your cat watched the washing machine spin for an hour, fa: گربه‌ت یه ساعت چرخیدن ماشین لباسشویی رو تماشا کرد }
 
 # Rare events (5% of rolls) replace the normal roll with a big swing.
 events:
@@ -55,10 +90,20 @@ events:
     - { en: Your cat stole grandma's tahdig, fa: گربه‌ت ته‌دیگ مامان‌بزرگ رو دزدید }
     - { en: Your cat got into the Nowruz sweets, fa: گربه‌ت افتاد به جون شیرینی‌های عید }
     - { en: The whole street voted your cat Cat of the Month, fa: کل کوچه گربه‌ت رو گربه‌ی ماه انتخاب کردن }
+    - { en: Your cat ate every piece of meat out of the ghormeh sabzi, fa: گربه‌ت همه‌ی گوشت‌های قورمه‌سبزی رو از توی قابلمه خورد }
+    - { en: Your cat's video went viral on Instagram, fa: ویدیوی گربه‌ت تو اینستاگرام ترکوند }
+    - { en: Your cat sneaked into a wedding and ate half the jujeh kabab, fa: گربه‌ت رفت تو تالار عروسی و نصف جوجه‌کباب‌ها رو خورد }
+    - { en: The corner butcher officially adopted your cat, fa: قصاب سر کوچه رسماً گربه‌ت رو به فرزندی قبول کرد }
+    - { en: On Yalda night the whole family kept feeding your cat till morning, fa: شب یلدا کل فامیل تا صبح به گربه‌ت لقمه دادن }
   bad:
     - { en: Your cat fell into the hoz, fa: گربه‌ت افتاد تو حوض }
     - { en: The vet shaved your cat. All of it, fa: دامپزشک گربه‌ت رو از ته تراشید. کاملش رو }
     - { en: Your cat saw a cucumber and lost half its fluff from fright, fa: گربه‌ت خیار دید و از ترس نصف پشمش ریخت }
+    - { en: Your cat got locked in the storage room all weekend, fa: گربه‌ت کل آخر هفته تو انباری زندونی شد }
+    - { en: Your cat fought the big tomcat of the alley and left a tuft of fur behind, fa: گربه‌ت با گربه‌ی گنده‌لات محل دعوا کرد و یه دسته پشمش جا موند }
+    - { en: You moved house and your cat shed from the stress, fa: اسباب‌کشی کردید و گربه‌ت از استرس پشم ریخت }
+    - { en: Your cat fell into grandma's torshi jar, fa: گربه‌ت افتاد تو خمره‌ی ترشی مامان‌بزرگ }
+    - { en: Your cat met a huge dog in the park and ran all the way home, fa: گربه‌ت تو پارک با یه سگ گنده روبه‌رو شد و یه‌نفس تا خونه دوید }
 
 # Cat outfits as titles. Each one is reached once the score is at least `at`.
 titles:

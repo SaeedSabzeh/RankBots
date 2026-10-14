@@ -1,0 +1,125 @@
+# Mom approval bot: grow your mom's approval. The leaderboard is "Favorite child".
+# Messages are written without numbers; the engine adds ": +9 pts" after them.
+# Farsi copy is a first draft for Simin to review.
+
+name: mom
+emoji: "💖"
+# fa, en, or both. "both" sends every message in Farsi and then English.
+language: fa
+# Time between two /play turns. Mom's mood can change in half an hour.
+cooldown_minutes: 30
+
+bot_name:
+  en: Mom Approval Bot
+  fa: ربات تأیید مامان
+tagline:
+  en: Become mom's favorite child. Your siblings are watching.
+  fa: بچه‌ی محبوب مامان شو. خواهر برادرات دارن نگاه می‌کنن.
+leaderboard_title:
+  en: Favorite child
+  fa: بچه‌ی محبوب مامان
+
+score:
+  name: { en: Mom's approval, fa: تأیید مامان }
+  unit: { en: pts, fa: امتیاز }
+  start: 0
+  direction: higher
+  scale: 1
+  min: 0
+
+gains:
+  - { en: You called just to ask how she's doing, fa: فقط زنگ زدی حالش رو بپرسی }
+  - { en: You finished your plate and asked for seconds, fa: کل غذات رو خوردی و دوباره کشیدی }
+  - { en: You wore the jacket she told you to wear, fa: همون کاپشنی که گفت رو پوشیدی }
+  - { en: You finally brought back her Tupperware, fa: بالاخره ظرف‌هاش رو پس آوردی }
+  - { en: 'You said "you were right"', fa: گفتی «حق با تو بود» }
+  - { en: You washed the dishes without being asked, fa: بی‌اینکه بگه ظرف‌ها رو شستی }
+  - { en: You sent her a good-morning flower picture, fa: براش عکس گل صبح‌بخیر فرستادی }
+  - { en: Her friends said what a polite kid you are, fa: دوستاش گفتن چه بچه‌ی مؤدبی داری }
+  - { en: You sat and cleaned sabzi with her for an hour, fa: یه ساعت نشستی باهاش سبزی پاک کردی }
+  - { en: You took the trash out the first time she asked, fa: همون بار اول که گفت، آشغال‌ها رو بردی دم در }
+  - { en: You called her back the second you saw her missed call, fa: تا دیدی زنگ زده سریع بهش زنگ زدی }
+  - { en: You tidied the whole house before the guests arrived, fa: قبل از اومدن مهمون‌ها کل خونه رو مرتب کردی }
+  - { en: You came home with hot fresh sangak bread, fa: با نون سنگک داغ اومدی خونه }
+  - { en: You ate yesterday's leftovers without complaining, fa: غذای مونده‌ی دیروز رو بی‌غر خوردی }
+  - { en: You told her her food beats any restaurant, fa: گفتی غذاش از هر رستورانی خوشمزه‌تره }
+  - { en: You taught her how to send a voice message, fa: یادش دادی چطوری ویس بفرسته }
+  - { en: You went to bed early like she told you to, fa: همون‌طور که گفت زود خوابیدی }
+  - { en: You ate every slice of the fruit she peeled for you, fa: میوه‌ای که برات پوست کنده بود رو تا ته خوردی }
+  - { en: You stood up when the elders walked in, fa: وقتی بزرگ‌ترها اومدن جلوشون پا شدی }
+  - { en: You bought her flowers for no reason at all, fa: بی‌مناسبت براش گل خریدی }
+  - { en: You said hello to every single auntie at the party, fa: تو مهمونی با تک‌تک خاله‌ها و عمه‌ها سلام‌علیک کردی }
+  - { en: You lined the shoes up neatly by the door, fa: کفش‌ها رو دم در مرتب جفت کردی }
+  - { en: You turned off the lights in the empty rooms, fa: چراغ اتاق‌های خالی رو خاموش کردی }
+  - { en: 'You took all the food she packed and didn''t say "it''s too much"', fa: همه‌ی غذایی که برات گذاشته بود ببری رو بردی و نگفتی «زیاده» }
+  - { en: You asked if her back pain is any better, fa: پرسیدی کمردردش بهتر شده یا نه }
+  - { en: You listened to the whole saga about the upstairs neighbors, fa: کل ماجرای همسایه‌ی طبقه‌ی بالا رو تا آخر گوش دادی }
+  - { en: You hung the laundry out to dry, fa: لباس‌ها رو پهن کردی }
+  - { en: You did the grocery run and forgot nothing, fa: رفتی خرید و هیچی یادت نرفت }
+  - { en: You brought home a good report card, fa: کارنامه‌ی خوب آوردی خونه }
+  - { en: You spread the sofreh before she even called you, fa: قبل از اینکه صدات کنه سفره رو انداختی }
+  - { en: You got a haircut before the family party, fa: قبل از مهمونی فامیلی رفتی موهات رو کوتاه کردی }
+
+losses:
+  - { en: 'You said "I''m not hungry"', fa: گفتی «گشنه‌م نیست» }
+  - { en: Your phone was on silent and you missed her calls, fa: گوشیت سایلنت بود و جواب زنگ‌هاش رو ندادی }
+  - { en: You went out with wet hair, fa: با موی خیس رفتی بیرون }
+  - { en: You walked around the house without socks, fa: تو خونه بی‌جوراب راه رفتی }
+  - { en: 'You said "coming!" for the third time', fa: برای بار سوم گفتی «الان میام!» }
+  - { en: Your cousin got a better grade, fa: بچه‌ی خاله‌ت نمره‌ی بهتری گرفت }
+  - { en: You forgot to take the meat out of the freezer, fa: یادت رفت گوشت رو از فریزر دربیاری }
+  - { en: You left food on your plate, fa: ته بشقابت غذا جا گذاشتی }
+  - { en: 'You opened the fridge and said "there''s nothing to eat"', fa: در یخچال رو باز کردی و گفتی «هیچی نداریم بخوریم» }
+  - { en: 'You left your dirty dishes in the sink and heard "am I your servant?"', fa: ظرف کثیفت رو ول کردی تو سینک و شنیدی «مگه من نوکرتم؟» }
+  - { en: You left her message on seen in the family group chat, fa: پیامش تو گروه فامیل رو سین کردی و جواب ندادی }
+  - { en: Her friend's son just became a doctor, fa: پسر دوستش دکتر شد }
+  - { en: You gave her container back empty, fa: ظرفش رو خالی پس دادی }
+  - { en: You slept until noon, fa: تا لنگ ظهر خوابیدی }
+  - { en: You threw your clothes on the chair again, fa: باز لباس‌هات رو انداختی روی صندلی }
+  - { en: You ate chips right before dinner, fa: درست قبل شام چیپس خوردی }
+  - { en: 'You said "I''ll do it later"', fa: گفتی «بعداً انجامش می‌دم» }
+  - { en: You came home late and didn't let her know, fa: دیر اومدی خونه و خبر ندادی }
+  - { en: You were glued to your phone while the guests were over, fa: جلوی مهمون‌ها سرت تو گوشی بود }
+  - { en: You forgot it was trash night, fa: یادت رفت امشب شب بردن آشغال‌هاست }
+  - { en: You said her rice was a little salty, fa: گفتی برنجش یه کم شوره }
+  - { en: You drank ice water right after eating, fa: درست بعد غذا آب یخ خوردی }
+  - { en: You walked across the floor she had just mopped, fa: روی زمینی که تازه طی کشیده بود راه رفتی }
+
+neutral:
+  - { en: 'You said "whatever you think is best"', fa: گفتی «هرچی خودت صلاح می‌دونی» }
+  - { en: 'She asked "have you eaten?" and you said yes', fa: پرسید «غذا خوردی؟» گفتی آره }
+  - { en: She forwarded you an article about the dangers of phones, fa: برات یه مطلب درباره‌ی ضررهای گوشی فوروارد کرد }
+  - { en: She asked when you're getting married. Again, fa: دوباره پرسید کِی ازدواج می‌کنی }
+  - { en: 'She said "do whatever you want" in that tone', fa: با اون لحن همیشگی گفت «هرکاری دلت می‌خواد بکن» }
+  - { en: She asked if you were cold. You weren't. She brought a blanket anyway, fa: پرسید «سردته؟»، گفتی نه، باز هم برات پتو آورد }
+
+# Rare events (5% of rolls) replace the normal roll with a big swing.
+events:
+  good:
+    - { en: She bragged about you in the family group chat, fa: تو گروه فامیل کلی ازت تعریف کرد }
+    - { en: You fixed the TV remote she'd been fighting with all week, fa: کنترل تلویزیونی که یه هفته باهاش کلنجار می‌رفت رو درست کردی }
+    - { en: You remembered her birthday without a reminder, fa: تولدش رو بدون یادآوری یادت بود }
+    - { en: You brought someone home to meet her and she adored them instantly, fa: یکی رو برای آشنایی آوردی خونه و مامان همون لحظه عاشقش شد }
+    - { en: You got into medical school and she told the whole building, fa: پزشکی قبول شدی و مامان به کل ساختمون خبر داد }
+    - { en: You took her on a surprise trip to the north, fa: سورپرایزی بردیش شمال }
+    - { en: You cooked a whole ghormeh sabzi and she asked for your recipe, fa: یه قورمه‌سبزی کامل پختی و مامان ازت دستور پختش رو خواست }
+    - { en: Grandma told everyone what a great kid she raised, fa: مامان‌بزرگ جلوی همه گفت عجب بچه‌ای بزرگ کرده }
+  bad:
+    - { en: The slipper flew, fa: دمپایی پرواز کرد }
+    - { en: She heard the news from someone else first, fa: خبر رو اول از یکی دیگه شنید }
+    - { en: 'You said "but my friend''s mom lets them"', fa: گفتی «ولی مامانِ دوستم اجازه می‌ده» }
+    - { en: You broke one of the good guest plates from her dowry, fa: یکی از ظرف‌های جهیزیه‌ش رو شکستی }
+    - { en: She found out you threw away her Tupperware, fa: فهمید ظرفش رو انداختی دور }
+    - { en: You forgot Mother's Day, fa: روز مادر یادت رفت }
+    - { en: You said your aunt's tahdig is better than hers, fa: گفتی ته‌دیگِ خاله از ته‌دیگِ مامان بهتره }
+    - { en: The guests opened your bedroom door, fa: مهمون‌ها در اتاقت رو باز کردن }
+
+# Each title is reached once the score is at least `at`.
+titles:
+  - { at: 0, name: { en: The other child 🙃, fa: اون یکی بچه 🙃 } }
+  - { at: 25, name: { en: Sometimes useful 🧹, fa: گاهی به‌دردبخور 🧹 } }
+  - { at: 60, name: { en: Good kid 🙂, fa: بچه‌ی خوب 🙂 } }
+  - { at: 120, name: { en: Mom's sous-chef 🍲, fa: دستیار آشپزخونه‌ی مامان 🍲 } }
+  - { at: 200, name: { en: Bragged about at every party 🗣️, fa: مایه‌ی پز مهمونی‌ها 🗣️ } }
+  - { at: 350, name: { en: Golden child ✨, fa: بچه‌ی طلایی ✨ } }
+  - { at: 600, name: { en: Mom's favorite 👑, fa: عزیزدردونه‌ی مامان 👑 } }

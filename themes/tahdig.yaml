@@ -6,6 +6,8 @@ name: tahdig
 emoji: "🍚"
 # fa, en, or both. "both" sends every message in Farsi and then English.
 language: fa
+# Time between two /play turns. Rice needs about an hour on the stove to get its tahdig.
+cooldown_minutes: 60
 
 bot_name:
   en: Tahdig Bot
@@ -34,6 +36,24 @@ gains:
   - { en: Grandma let slip her secret. A spoonful of yogurt in the bottom, fa: مامان‌بزرگ رازش رو لو داد؛ یه قاشق ماست ته قابلمه }
   - { en: You sliced the potatoes paper-thin, fa: سیب‌زمینی‌ها رو نازکِ نازک حلقه کردی }
   - { en: You rinsed the rice until the water ran clear, fa: برنج رو اون‌قدر شستی تا آبش زلال شد }
+  - { en: You bought aged Hashemi rice and it paid off, fa: برنج هاشمیِ کهنه خریدی و جواب داد }
+  - { en: You lined the pot with lavash and it came out like glass, fa: ته قابلمه لواش گذاشتی و مثل شیشه ترد شد }
+  - { en: You brushed saffron butter over the potato slices, fa: روی حلقه‌های سیب‌زمینی کره‌ی زعفرونی مالیدی }
+  - { en: You used the old non-stick pot that has never let anyone down, fa: از قابلمه‌ی تفلونِ قدیمی استفاده کردی که تا حالا به هیچ‌کس خیانت نکرده }
+  - { en: You drained the rice at exactly the right moment, fa: برنج رو درست سرِ وقتش آبکش کردی }
+  - { en: You poked steam holes in the rice with the spoon handle, fa: با دسته‌ی کفگیر تو برنج چندتا سوراخ زدی که بخار راه داشته باشه }
+  - { en: You heaped the rice into a little mountain the way Grandma does, fa: برنج رو مثل مامان‌بزرگ کوهی ریختی تو قابلمه }
+  - { en: The edges pulled away from the pot all by themselves, fa: لبه‌هاش خودشون از قابلمه جدا شدن }
+  - { en: You set the hot pot in cold water before the flip. The old trick, fa: "قبل از برگردوندن، قابلمه رو گذاشتی تو آب سرد. ترفند قدیمی" }
+  - { en: The neighbor smelled it and came over to ask what you were making, fa: همسایه بوش رو شنید و اومد پرسید چی درست کردی }
+  - { en: You didn't stir the rice. Not even once, fa: "دست به برنج نزدی. حتی یه بار" }
+  - { en: You salted the boiling water like the Caspian Sea, fa: آب جوش رو اندازه‌ی آب دریای خزر نمک زدی }
+  - { en: You put your phone down and actually watched the stove, fa: گوشی رو گذاشتی کنار و واقعاً حواست به گاز بود }
+  - { en: You turned the pot on the flame so every side browned evenly, fa: قابلمه رو روی شعله چرخوندی که همه‌جاش یکدست طلایی بشه }
+  - { en: Your little cousin said it sounds just like chips, fa: پسرخاله‌ی کوچیکت گفت صداش عین چیپسه }
+  - { en: You found a perfect heavy-bottomed pot in Grandma's cupboard, fa: تو کابینت مامان‌بزرگ یه قابلمه‌ی ته‌کلفتِ بی‌نظیر پیدا کردی }
+  - { en: You layered the tahchin with saffron yogurt and it stood up like a cake, fa: ته‌چین رو با ماست زعفرونی لایه چیدی و مثل کیک سرپا وایستاد }
+  - { en: You hid the crispy middle piece for yourself before anyone noticed, fa: تیکه‌ی وسطی رو قبل از اینکه کسی بفهمه برای خودت قایم کردی }
 
 losses:
   - { en: You lifted the lid for a peek. Twice, fa: درِ قابلمه رو برداشتی یه سرک بکشی. دو بار }
@@ -43,10 +63,28 @@ losses:
   - { en: You forgot the lid towel and the steam made it soggy, fa: دم‌کنی یادت رفت و ته‌دیگ از بخار خیس خورد }
   - { en: You flipped it and half of it stayed stuck in the pot, fa: برگردوندی و نصفش ته قابلمه چسبید }
   - { en: Someone drowned it in gheymeh before you got a bite, fa: "یکی قبل از اینکه دستت بهش برسه، روش خورش قیمه خالی کرد" }
+  - { en: You bought this year's new rice and it turned to glue, fa: برنج تازه‌ی امسالی خریدی و شد چسب }
+  - { en: You boiled the rice too long before draining it, fa: برنج رو زیادی جوشوندی و دیر آبکشش کردی }
+  - { en: "While you set the table, your cousin swiped the best piece", fa: "تا سفره رو بچینی، پسرعمه‌ت بهترین تیکه رو کش رفت" }
+  - { en: The pot's non-stick coating finally retired and everything stuck, fa: تفلون قابلمه بالاخره بازنشسته شد و همه‌چی چسبید }
+  - { en: You used bread that was too thick and it stayed doughy, fa: نونش رو زیادی کلفت گذاشتی و ته‌دیگ خمیر موند }
+  - { en: The guests came early and you served it before it crisped up, fa: مهمونا زود رسیدن و ته‌دیگ رو قبل از ترد شدن کشیدی }
+  - { en: The lid towel slipped and you spent the hour putting it back, fa: دم‌کنی هی سُر خورد و کل یه ساعت رو سرِ درست کردنش گذروندی }
+  - { en: You flipped it too early and it was still pale, fa: زود برگردوندی و ته‌دیگ هنوز رنگ‌پریده بود }
+  - { en: Your uncle smashed it with the spatula to share it out, fa: دایی با کفگیر خردش کرد که بین همه تقسیمش کنه }
+  - { en: You were glued to your phone and smelled the burning too late, fa: سرت تو گوشی بود و بوی سوختگی رو دیر فهمیدی }
+  - { en: You cut the potatoes too thick and the middles stayed raw, fa: سیب‌زمینی‌ها رو کلفت بریدی و وسطشون خام موند }
+  - { en: The kids nibbled off every saffron-gold bit, fa: بچه‌ها همه‌ی تیکه‌های زعفرونیش رو ناخنک زدن }
+  - { en: Someone left it out and it went cold and stale, fa: یکی ته‌دیگ رو بیرون جا گذاشت و سرد و بیات شد }
+  - { en: 'Mom said "Your tahdig is good, but..." and never finished the sentence', fa: مامان گفت «ته‌دیگت خوبه، ولی…» و جمله‌ش رو تموم نکرد }
 
 neutral:
   - { en: The whole house argued potato versus bread tahdig. Nobody won, fa: "سر اینکه ته‌دیگ سیب‌زمینی بهتره یا نون، کل خونه دعوا شد. برنده نداشت" }
   - { en: Grandma tasted it and said "not bad". Nobody knows what that means yet, fa: مامان‌بزرگ چشید و گفت «بد نیست». هنوز هیچ‌کس نفهمیده یعنی چی }
+  - { en: Dad asked for his rice without tahdig. Everyone turned and stared, fa: "بابا گفت برنجم رو بدون ته‌دیگ می‌خوام. همه برگشتن نگاهش کردن" }
+  - { en: You split the last piece exactly in half with your sister. Still arguing over who got more, fa: "آخرین تیکه رو با خواهرت دقیقاً نصف کردین. هنوز سر اینکه کی بیشتر برداشت بحثه" }
+  - { en: 'Someone asked whether tahdig counts as rice or as a snack. The debate continues', fa: "یکی پرسید ته‌دیگ جزو برنجه یا تنقلات؟ بحث هنوز ادامه داره" }
+  - { en: You made tahdig in a rice cooker. Grandma pretended not to see, fa: "با پلوپز ته‌دیگ درست کردی. مامان‌بزرگ خودش رو زد به ندیدن" }
 
 # Rare events (5% of rolls) replace the normal roll with a big swing.
 events:
@@ -55,10 +93,20 @@ events:
     - { en: "Mom flipped it perfectly! One golden piece, and not a single grain left in the pot", fa: "مامان برگردوندش و بی‌نقص دراومد! یه‌تیکه و طلایی، یه دونه برنج هم ته قابلمه نموند" }
     - { en: You flipped the pot and the whole family applauded, fa: "قابلمه رو که برگردوندی، کل فامیل براش دست زدن" }
     - { en: The crunch of your tahdig was heard all the way down the street, fa: صدای قرچ‌قرچ ته‌دیگت تا سر کوچه رفت }
+    - { en: 'Grandma tasted it and said "better than mine". The whole family went silent', fa: "مامان‌بزرگ چشید و گفت «از مال من بهتره». کل فامیل ساکت شدن" }
+    - { en: At the mehmooni the guests ignored the khoresh and only asked for your tahdig, fa: تو مهمونی، مهمونا خورش رو ول کردن و فقط ته‌دیگت رو خواستن }
+    - { en: Your aunt asked for your recipe in front of everyone, fa: خاله جلوی همه دستور پختت رو ازت خواست }
+    - { en: Your tahdig photo got passed around the whole family group chat, fa: عکس ته‌دیگت تو گروه فامیلی دست‌به‌دست شد و همه براش قلب فرستادن }
+    - { en: Grandma handed you her old tahdig pot. You are the heir now, fa: "مامان‌بزرگ قابلمه‌ی قدیمیش رو داد دستت. حالا تو وارثشی" }
   bad:
     - { en: You flipped the pot and the tahdig landed on the floor, fa: قابلمه رو برگردوندی و ته‌دیگ پخش زمین شد }
     - { en: Your aunt called and by the time you said goodbye the tahdig was black, fa: "خاله زنگ زد؛ تا خداحافظی کنی، ته‌دیگ سوخت و سیاه شد" }
     - { en: Someone reheated the leftover tahdig in the microwave, fa: یکی ته‌دیگِ مونده رو گذاشت تو مایکروویو }
+    - { en: The serving platter cracked right in the middle of the flip, fa: وسط برگردوندن، دیس ترک برداشت }
+    - { en: A surprise crowd of guests turned up and not one piece reached you, fa: یه‌هو یه ایل مهمون رسید و یه تیکه هم به خودت نرسید }
+    - { en: The gas cut out halfway and the rice just sat there half-cooked, fa: گاز وسط کار قطع شد و برنج نیم‌پز موند }
+    - { en: Someone posted your burnt tahdig in the family group chat, fa: یکی عکس ته‌دیگ سوخته‌ت رو گذاشت تو گروه فامیلی }
+    - { en: "Grandma tasted it, sighed, and walked away without a word", fa: "مامان‌بزرگ چشید، آه کشید و بی‌هیچ حرفی رفت" }
 
 # Tahdig styles as titles. Each one is reached once the score is at least `at`.
 titles:
