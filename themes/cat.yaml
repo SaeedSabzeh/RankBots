@@ -1,0 +1,77 @@
+# Cat bot: grow your cat's fluffiness. The first bot, used to prove the engine.
+# Messages are written without numbers; the engine adds ": +9 g" after them.
+# Farsi copy is a first draft for Simin to review.
+
+name: cat
+emoji: "🐱"
+# fa, en, or both. "both" sends every message in Farsi and then English.
+language: fa
+
+bot_name:
+  en: Cat Bot
+  fa: ربات گربه
+tagline:
+  en: Make your cat the fluffiest in the whole group!
+  fa: گربه‌ت رو پشمالوترین گربه‌ی گروه کن!
+leaderboard_title:
+  en: Fluffiest cats
+  fa: پشمالوترین گربه‌ها
+
+score:
+  name: { en: Fluffiness, fa: پشمالویی }
+  unit: { en: g, fa: گرم }
+  start: 0
+  direction: higher
+  scale: 1
+  min: 0
+
+gains:
+  - { en: Your cat ate a whole sausage, fa: گربه‌ت یه سوسیس کامل خورد }
+  - { en: Your cat napped in a sunbeam for six hours, fa: گربه‌ت شش ساعت زیر آفتاب خوابید }
+  - { en: Grandma secretly fed your cat kabab, fa: مامان‌بزرگ یواشکی به گربه‌ت کباب داد }
+  - { en: Your cat found the butter, fa: گربه‌ت کره رو پیدا کرد }
+  - { en: You brushed your cat and it puffed up like a cloud, fa: گربه‌ت رو شونه کردی و شد عین ابر }
+  - { en: Your cat licked the yogurt bowl clean, fa: گربه‌ت کاسه‌ی ماست رو تا ته لیس زد }
+  - { en: Your cat swiped a piece of chicken off the sofreh, fa: گربه‌ت یه تیکه مرغ از سر سفره کش رفت }
+  - { en: Your cat's winter coat came in, fa: پشم زمستونی گربه‌ت دراومد }
+
+losses:
+  - { en: Your cat got caught in the rain, fa: گربه‌ت زیر بارون موند }
+  - { en: Vet day. Your cat is on a diet now, fa: روز دامپزشکی بود؛ گربه‌ت رژیم گرفته }
+  - { en: Your cat chased a laser pointer for an hour, fa: گربه‌ت یه ساعت دنبال نور لیزر دوید }
+  - { en: Bath time. Your cat looks like a wet rat, fa: حمومش کردی؛ شده عین موش آب‌کشیده }
+  - { en: Your cat shed all over the sofa, fa: گربه‌ت کل پشمش رو ریخت روی مبل }
+  - { en: Your cat got a summer haircut, fa: موی گربه‌ت رو تابستونی زدن }
+  - { en: The neighbor's cat ate your cat's food, fa: گربه‌ی همسایه غذای گربه‌ت رو خورد }
+
+neutral:
+  - { en: Your cat stared at the wall all day, fa: گربه‌ت کل روز به دیوار زل زد }
+  - { en: Your cat knocked a glass off the table and felt nothing, fa: گربه‌ت یه لیوان رو از روی میز انداخت و هیچ عذاب وجدانی نداشت }
+
+# Rare events (5% of rolls) replace the normal roll with a big swing.
+events:
+  good:
+    - { en: Your cat stole grandma's tahdig, fa: گربه‌ت ته‌دیگ مامان‌بزرگ رو دزدید }
+    - { en: Your cat got into the Nowruz sweets, fa: گربه‌ت افتاد به جون شیرینی‌های عید }
+    - { en: The whole street voted your cat Cat of the Month, fa: کل کوچه گربه‌ت رو گربه‌ی ماه انتخاب کردن }
+  bad:
+    - { en: Your cat fell into the hoz, fa: گربه‌ت افتاد تو حوض }
+    - { en: The vet shaved your cat. All of it, fa: دامپزشک گربه‌ت رو از ته تراشید. کاملش رو }
+    - { en: Your cat saw a cucumber and lost half its fluff from fright, fa: گربه‌ت خیار دید و از ترس نصف پشمش ریخت }
+
+# Cat outfits as titles. Each one is reached once the score is at least `at`.
+titles:
+  - { at: 0, name: { en: Bare kitten 🐾, fa: بچه‌گربه‌ی بی‌لباس 🐾 } }
+  - { at: 25, name: { en: Kitten in a bow tie 🎀, fa: بچه‌گربه با پاپیون 🎀 } }
+  - { at: 60, name: { en: Fluffball in a beanie 🧶, fa: پشمالو با کلاه بافتنی 🧶 } }
+  - { at: 120, name: { en: Chonky in a hoodie 🧥, fa: تپل با هودی 🧥 } }
+  - { at: 200, name: { en: Mega chonk in a tuxedo 🤵, fa: تپلِ گنده با کت‌وشلوار 🤵 } }
+  - { at: 350, name: { en: Absolute Unit in a royal cape 🦸, fa: غول پشمالو با شنل شاهی 🦸 } }
+  - { at: 600, name: { en: Cat Emperor in a golden crown 👑, fa: امپراتور گربه‌ها با تاج طلا 👑 } }
+
+# Optional special mechanic, at most one per theme. The cat bot has none. The taarof bot will use:
+# hook:
+#   kind: lost_turn     # the turn is lost: cooldown used, score unchanged
+#   chance: 0.1
+#   messages:
+#     - { en: "The bot insisted: after you! Your turn went to the bot", fa: "ربات تعارف کرد: «اول شما!» نوبتت پرید" }
