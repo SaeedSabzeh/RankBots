@@ -40,6 +40,7 @@ class Board:
     top: list[Player]
     me: Player | None
     my_rank: int | None
+    players: int = 0  # everyone who has played in the group, for the last-place nickname
 
 
 async def _cooldown(store: Store, theme: Theme, chat_id: int, chat_title: str | None) -> timedelta:
@@ -102,12 +103,13 @@ async def stats(store: Store, theme: Theme, *, chat_id: int, user_id: int, now: 
 
 async def board(store: Store, theme: Theme, *, chat_id: int, user_id: int, limit: int = 10) -> Board:
     top = await store.top(theme.name, chat_id, theme.higher_is_better, limit)
+    players = await store.player_count(theme.name, chat_id) if top else 0
     if any(p.user_id == user_id for p in top):
-        return Board(top, None, None)
+        return Board(top, None, None, players)
     me = await store.get_player(theme.name, chat_id, user_id)
     if me is None or me.last_play_at is None:
-        return Board(top, None, None)
-    return Board(top, me, await store.rank_of(theme.name, chat_id, me.score, theme.higher_is_better))
+        return Board(top, None, None, players)
+    return Board(top, me, await store.rank_of(theme.name, chat_id, me.score, theme.higher_is_better), players)
 
 
 @dataclass(frozen=True)

@@ -41,6 +41,7 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "empty_top": "Nobody has played yet. Send /play to start!",
         "rank": "🏅 Rank: #{rank} of {count}",
         "title": "🎽 Title: {title}",
+        "nickname": "🏷️ In this group: {nickname}",
         "streak": "🔥 Streak: {days} days ({bonus} per roll)",
         "streak_none": "🔥 Streak: none yet. Play on consecutive days to build one",
         "next_now": "⏳ Next try: now!",
@@ -107,6 +108,7 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "empty_top": "هنوز کسی بازی نکرده. با /play شروع کن!",
         "rank": "🏅 رتبه: {rank} از {count}",
         "title": "🎽 لقب: {title}",
+        "nickname": "🏷️ تو این گروه: {nickname}",
         "streak": "🔥 {days} روز پشت سر هم ({bonus} جایزه در هر بازی)",
         "streak_none": "🔥 هنوز روزهای پشت سر هم نداری. هر روز بازی کن تا جایزه بگیری",
         "next_now": "⏳ نوبت بعدی: همین الان!",
@@ -238,6 +240,8 @@ def me(theme: Theme, name: str, st: Stats) -> str:
             s["rank"].format(rank=num(st.rank, lang), count=num(st.players, lang)),
             s["title"].format(title=game.title_for(theme, p.score).name[lang]),
         ]
+        if (nick := theme.nickname(st.rank, st.players)) is not None:
+            lines.append(s["nickname"].format(nickname=nick[lang]))
         if p.streak:
             bonus = amount(theme, game.score_delta(theme, game.streak_bonus(p.streak)), lang, signed=True)
             lines.append(s["streak"].format(days=num(p.streak, lang), bonus=bonus))
@@ -261,8 +265,14 @@ def top(theme: Theme, b: Board) -> str:
         name = display_name(p.first_name, p.username)
         if you:
             name = f"{STRINGS[lang]['you']} ({name})"
-        title = game.title_for(theme, p.score).name[lang]
-        return f"{badge} {name}: <b>{amount(theme, p.score, lang)}</b> · {title}"
+        score = f"<b>{amount(theme, p.score, lang)}</b>"
+        # With position nicknames the leaderboard shows those; the score titles stay in /me and /play.
+        if (nick := theme.nickname(rank, b.players)) is not None:
+            quoted = f"«{nick[lang]}»" if lang == "fa" else f"“{nick[lang]}”"
+            return f"{badge} {name} {quoted}: {score}"
+        if theme.nicknames is not None:
+            return f"{badge} {name}: {score}"
+        return f"{badge} {name}: {score} · {game.title_for(theme, p.score).name[lang]}"
 
     def build(lang: Lang) -> str:
         lines = [f"🏆 <b>{theme.leaderboard_title[lang]}</b>", ""]

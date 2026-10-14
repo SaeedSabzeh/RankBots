@@ -74,3 +74,25 @@ def test_hook_messages_need_every_language(tmp_path):
 def test_bad_hooks_are_rejected(tmp_path, change):
     with pytest.raises(ValueError):
         load_theme(_write_variant(tmp_path, hook={**TAAROF_HOOK, **change}))
+
+
+def test_every_theme_has_leaderboard_nicknames():
+    for theme in load_themes().values():
+        assert theme.nicknames is not None and len(theme.nicknames.ranks) >= 10, theme.name
+
+
+def test_nickname_by_position_and_last_place():
+    cat = load_themes()["cat"]
+    ranks, last = cat.nicknames.ranks, cat.nicknames.last
+    assert cat.nickname(1, 2) == ranks[0]
+    assert cat.nickname(3, 3) == ranks[2]  # last place only counts from four players up
+    assert cat.nickname(4, 4) == last
+    assert cat.nickname(12, 30) is None  # past the list, not last
+    assert cat.nickname(30, 30) == last
+
+
+def test_nicknames_need_every_language(tmp_path):
+    data = yaml.safe_load((THEMES_DIR / "cat.yaml").read_text(encoding="utf-8"))
+    data["nicknames"]["ranks"][0] = {"en": "Boss"}
+    with pytest.raises(ValueError, match=r"nicknames.ranks\[0\] is missing its 'fa' text"):
+        load_theme(_write_variant(tmp_path, nicknames=data["nicknames"]))

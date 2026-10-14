@@ -63,13 +63,20 @@ gains:
   - { en: You poured from up high and didn't spill a drop, fa: چای رو از بالا ریختی و یه قطره هم بیرون نریخت }
   - { en: The tea-house guy round the corner knows your order by heart, fa: آقای قهوه‌خونه‌ی سر کوچه دیگه سفارشت رو از حفظه }
   - { en: You stirred your tea so loudly the whole office got cravings, fa: اون‌قدر با سروصدا چاییت رو هم زدی که کل اداره هوس چای کردن }
+  - { en: 'Your aunt said "have a tea, then go" and you left her place at midnight', fa: 'عمه گفت «یه چای بخور بعد برو» و ساعت دوازده شب از خونه‌ش اومدی بیرون' }
+  - { en: 'It started raining, someone lit the samovar and opened the window', fa: 'بارون گرفت، یکی سماور رو روشن کرد و پنجره رو باز گذاشت' }
+  - { en: 'Exam night: Mom left a glass of tea outside your door every half hour', fa: 'شب امتحان مامان هر نیم ساعت یه استکان چای پشت در اتاقت گذاشت' }
+  - { en: 'The corner shop had set aside a fresh pack of Lahijan tea just for you', fa: 'بقال سر کوچه یه بسته چای لاهیجان تازه برات کنار گذاشته بود' }
+  - { en: 'You looked down and someone had quietly filled your glass again', fa: 'یه نگاه به استکانت انداختی و دیدی یکی بی‌صدا دوباره پرش کرده' }
+  - { en: 'On the intercity bus the attendant brought tea and you took two', fa: 'تو اتوبوس بین‌شهری شاگرد راننده چای آورد و تو دو تا برداشتی' }
+  - { en: 'You wrote "tea?" in the family group and replies of "yes" came in all night', fa: 'تو گروه فامیل نوشتی «چای؟» و تا آخر شب همه جواب دادن «آره»' }
 
 losses:
   - { en: Someone gave you a teabag. You're in mourning, fa: بهت چای کیسه‌ای دادن. عزای عمومی }
   - { en: You talked so much your tea went cold, fa: اون‌قدر حرف زدی که چاییت یخ کرد }
   - { en: The boiling water cracked your glass and the tea ran down your hand, fa: استکان از آب جوش ترک خورد و چای ریخت رو دستت }
   - { en: You drank coffee for a whole day. Traitor, fa: یه روز کامل قهوه خوردی. خائن }
-  - { en: The tea ran out at home, fa: چای خونه تموم شد }
+  - { en: 'The tea ran out at home, so the house is officially closed', fa: 'چای خونه تموم شد؛ یعنی خونه رسماً تعطیله' }
   - { en: The samovar broke, fa: سماور خراب شد }
   - { en: The doctor said to cut down on tea, fa: دکتر گفت چایی رو کم کن }
   - { en: No strainer. You got a mouthful of tea leaves, fa: صافی نبود و یه دهن تفاله‌ی چای خوردی }
@@ -86,10 +93,15 @@ losses:
   - { en: You brewed it with tap water and it tasted of chlorine, fa: با آب لوله‌کشی دم کردی و بوی کلر داد }
   - { en: 'You bought cheap imported tea and it tasted like sawdust', fa: چای خارجی ارزون خریدی، مزه‌ی خاک‌اره می‌داد }
   - { en: Someone said green tea is healthier and made you drink it, fa: یکی گفت چای سبز سالم‌تره و به زور بهت داد }
-  - { en: A fly fell into your tea, fa: یه مگس افتاد تو چاییت }
+  - { en: 'A fly dove into your tea with total confidence', fa: 'یه مگس با اعتمادبه‌نفس کامل شیرجه زد تو چاییت' }
   - { en: At the mehmooni you were too shy to ask for a second glass, fa: تو مهمونی از رودربایستی روت نشد استکان دوم رو بخوای }
   - { en: 'The host said "I''ll put the tea on" and never did', fa: صاحب‌خونه گفت «الان چای می‌ذارم» و هیچ‌وقت نذاشت }
   - { en: Your dentist saw your tea-stained teeth and lectured you for ages, fa: دندون‌پزشک رنگ دندون‌هات رو دید و کلی برات سخنرانی کرد }
+  - { en: 'You said "one more glass" and Uncle said "it''s getting late"', fa: 'گفتی «یه استکان دیگه» و دایی گفت «دیروقته‌ها»' }
+  - { en: 'At the party they handed you tea in a paper cup', fa: 'تو مهمونی چای رو تو لیوان کاغذی دادن دستت' }
+  - { en: 'You filled the samovar and forgot to plug it in', fa: 'سماور رو آب کردی و یادت رفت به برق بزنی' }
+  - { en: 'Your cousin dropped two sugar cubes into your tea without asking', fa: 'پسرعمه بی‌اجازه دو تا قند انداخت تو چاییت' }
+  - { en: 'A friend said "I''m not really a tea person" and you didn''t speak to him for an hour', fa: 'دوستت گفت «من زیاد اهل چای نیستم» و یه ساعت باهاش حرف نزدی' }
 
 neutral:
   - { en: You poured a glass and forgot it on the windowsill, fa: یه استکان ریختی و لب پنجره یادت رفت }
@@ -114,6 +126,7 @@ events:
     - { en: The whole family officially named you the tea-maker, fa: کل فامیل رسماً تو رو مسئول چای‌دم‌کردن اعلام کردن }
     - { en: During a blackout the neighbor showed up with a hot charcoal samovar, fa: وسط خاموشی همسایه با یه سماور ذغالی داغ اومد درِ خونه }
     - { en: Grandma finally taught you her secret brewing trick, fa: مامان‌بزرگ بالاخره فوت‌وفن دم‌کردن چاییش رو بهت یاد داد }
+    - { en: 'After all these years Grandpa finally said "let me pour yours"', fa: 'بابابزرگ بعد از این‌همه سال بالاخره گفت «بذار من برات بریزم»' }
   bad:
     - { en: You dropped the whole tea tray in front of the guests, fa: سینی چای رو جلوی مهمون‌ها برگردوندی }
     - { en: Someone put milk in your tea, fa: یکی تو چاییت شیر ریخت }
@@ -125,6 +138,7 @@ events:
     - { en: At the mehmooni you were served last. And it was cold, fa: تو مهمونی آخر از همه بهت چای دادن، اونم یخ‌کرده }
     - { en: You put salt in your tea instead of sugar and took a big gulp, fa: جای قند نمک ریختی تو چای و یه قلپ گنده زدی }
     - { en: Someone made tea in the microwave, fa: یکی چای رو تو مایکروویو درست کرد }
+    - { en: 'The host announced in front of everyone: "no tea, only Nescafé"', fa: 'صاحب‌خونه جلوی همه گفت «چای نداریم، نسکافه هست»' }
 
 # Each title is reached once the score is at least `at`.
 titles:
@@ -135,3 +149,18 @@ titles:
   - { at: 200, name: { en: Sugar-cube master 🧊, fa: استاد قند به دهن 🧊 } }
   - { at: 350, name: { en: Tea runs in your veins 🌊, fa: تو رگ‌هات چای جریان داره 🌊 } }
   - { at: 600, name: { en: Grandma's true heir 👑, fa: وارث واقعی مامان‌بزرگ 👑 } }
+
+# Leaderboard nicknames by position in the group (#1, #2, ...), and one for last place.
+nicknames:
+  ranks:
+    - { en: 'Sultan of the samovar 👑', fa: 'سلطان سماور 👑' }
+    - { en: 'Minister of the teapot', fa: 'وزیر قوری' }
+    - { en: 'Master of the sugar cube', fa: 'استاد قند به دهن' }
+    - { en: 'Teahouse regular', fa: 'مشتری ثابت قهوه‌خونه' }
+    - { en: 'Honorary office tea man', fa: 'آبدارچی افتخاری' }
+    - { en: 'The "one more glass" one', fa: '«یه استکان دیگه»' }
+    - { en: 'Pro tea drinker', fa: 'چایی‌خور حرفه‌ای' }
+    - { en: 'Just discovered tea', fa: 'تازه با چای آشنا شده' }
+    - { en: 'Still drinks teabags', fa: 'هنوز چای کیسه‌ای می‌خوره' }
+    - { en: 'Only likes the smell of tea', fa: 'فقط بوی چای رو دوست داره' }
+  last: { en: 'Secret coffee drinker', fa: 'قهوه‌خور مخفی' }

@@ -59,6 +59,16 @@ class LostTurnHook(_Strict):
     messages: list[Text] = Field(min_length=1)
 
 
+class Nicknames(_Strict):
+    """Leaderboard nicknames by position in the group: ranks[0] is #1, ranks[1] is #2, ...
+
+    `last` goes to whoever is in last place (from four players up), whatever their position.
+    """
+
+    ranks: list[Text] = Field(min_length=1)
+    last: Text | None = None
+
+
 # The optional special mechanic, at most one per theme so the engine stays generic.
 # A new kind becomes another model with its own `kind`, joined here as a union.
 Hook = LostTurnHook
@@ -80,6 +90,7 @@ class Theme(_Strict):
     events: Events
     titles: list[Title] = Field(min_length=1)
     hook: Hook | None = None
+    nicknames: Nicknames | None = None
 
     @field_validator("name")
     @classmethod
@@ -131,6 +142,10 @@ class Theme(_Strict):
         texts += [(f"titles[{i}].name", t.name) for i, t in enumerate(self.titles)]
         if self.hook is not None:
             texts += [(f"hook.messages[{i}]", t) for i, t in enumerate(self.hook.messages)]
+        if self.nicknames is not None:
+            texts += [(f"nicknames.ranks[{i}]", t) for i, t in enumerate(self.nicknames.ranks)]
+            if self.nicknames.last is not None:
+                texts.append(("nicknames.last", self.nicknames.last))
         for where, text in texts:
             for lang in self.langs:
                 if not text.get(lang, "").strip():
@@ -144,6 +159,15 @@ class Theme(_Strict):
             raise ValueError(f"titles must be in strictly {order} order of 'at'")
         if not self.reaches(self.score.start, self.titles[0].at):
             raise ValueError("the first title must already be reached at score.start")
+
+    def nickname(self, rank: int, players: int) -> Text | None:
+        """The leaderboard nickname for a position in a group of `players`, if the theme has one."""
+        n = self.nicknames
+        if n is None:
+            return None
+        if n.last is not None and players >= 4 and rank == players:
+            return n.last
+        return n.ranks[rank - 1] if rank <= len(n.ranks) else None
 
     def reaches(self, score: int, threshold: int) -> bool:
         return score >= threshold if self.higher_is_better else score <= threshold

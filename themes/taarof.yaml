@@ -58,6 +58,10 @@ gains:
   - { en: You praised the host's cooking and asked for the recipe, fa: از دست‌پخت صاحب‌خونه تعریف کردی و دستور پختش رو پرسیدی }
   - { en: 'A surprise guest showed up and you said "ghadametun ru cheshm"', fa: مهمون سرزده اومد، گفتی «قدمتون روی چشم» }
   - { en: 'You told your elder "shoma bozorgvarid" and meant every word', fa: به بزرگ‌ترت گفتی «شما بزرگوارید» و از ته دل گفتی }
+  - { en: 'The guest came with a box of sweets and left with a bigger one', fa: 'مهمون با یه جعبه شیرینی اومد و با یه جعبه‌ی بزرگ‌تر رفت' }
+  - { en: 'You lined up the guest''s shoes at the door before they noticed', fa: 'دم در کفش‌های مهمون رو جفت کردی، قبل از اینکه خودش بفهمه' }
+  - { en: 'Leaving, you said "sorry for the trouble" three times while they begged you to stay', fa: 'موقع رفتن سه بار گفتی «ببخشید مزاحم شدیم» و اونا التماس کردن بمونی' }
+  - { en: 'A guest "just dropped by for a minute" and you kept them till dinner', fa: 'مهمون گفت «فقط یه لحظه اومدم» و تو تا شام نگهش داشتی' }
 
 losses:
   - { en: You took the tea the very first time it was offered, fa: چای رو بار اول که تعارف کردن برداشتی. زشته }
@@ -82,14 +86,19 @@ losses:
   - { en: You took the front seat without offering it to an elder, fa: بدون تعارف به بزرگ‌ترها نشستی صندلی جلو }
   - { en: 'You answered the phone with "what?" instead of "jaanam?"', fa: گوشی رو برداشتی گفتی «چیه؟» به‌جای «جانم؟» }
   - { en: You stretched your legs out toward the elders, fa: جلوی بزرگ‌ترها پاهات رو دراز کردی }
+  - { en: 'You said "no thanks, I''m full" and couldn''t sleep from hunger at midnight', fa: 'گفتی «نه ممنون، سیرم» و نصف‌شب از گشنگی خوابت نبرد' }
+  - { en: 'The host offered once and you accepted. A heavy silence fell', fa: 'صاحب‌خونه یه بار تعارف کرد و تو قبول کردی. یه سکوت سنگین افتاد' }
+  - { en: 'You got out of the elevator first', fa: 'از آسانسور اول از همه پیاده شدی' }
 
 neutral:
-  - { en: You and your aunt are still standing at the door saying "after you", fa: تو و خاله‌ت هنوز دم در دارین می‌گین «اول شما» }
+  - { en: 'You and your aunt are still at the door saying "after you", and the neighbors are bringing you tea', fa: 'تو و خاله‌ت هنوز دم در دارین می‌گین «اول شما»؛ همسایه‌ها دارن براتون چای میارن' }
   - { en: 'Someone said "come over some day" and nobody asked which day. As always', fa: 'یکی گفت «یه روز بیاین خونه‌ی ما» و هیچ‌کس نپرسید کدوم روز. مثل همیشه' }
   - { en: 'The host asked "tea or sharbat?" and you said "whatever you like". Still undecided', fa: 'صاحب‌خونه پرسید «چای یا شربت؟» گفتی «هرچی شما بخواین». هنوز معلوم نیست کدوم' }
   - { en: You offered the last date to everyone and it's still sitting on the plate, fa: آخرین خرما رو به همه تعارف کردی، هنوز تو بشقاب مونده }
   - { en: You said goodbye at the door for so long the tea went cold, fa: اون‌قدر دم در خداحافظی کردین که چای یخ کرد }
   - { en: 'You both grabbed the bill at once and it tore in half', fa: هر دوتون هم‌زمان صورت‌حساب رو گرفتین و از وسط پاره شد }
+  - { en: 'In the bread line you said "after you" and there was nobody behind you', fa: 'تو صف نونوایی گفتی «شما بفرمایید» و پشت سرت هیچ‌کس نبود' }
+  - { en: 'In the taxi you both insisted "you sit in front" and ended up both in the back', fa: 'تو تاکسی به هم گفتین «شما جلو بشینید» و آخرش هر دوتون عقب نشستین' }
 
 # Rare events (5% of rolls) replace the normal roll with a big swing.
 events:
@@ -102,6 +111,7 @@ events:
     - { en: 'You poured water behind the guests'' car and waved until it turned the corner', fa: پشت ماشین مهمون‌ها آب ریختی و تا سر کوچه دست تکون دادی }
     - { en: You won the fight for the bill so gracefully that the whole restaurant clapped, fa: سر حساب رستوران اون‌قدر قشنگ بردی که کل رستوران برات دست زدن }
     - { en: You sent the guests home with so many leftovers they needed a second car, fa: اون‌قدر برای مهمون‌ها غذا گذاشتی ببرن که یه ماشین دیگه لازم شد }
+    - { en: 'Uncle finally said in front of everyone: "this kid is something else"', fa: 'عمو بالاخره جلوی همه گفت «این بچه یه چیز دیگه‌ست»' }
   bad:
     - { en: The taxi driver said "be my guest" and you got out without paying, fa: راننده تاکسی گفت «قابل نداره» و تو بی‌پول پیاده شدی }
     - { en: You said "you shouldn't have" and opened the gift on the spot, fa: گفتی «چرا زحمت کشیدین» و همون‌جا کادو رو باز کردی }
@@ -111,6 +121,8 @@ events:
     - { en: 'You walked into a family party and your first words were "what''s the Wi-Fi password?"', fa: وارد مهمونی فامیلی شدی و اولین حرفت «رمز وای‌فای چیه؟» بود }
     - { en: The host said "stay for dinner" once and you stayed three days, fa: صاحب‌خونه یه بار گفت «شام بمونید» و تو سه روز موندی }
     - { en: 'You told the guest "leaving already? OK, bye!" and shut the door', fa: به مهمون گفتی «دارین می‌رین؟ باشه، خداحافظ» و در رو بستی }
+    - { en: 'You said "whatever you like" and they really ordered only what they liked', fa: 'گفتی «هرچی شما بخواین» و اونام واقعاً فقط چیزی که خودشون دوست داشتن سفارش دادن' }
+    - { en: 'Your aunt said "don''t bring anything" and you really brought nothing', fa: 'خاله گفت «چیزی نیاریا» و تو هم واقعاً دست خالی رفتی' }
 
 # Each title is reached once the score is at least `at`.
 titles:
@@ -135,3 +147,20 @@ hook:
     - { en: You and the bot fought over who pays for this turn until the waiter took it away, fa: تو و ربات اون‌قدر سر حساب این نوبت دعوا کردین که گارسون نوبت رو برد }
     - { en: The bot offered you tea first. You refused three times and your turn went cold, fa: ربات اول به تو چای تعارف کرد، سه بار رد کردی تا نوبتت سرد شد }
     - { en: The bot insisted you stay for dinner. By dessert your turn was over, fa: ربات اصرار کرد شام بمونی، تا دسر رسید نوبتت تموم شده بود }
+    - { en: 'The bot gave you its turn, you gave it back, and now the turn belongs to nobody', fa: 'ربات نوبتش رو داد به تو، تو دادی به ربات، حالا نوبت مال هیچ‌کس نیست' }
+    - { en: 'The bot said "it''s nothing, really" and kept your turn for itself', fa: 'ربات گفت «قابل نداره» و نوبتت رو برای خودش برداشت' }
+
+# Leaderboard nicknames by position in the group (#1, #2, ...), and one for last place.
+nicknames:
+  ranks:
+    - { en: 'King of "it''s nothing" 👑', fa: 'سلطان «قابل نداره» 👑' }
+    - { en: 'Commander of "befarmaid"', fa: 'فرمانده‌ی «بفرمایید»' }
+    - { en: 'Never lets you pay', fa: 'هیچ‌وقت نمی‌ذاره حساب کنی' }
+    - { en: 'Walks you to the end of the street', fa: 'تا سر کوچه بدرقه‌ت می‌کنه' }
+    - { en: 'Refuses three times, then takes one', fa: 'سه بار رد می‌کنه، بعد برمی‌داره' }
+    - { en: 'Model host', fa: 'میزبان نمونه' }
+    - { en: 'Polite guest', fa: 'مهمون باادب' }
+    - { en: 'At "bless your hands" level', fa: 'در حد «دستت درد نکنه»' }
+    - { en: 'Just learned to say "befarmaid"', fa: 'تازه یاد گرفته بگه «بفرمایید»' }
+    - { en: 'Can''t taarof, but means well', fa: 'تعارف بلد نیست ولی دلش پاکه' }
+  last: { en: 'Takes the tea the first time it''s offered', fa: 'چای رو بار اول برمی‌داره' }

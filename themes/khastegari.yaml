@@ -35,7 +35,7 @@ gains:
   - { en: The gold price jumped overnight, fa: قیمت سکه یه‌شبه رفت بالا }
   - { en: The tea was served perfectly and everyone was impressed, fa: چای بی‌نقص اومد و همه کف کردن }
   - { en: Dad cleared his throat meaningfully, fa: بابا یه سرفه‌ی معنی‌دار کرد }
-  - { en: The uncle who's a lawyer showed up, fa: عموی وکیل هم سر رسید }
+  - { en: 'The lawyer uncle arrived with a briefcase and nobody dared ask what was in it', fa: 'عموی وکیل با یه کیف سامسونت رسید و هیچ‌کس جرئت نکرد بپرسه توش چیه' }
   - { en: 'Someone said "it''s just a number" so a zero got added', fa: یکی گفت «حالا یه عدده دیگه» و یه صفر اضافه شد }
   - { en: The groom's family brought a flower basket taller than the groom, fa: خانواده‌ی داماد یه سبد گل آوردن قد خود داماد }
   - { en: The bride walked in with the tea tray and the whole room went quiet, fa: عروس با سینی چای اومد تو و کل مجلس ساکت شد }
@@ -54,13 +54,19 @@ gains:
   - { en: The bride's little brother asked for a PlayStation for himself too, fa: برادر کوچیکه‌ی عروس یه پلی‌استیشن هم برای خودش خواست }
   - { en: Someone casually brought up last year's other suitor, fa: یکی همین‌جوری حرف خواستگار پارسال رو پیش کشید }
   - { en: The sweets came from the most famous bakery in town, fa: شیرینی از معروف‌ترین قنادی شهر بود }
+  - { en: 'Uncle said "I only came for a cup of tea" and then made speeches for three hours', fa: 'عمو گفت «من فقط اومدم یه چای بخورم» و بعد سه ساعت سخنرانی کرد' }
+  - { en: 'The groom''s mom said "my son works so hard" and everyone understood he has no job yet', fa: 'مامان داماد گفت «پسرم خیلی زحمتکشه» و همه فهمیدن یعنی هنوز سر کار نرفته' }
+  - { en: 'Uncle said "we want nothing, just something symbolic" and started counting', fa: 'دایی گفت «ما چیزی نمی‌خوایم، فقط یه چیز نمادین» و شروع کرد به شمردن' }
+  - { en: 'Someone asked the groom''s salary and he said "more or less"', fa: 'یکی حقوق داماد رو پرسید و داماد گفت «کم‌وبیش»' }
+  - { en: 'The groom said "we have love" and Grandma said "love doesn''t buy rice"', fa: 'داماد گفت «ما عشق داریم» و مامان‌بزرگ گفت «با عشق که نمی‌شه برنج خرید»' }
+  - { en: 'Asked where they''d live after the wedding, the groom said "at my mom''s"', fa: 'پرسیدن «بعد عروسی کجا زندگی می‌کنین؟» داماد گفت «خونه‌ی مامانم»' }
 
 losses:
   - { en: 'Someone said "love is all you need"', fa: یکی گفت «عشق کافیه» }
   - { en: The sweets came from the cheap bakery, fa: شیرینی از قنادی ارزونه بود }
   - { en: The gold price dropped, fa: قیمت سکه اومد پایین }
   - { en: Grandpa fell asleep in the middle of the negotiation, fa: بابابزرگ وسط مذاکره خوابش برد }
-  - { en: The tea arrived cold, fa: چای سرد رسید }
+  - { en: 'The tea arrived cold: a full-blown diplomatic incident', fa: 'چای سرد رسید؛ یه حادثه‌ی دیپلماتیک تمام‌عیار' }
   - { en: The groom's mother started crying and everyone softened, fa: مادر داماد زد زیر گریه و همه کوتاه اومدن }
   - { en: 'Someone said "who ever actually pays the mehrieh anyway?"', fa: 'یکی گفت «مهریه رو کی داده کی گرفته؟»' }
   - { en: The groom's side mentioned how expensive rent is these days, fa: طرف داماد یادآوری کرد این روزها اجاره‌خونه چقدر گرونه }
@@ -76,6 +82,9 @@ losses:
   - { en: Someone suggested a group photo in the middle of the negotiation and everyone went to fix their hair, fa: یکی وسط مذاکره گفت عکس یادگاری بگیریم و همه رفتن موهاشون رو درست کنن }
   - { en: Dad took a phone call and forgot which number he was defending, fa: بابا تلفنش زنگ خورد و یادش رفت از چه عددی دفاع می‌کرد }
   - { en: Someone remembered the groom once fixed their car for free, fa: یکی یادش اومد داماد یه بار ماشینش رو مجانی درست کرده }
+  - { en: 'A kid shouted "I''m hungry" and the negotiation turned into dinner', fa: 'یه بچه وسط مذاکره داد زد «گشنمه» و جلسه تبدیل شد به شام' }
+  - { en: 'Someone''s phone rang with a silly ringtone and the meeting lost all seriousness', fa: 'گوشی یکی با یه آهنگ مسخره زنگ خورد و جدیت جلسه پرید' }
+  - { en: 'The groom was so nervous he put salt in his tea instead of sugar', fa: 'داماد از استرس جای قند نمک ریخت تو چاییش' }
 
 neutral:
   - { en: 'Everyone said "whatever the elders decide"', fa: همه گفتن «هرچی بزرگ‌ترها بگن» }
@@ -95,6 +104,8 @@ events:
     - { en: 'The bride finally broke her silence and said "and a trip to Kish"', fa: 'عروس بالاخره سکوتش رو شکست و گفت «یه سفر کیش هم باشه»' }
     - { en: The TV news announced a record gold price right in the middle of the visit, fa: وسط جلسه اخبار تلویزیون گفت قیمت سکه رکورد زد }
     - { en: 'Uncle proposed the height of Damavand in coins and Grandma said "make it Everest"', fa: دایی گفت «به ارتفاع دماوند سکه»، مامان‌بزرگ گفت «اورست باشه بهتره» }
+    - { en: 'The bride''s uncle stood up to "say just one sentence" and the mehrieh doubled during his speech', fa: 'عموی عروس پاشد «فقط یه جمله» بگه و وسط حرفاش مهریه دوبرابر شد' }
+    - { en: 'The groom panicked, said "we accept everything", and only then heard what he''d said', fa: 'داماد هول کرد و گفت «ما همه‌چی رو قبول داریم»، بعد تازه فهمید چی گفته' }
   bad:
     - { en: 'The groom said "I''m still a student"', fa: داماد گفت «من هنوز دانشجوام» }
     - { en: Both families settled on one coin and a stick of nabat, fa: دو خانواده سر یه سکه و یه شاخه نبات توافق کردن }
@@ -104,6 +115,7 @@ events:
     - { en: The bride's lawyer uncle and the groom's lawyer cousin cancelled each other out, fa: عموی وکیل عروس و پسرخاله‌ی وکیل داماد همدیگه رو خنثی کردن }
     - { en: The paper with the agreed figure flew out the window, fa: کاغذی که عدد توافقی روش نوشته شده بود از پنجره پرید بیرون }
     - { en: Everything was put off until after the cousin's Konkur results, fa: همه‌چی موکول شد به بعد از جواب کنکور پسرخاله }
+    - { en: 'The couple came back hand in hand and said "we''ll sort it out ourselves"', fa: 'عروس و داماد دست‌تودست برگشتن و گفتن «خودمون حلش می‌کنیم»' }
 
 # Each title is reached once the score is at least `at`.
 titles:
@@ -114,3 +126,18 @@ titles:
   - { at: 1380, name: { en: Birth-year mehrieh 🎂, fa: مهریه به سال تولد 🎂 } }
   - { at: 2500, name: { en: The lawyer-uncle special ⚖️, fa: ویژه‌ی عموی وکیل ⚖️ } }
   - { at: 5000, name: { en: Mehrieh with a villa in Lavasan 🏡, fa: مهریه با ویلای لواسون 🏡 } }
+
+# Leaderboard nicknames by position in the group (#1, #2, ...), and one for last place.
+nicknames:
+  ranks:
+    - { en: 'Family mehrieh record holder 👑', fa: 'رکورددار مهریه‌ی فامیل 👑' }
+    - { en: 'Chief negotiator', fa: 'مذاکره‌کننده‌ی ارشد' }
+    - { en: 'Keeper of the coins', fa: 'صاحب‌اختیار سکه‌ها' }
+    - { en: 'Special adviser to the aunts', fa: 'مشاور ویژه‌ی عمه‌ها' }
+    - { en: 'The lawyer uncle', fa: 'عموی وکیل' }
+    - { en: 'In charge of the tea tray', fa: 'مسئول سینی چای' }
+    - { en: 'Gold-price analyst', fa: 'کارشناس قیمت سکه' }
+    - { en: 'Still at "we''ll think about it"', fa: 'هنوز در مرحله‌ی «فکرامون رو می‌کنیم»' }
+    - { en: 'Mirror-and-candlesticks level', fa: 'در حد آینه و شمعدون' }
+    - { en: 'A single stick of nabat', fa: 'یه شاخه نبات' }
+  last: { en: '"Love is enough"', fa: '«عشق کافیه»' }

@@ -54,6 +54,10 @@ gains:
   - { en: You found a perfect heavy-bottomed pot in Grandma's cupboard, fa: تو کابینت مامان‌بزرگ یه قابلمه‌ی ته‌کلفتِ بی‌نظیر پیدا کردی }
   - { en: You layered the tahchin with saffron yogurt and it stood up like a cake, fa: ته‌چین رو با ماست زعفرونی لایه چیدی و مثل کیک سرپا وایستاد }
   - { en: You hid the crispy middle piece for yourself before anyone noticed, fa: تیکه‌ی وسطی رو قبل از اینکه کسی بفهمه برای خودت قایم کردی }
+  - { en: 'Dad came in "just to take a look" and stood over the pot for an hour', fa: 'بابا اومد «فقط یه نگاه بندازه» و یه ساعت بالای سر قابلمه وایساد' }
+  - { en: 'The neighbor rang to ask about the smell and left with a plate of tahdig', fa: 'همسایه زنگ زد بپرسه این بو از کجاست و با یه بشقاب ته‌دیگ برگشت' }
+  - { en: 'Uncle tapped it with the spatula and it rang like a bell', fa: 'دایی با کفگیر زد روش و صداش عین زنگ بود' }
+  - { en: 'Tahdig, cold doogh and fresh herbs: Friday lunch complete', fa: 'ته‌دیگ و دوغ خنک و سبزی خوردن؛ ناهار جمعه تکمیل شد' }
 
 losses:
   - { en: You lifted the lid for a peek. Twice, fa: درِ قابلمه رو برداشتی یه سرک بکشی. دو بار }
@@ -77,6 +81,12 @@ losses:
   - { en: The kids nibbled off every saffron-gold bit, fa: بچه‌ها همه‌ی تیکه‌های زعفرونیش رو ناخنک زدن }
   - { en: Someone left it out and it went cold and stale, fa: یکی ته‌دیگ رو بیرون جا گذاشت و سرد و بیات شد }
   - { en: 'Mom said "Your tahdig is good, but..." and never finished the sentence', fa: مامان گفت «ته‌دیگت خوبه، ولی…» و جمله‌ش رو تموم نکرد }
+  - { en: 'You said "just a minute" on the phone and the smoke alarm joined the call', fa: 'گفتی «فقط یه دقیقه» و گوشی رو جواب دادی؛ آخرش آژیر دود هم اومد تو تماس' }
+  - { en: 'Uncle said "let me see how it''s doing" and lifted the lid', fa: 'دایی گفت «ببینم چی شده» و در قابلمه رو برداشت' }
+  - { en: 'You posted it in the family group and everyone asked "is that toast?"', fa: 'عکسش رو گذاشتی تو گروه فامیل و همه پرسیدن «نون برشته‌ست؟»' }
+  - { en: 'You flipped it and it came out shaped like a map of a country that doesn''t exist', fa: 'برگردوندی و شکلش شد عین نقشه‌ی یه کشوری که وجود نداره' }
+  - { en: 'You reheated it the next day and it turned into a brick', fa: 'فرداش گرمش کردی و شد عین آجر' }
+  - { en: 'Three kids appeared out of nowhere and a minute later there was no tahdig', fa: 'سه تا بچه از ناکجا پیدا شدن و یه دقیقه بعد دیگه ته‌دیگی در کار نبود' }
 
 neutral:
   - { en: The whole house argued potato versus bread tahdig. Nobody won, fa: "سر اینکه ته‌دیگ سیب‌زمینی بهتره یا نون، کل خونه دعوا شد. برنده نداشت" }
@@ -98,6 +108,8 @@ events:
     - { en: Your aunt asked for your recipe in front of everyone, fa: خاله جلوی همه دستور پختت رو ازت خواست }
     - { en: Your tahdig photo got passed around the whole family group chat, fa: عکس ته‌دیگت تو گروه فامیلی دست‌به‌دست شد و همه براش قلب فرستادن }
     - { en: Grandma handed you her old tahdig pot. You are the heir now, fa: "مامان‌بزرگ قابلمه‌ی قدیمیش رو داد دستت. حالا تو وارثشی" }
+    - { en: 'Your aunt abroad video-called; you held the pot up to the camera and she teared up', fa: 'خاله‌ی خارج‌نشین تصویری زنگ زد، قابلمه رو گرفتی جلوی دوربین و اشکش دراومد' }
+    - { en: 'It came out in one perfect round piece, exactly the size of the pot', fa: 'یه‌تیکه دراومد؛ گرد و کامل، درست اندازه‌ی قابلمه' }
   bad:
     - { en: You flipped the pot and the tahdig landed on the floor, fa: قابلمه رو برگردوندی و ته‌دیگ پخش زمین شد }
     - { en: Your aunt called and by the time you said goodbye the tahdig was black, fa: "خاله زنگ زد؛ تا خداحافظی کنی، ته‌دیگ سوخت و سیاه شد" }
@@ -107,6 +119,7 @@ events:
     - { en: The gas cut out halfway and the rice just sat there half-cooked, fa: گاز وسط کار قطع شد و برنج نیم‌پز موند }
     - { en: Someone posted your burnt tahdig in the family group chat, fa: یکی عکس ته‌دیگ سوخته‌ت رو گذاشت تو گروه فامیلی }
     - { en: "Grandma tasted it, sighed, and walked away without a word", fa: "مامان‌بزرگ چشید، آه کشید و بی‌هیچ حرفی رفت" }
+    - { en: 'The guests arrived early and started digging it out of the pot with their hands', fa: 'مهمونا زودتر رسیدن و با دست افتادن به جون ته‌دیگ تو قابلمه' }
 
 # Tahdig styles as titles. Each one is reached once the score is at least `at`.
 titles:
@@ -117,3 +130,18 @@ titles:
   - { at: 200, name: { en: Tahchin master 🍗, fa: استاد ته‌چین 🍗 } }
   - { at: 350, name: { en: Grandma-level tahdig 👵, fa: ته‌دیگ در حد مامان‌بزرگ 👵 } }
   - { at: 600, name: { en: Legendary tahdig 👑, fa: ته‌دیگ افسانه‌ای 👑 } }
+
+# Leaderboard nicknames by position in the group (#1, #2, ...), and one for last place.
+nicknames:
+  ranks:
+    - { en: 'Grandmaster of tahdig 👑', fa: 'استاد اعظم ته‌دیگ 👑' }
+    - { en: 'Grandma''s right hand', fa: 'دست راست مامان‌بزرگ' }
+    - { en: 'Lord of the crunch', fa: 'صاحب قرچ‌قرچ' }
+    - { en: 'Pot-flipping expert', fa: 'متخصص برگردوندن قابلمه' }
+    - { en: 'Head of the lid towel', fa: 'مسئول دم‌کنی' }
+    - { en: 'Sous-chef', fa: 'دستیار سرآشپز' }
+    - { en: 'Kitchen apprentice', fa: 'شاگرد آشپزخونه' }
+    - { en: 'Potato slicer', fa: 'حلقه‌کن سیب‌زمینی' }
+    - { en: 'Rice-cooker rookie', fa: 'تازه‌کار پلوپزی' }
+    - { en: 'Only comes to the table for the tahdig', fa: 'فقط به عشق ته‌دیگ میاد سر سفره' }
+  last: { en: 'Their rice is still mushy', fa: 'برنجش هنوز شفته‌ست' }

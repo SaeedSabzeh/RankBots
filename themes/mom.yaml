@@ -59,6 +59,11 @@ gains:
   - { en: You brought home a good report card, fa: کارنامه‌ی خوب آوردی خونه }
   - { en: You spread the sofreh before she even called you, fa: قبل از اینکه صدات کنه سفره رو انداختی }
   - { en: You got a haircut before the family party, fa: قبل از مهمونی فامیلی رفتی موهات رو کوتاه کردی }
+  - { en: 'You walked in saying "mmm, what a smell!" before you even knew what she''d cooked', fa: 'تا اومدی تو گفتی «به‌به، چه بویی!»، قبل از اینکه بدونی چی پخته' }
+  - { en: 'You fixed her phone without saying "it''s so easy"', fa: 'گوشیش رو درست کردی و نگفتی «این که خیلی راحته»' }
+  - { en: 'In front of the aunts you said "my mom''s cooking is the best"', fa: 'جلوی خاله‌ها گفتی «دست‌پخت مامانم از همه بهتره»' }
+  - { en: 'You asked about her TV series and she happily explained it for ten minutes', fa: 'درباره‌ی سریالش ازش سؤال پرسیدی و ده دقیقه با ذوق برات تعریف کرد' }
+  - { en: 'You drove her to your aunt''s without a single complaint', fa: 'بی‌غر رسوندیش خونه‌ی خاله' }
 
 losses:
   - { en: 'You said "I''m not hungry"', fa: گفتی «گشنه‌م نیست» }
@@ -72,7 +77,7 @@ losses:
   - { en: 'You opened the fridge and said "there''s nothing to eat"', fa: در یخچال رو باز کردی و گفتی «هیچی نداریم بخوریم» }
   - { en: 'You left your dirty dishes in the sink and heard "am I your servant?"', fa: ظرف کثیفت رو ول کردی تو سینک و شنیدی «مگه من نوکرتم؟» }
   - { en: You left her message on seen in the family group chat, fa: پیامش تو گروه فامیل رو سین کردی و جواب ندادی }
-  - { en: Her friend's son just became a doctor, fa: پسر دوستش دکتر شد }
+  - { en: 'Her friend''s son became a doctor and Mom just gave you a look', fa: 'پسر دوستش دکتر شد و مامان فقط یه نگاه بهت انداخت' }
   - { en: You gave her container back empty, fa: ظرفش رو خالی پس دادی }
   - { en: You slept until noon, fa: تا لنگ ظهر خوابیدی }
   - { en: You threw your clothes on the chair again, fa: باز لباس‌هات رو انداختی روی صندلی }
@@ -84,14 +89,20 @@ losses:
   - { en: You said her rice was a little salty, fa: گفتی برنجش یه کم شوره }
   - { en: You drank ice water right after eating, fa: درست بعد غذا آب یخ خوردی }
   - { en: You walked across the floor she had just mopped, fa: روی زمینی که تازه طی کشیده بود راه رفتی }
+  - { en: 'She asked "how''s the food?" and you said "not bad"', fa: 'پرسید «غذا چطوره؟» گفتی «بد نیست»' }
+  - { en: 'You ate the thing she''d put aside for the guests', fa: 'همون چیزی که برای مهمونا کنار گذاشته بود رو خوردی' }
+  - { en: 'You called your aunt before you called her, and she found out', fa: 'قبل از مامان به خاله زنگ زدی و مامان فهمید' }
+  - { en: 'She said "go put on something decent" and you came back in a worse T-shirt', fa: 'گفت «برو یه چیز درست‌وحسابی بپوش» و تو با یه تی‌شرت بدتر برگشتی' }
+  - { en: 'She said "sleep early tonight" and you were the last one online in the family group', fa: 'گفت «امشب زود بخواب» و تو آخرین نفری بودی که تو گروه فامیل آنلاین بود' }
 
 neutral:
   - { en: 'You said "whatever you think is best"', fa: گفتی «هرچی خودت صلاح می‌دونی» }
   - { en: 'She asked "have you eaten?" and you said yes', fa: پرسید «غذا خوردی؟» گفتی آره }
-  - { en: She forwarded you an article about the dangers of phones, fa: برات یه مطلب درباره‌ی ضررهای گوشی فوروارد کرد }
+  - { en: 'She forwarded you an article on the dangers of phones. From her phone', fa: 'برات یه مطلب درباره‌ی ضررهای گوشی فوروارد کرد. با گوشی' }
   - { en: She asked when you're getting married. Again, fa: دوباره پرسید کِی ازدواج می‌کنی }
   - { en: 'She said "do whatever you want" in that tone', fa: با اون لحن همیشگی گفت «هرکاری دلت می‌خواد بکن» }
   - { en: 'She asked if you were cold. You weren''t. She brought a blanket anyway', fa: 'پرسید «سردته؟» گفتی نه، ولی بازم برات پتو آورد' }
+  - { en: 'You said "I''m bored" and she said "great, come clean the herbs"', fa: 'گفتی «حوصله‌م سر رفته» و مامان گفت «پس بیا سبزی پاک کن»' }
 
 # Rare events (5% of rolls) replace the normal roll with a big swing.
 events:
@@ -104,6 +115,8 @@ events:
     - { en: You took her on a surprise trip to the north, fa: سورپرایزی بردیش شمال }
     - { en: You cooked a whole ghormeh sabzi and she asked for your recipe, fa: یه قورمه‌سبزی کامل پختی و مامان ازت دستور پختش رو خواست }
     - { en: Grandma told everyone what a great kid she raised, fa: مامان‌بزرگ جلوی همه گفت عجب بچه‌ای بزرگ کرده }
+    - { en: 'You overheard her tell your aunt "my kid was wonderful today"', fa: 'از پشت در شنیدی به خاله گفت «بچه‌م امروز خیلی خوب بود»' }
+    - { en: 'She said "you shouldn''t have" and didn''t let go of your gift all night', fa: 'گفت «لازم نبود» و تا آخر شب کادوت رو از خودش جدا نکرد' }
   bad:
     - { en: The slipper flew, fa: دمپایی پرواز کرد }
     - { en: She heard the news from someone else first, fa: خبر رو اول از یکی دیگه شنید }
@@ -113,6 +126,8 @@ events:
     - { en: You forgot Mother's Day, fa: روز مادر یادت رفت }
     - { en: You said your aunt's tahdig is better than hers, fa: گفتی ته‌دیگِ خاله از ته‌دیگِ مامان بهتره }
     - { en: The guests opened your bedroom door, fa: مهمون‌ها در اتاقت رو باز کردن }
+    - { en: 'You said "Mom, I need to tell you something" and she said "what did you break this time?"', fa: 'گفتی «مامان، یه چیزی می‌خوام بگم» و جواب داد «باز چی رو شکستی؟»' }
+    - { en: 'You forgot her birthday and posted "happy birthday" in the family group at midnight', fa: 'تولدش یادت رفت و نصف‌شب تو گروه فامیل نوشتی «تولدت مبارک»' }
 
 # Each title is reached once the score is at least `at`.
 titles:
@@ -123,3 +138,18 @@ titles:
   - { at: 200, name: { en: Bragged about at every party 🗣️, fa: مایه‌ی پز مهمونی‌ها 🗣️ } }
   - { at: 350, name: { en: Golden child ✨, fa: بچه‌ی طلایی ✨ } }
   - { at: 600, name: { en: Mom's favorite 👑, fa: عزیزدردونه‌ی مامان 👑 } }
+
+# Leaderboard nicknames by position in the group (#1, #2, ...), and one for last place.
+nicknames:
+  ranks:
+    - { en: 'Officially the favorite 👑', fa: 'بچه‌ی محبوب، رسماً 👑' }
+    - { en: 'Second, as always', fa: 'دومی، مثل همیشه' }
+    - { en: 'Pride of the family', fa: 'مایه‌ی آبروی فامیل' }
+    - { en: 'The obedient one', fa: 'بچه‌ی حرف‌گوش‌کن' }
+    - { en: 'In charge of the dishes', fa: 'مسئول ظرف‌ها' }
+    - { en: 'Herb-cleaning assistant', fa: 'دستیار سبزی پاک کردن' }
+    - { en: 'The middle child', fa: 'بچه‌ی وسطی' }
+    - { en: 'The "coming in a minute" one', fa: 'بچه‌ی «الان میام»' }
+    - { en: 'Gets "when are you getting married?"', fa: 'همونی که ازش می‌پرسن «کِی ازدواج می‌کنی؟»' }
+    - { en: 'The neighbor''s kid is better', fa: 'بچه‌ی همسایه ازش بهتره' }
+  last: { en: 'Main slipper target', fa: 'هدف اصلی دمپایی' }
