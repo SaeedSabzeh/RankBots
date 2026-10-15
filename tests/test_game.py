@@ -50,28 +50,46 @@ def test_local_day_uses_rome_time():
     assert game.local_day(datetime(2026, 10, 14, 23, 30, tzinfo=timezone.utc)) == date(2026, 10, 15)
 
 
-def test_rolls_stay_in_range_and_pick_matching_messages():
+def test_every_roll_uses_its_sentences_fixed_score():
     rng = random.Random(1)
-    events = Counter()
+    kinds = Counter()
     for _ in range(20_000):
         r = game.roll(CAT, streak=0, rng=rng)
-        events[r.event] += 1
+        kinds[r.event] += 1
+        # The points are always the sentence's own `n` (neutral lines are worth 0).
+        assert r.base == r.message.get("n", 0)
         if r.event is None:
-            assert game.ROLL_MIN <= r.base <= game.ROLL_MAX
-            if r.points > 0:
+            if r.base > 0:
                 assert r.message in CAT.gains
-            elif r.points < 0:
+                kinds["gain"] += 1
+            elif r.base < 0:
                 assert r.message in CAT.losses
+                kinds["loss"] += 1
             else:
                 assert r.message in CAT.neutral
         elif r.event == "good":
-            assert game.EVENT_MIN <= r.base <= game.EVENT_MAX
-            assert r.message in CAT.events.good
+            assert r.message in CAT.events.good and r.base >= 15
         else:
-            assert -game.EVENT_MAX <= r.base <= -game.EVENT_MIN
-            assert r.message in CAT.events.bad
-    rare = (events["good"] + events["bad"]) / 20_000
-    assert 0.04 < rare < 0.06
+            assert r.message in CAT.events.bad and r.base <= -15
+    normal = 20_000 - kinds["good"] - kinds["bad"]
+    assert 0.04 < (kinds["good"] + kinds["bad"]) / 20_000 < 0.06
+    assert abs(kinds["gain"] / normal - game.GAIN_SHARE) < 0.02
+    assert abs(kinds["loss"] / normal - game.LOSS_SHARE) < 0.02
+
+
+def test_the_same_sentence_always_scores_the_same():
+    seen: dict[str, set[int]] = {}
+    rng = random.Random(9)
+    for _ in range(5000):
+        r = game.roll(CAT, streak=0, rng=rng)
+        seen.setdefault(r.message["en"], set()).add(r.base)
+    assert all(len(scores) == 1 for scores in seen.values())
+
+
+def test_every_scoring_line_in_every_theme_has_a_score():
+    for theme in load_themes().values():
+        for line in [*theme.gains, *theme.losses, *theme.events.good, *theme.events.bad]:
+            assert isinstance(line.get("n"), int), (theme.name, line["en"])
 
 
 def test_streak_bonus_is_added_to_the_roll():

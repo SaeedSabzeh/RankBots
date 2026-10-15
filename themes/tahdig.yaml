@@ -28,65 +28,65 @@ score:
   min: 0
 
 gains:
-  - { en: You didn't hold back on the oil, fa: روغنش رو کم نذاشتی }
-  - { en: You put the lid towel on like a pro, fa: دم‌کنی رو مثل حرفه‌ای‌ها گذاشتی رو قابلمه }
-  - { en: You bloomed the saffron just right, fa: زعفرونش رو درست‌وحسابی دم کردی }
-  - { en: You waited an hour on low heat and never lifted the lid, fa: یه ساعت رو شعله‌ی کم صبر کردی و درش رو برنداشتی }
-  - { en: The sizzle from the pot sounded exactly right, fa: صدای جلزوولز ته قابلمه دقیقاً همونی بود که باید باشه }
-  - { en: Grandma let slip her secret. A spoonful of yogurt in the bottom, fa: مامان‌بزرگ رازش رو لو داد؛ یه قاشق ماست ته قابلمه }
-  - { en: You sliced the potatoes paper-thin, fa: سیب‌زمینی‌ها رو نازکِ نازک حلقه کردی }
-  - { en: You rinsed the rice until the water ran clear, fa: برنج رو اون‌قدر شستی تا آبش زلال شد }
-  - { en: You bought aged Hashemi rice and it paid off, fa: برنج هاشمیِ کهنه خریدی و جواب داد }
-  - { en: You lined the pot with lavash and it came out like glass, fa: ته قابلمه لواش گذاشتی و مثل شیشه ترد شد }
-  - { en: You brushed saffron butter over the potato slices, fa: روی حلقه‌های سیب‌زمینی کره‌ی زعفرونی مالیدی }
-  - { en: You used the old non-stick pot that has never let anyone down, fa: از قابلمه‌ی تفلونِ قدیمی استفاده کردی که تا حالا به هیچ‌کس خیانت نکرده }
-  - { en: You drained the rice at exactly the right moment, fa: برنج رو درست سرِ وقتش آبکش کردی }
-  - { en: You poked steam holes in the rice with the spoon handle, fa: با دسته‌ی کفگیر تو برنج چندتا سوراخ زدی که بخار راه داشته باشه }
-  - { en: You heaped the rice into a little mountain the way Grandma does, fa: برنج رو مثل مامان‌بزرگ کوهی ریختی تو قابلمه }
-  - { en: The edges pulled away from the pot all by themselves, fa: لبه‌هاش خودشون از قابلمه جدا شدن }
-  - { en: You set the hot pot in cold water before the flip. The old trick, fa: "قبل از برگردوندن، قابلمه رو گذاشتی تو آب سرد. ترفند قدیمی" }
-  - { en: The neighbor smelled it and came over to ask what you were making, fa: همسایه بوش رو شنید و اومد پرسید چی درست کردی }
-  - { en: You didn't stir the rice. Not even once, fa: "دست به برنج نزدی. حتی یه بار" }
-  - { en: 'You salted the rice water like the sea', fa: 'آب برنج رو عین آب دریا شور کردی' }
-  - { en: You put your phone down and actually watched the stove, fa: گوشی رو گذاشتی کنار و واقعاً حواست به گاز بود }
-  - { en: You turned the pot on the flame so every side browned evenly, fa: قابلمه رو روی شعله چرخوندی که همه‌جاش یکدست طلایی بشه }
-  - { en: Your little cousin said it sounds just like chips, fa: پسرخاله‌ی کوچیکت گفت صداش عین چیپسه }
-  - { en: You found a perfect heavy-bottomed pot in Grandma's cupboard, fa: تو کابینت مامان‌بزرگ یه قابلمه‌ی ته‌کلفتِ بی‌نظیر پیدا کردی }
-  - { en: You layered the tahchin with saffron yogurt and it stood up like a cake, fa: ته‌چین رو با ماست زعفرونی لایه چیدی و مثل کیک سرپا وایستاد }
-  - { en: You hid the crispy middle piece for yourself before anyone noticed, fa: تیکه‌ی وسطی رو قبل از اینکه کسی بفهمه برای خودت قایم کردی }
-  - { en: 'Dad came in "just to take a look" and stood over the pot for an hour', fa: 'بابا اومد «فقط یه نگاه بندازه» و یه ساعت بالای سر قابلمه وایساد' }
-  - { en: 'The neighbor rang to ask about the smell and left with a plate of tahdig', fa: 'همسایه زنگ زد بپرسه این بو از کجاست و با یه بشقاب ته‌دیگ برگشت' }
-  - { en: 'Uncle tapped it with the spatula and it rang like a bell', fa: 'دایی با کفگیر زد روش و صداش عین زنگ بود' }
-  - { en: 'Tahdig, cold doogh and fresh herbs: Friday lunch complete', fa: 'ته‌دیگ و دوغ خنک و سبزی خوردن؛ ناهار جمعه تکمیل شد' }
+  - { n: 4, en: You didn't hold back on the oil, fa: روغنش رو کم نذاشتی }
+  - { n: 3, en: You put the lid towel on like a pro, fa: دم‌کنی رو مثل حرفه‌ای‌ها گذاشتی رو قابلمه }
+  - { n: 4, en: You bloomed the saffron just right, fa: زعفرونش رو درست‌وحسابی دم کردی }
+  - { n: 6, en: You waited an hour on low heat and never lifted the lid, fa: یه ساعت رو شعله‌ی کم صبر کردی و درش رو برنداشتی }
+  - { n: 3, en: The sizzle from the pot sounded exactly right, fa: صدای جلزوولز ته قابلمه دقیقاً همونی بود که باید باشه }
+  - { n: 7, en: Grandma let slip her secret. A spoonful of yogurt in the bottom, fa: مامان‌بزرگ رازش رو لو داد؛ یه قاشق ماست ته قابلمه }
+  - { n: 5, en: You sliced the potatoes paper-thin, fa: سیب‌زمینی‌ها رو نازکِ نازک حلقه کردی }
+  - { n: 3, en: You rinsed the rice until the water ran clear, fa: برنج رو اون‌قدر شستی تا آبش زلال شد }
+  - { n: 6, en: You bought aged Hashemi rice and it paid off, fa: برنج هاشمیِ کهنه خریدی و جواب داد }
+  - { n: 8, en: You lined the pot with lavash and it came out like glass, fa: ته قابلمه لواش گذاشتی و مثل شیشه ترد شد }
+  - { n: 6, en: You brushed saffron butter over the potato slices, fa: روی حلقه‌های سیب‌زمینی کره‌ی زعفرونی مالیدی }
+  - { n: 4, en: You used the old non-stick pot that has never let anyone down, fa: از قابلمه‌ی تفلونِ قدیمی استفاده کردی که تا حالا به هیچ‌کس خیانت نکرده }
+  - { n: 4, en: You drained the rice at exactly the right moment, fa: برنج رو درست سرِ وقتش آبکش کردی }
+  - { n: 2, en: You poked steam holes in the rice with the spoon handle, fa: با دسته‌ی کفگیر تو برنج چندتا سوراخ زدی که بخار راه داشته باشه }
+  - { n: 3, en: You heaped the rice into a little mountain the way Grandma does, fa: برنج رو مثل مامان‌بزرگ کوهی ریختی تو قابلمه }
+  - { n: 7, en: The edges pulled away from the pot all by themselves, fa: لبه‌هاش خودشون از قابلمه جدا شدن }
+  - { n: 5, en: You set the hot pot in cold water before the flip. The old trick, fa: "قبل از برگردوندن، قابلمه رو گذاشتی تو آب سرد. ترفند قدیمی" }
+  - { n: 4, en: The neighbor smelled it and came over to ask what you were making, fa: همسایه بوش رو شنید و اومد پرسید چی درست کردی }
+  - { n: 3, en: You didn't stir the rice. Not even once, fa: "دست به برنج نزدی. حتی یه بار" }
+  - { n: 2, en: 'You salted the rice water like the sea', fa: 'آب برنج رو عین آب دریا شور کردی' }
+  - { n: 3, en: You put your phone down and actually watched the stove, fa: گوشی رو گذاشتی کنار و واقعاً حواست به گاز بود }
+  - { n: 5, en: You turned the pot on the flame so every side browned evenly, fa: قابلمه رو روی شعله چرخوندی که همه‌جاش یکدست طلایی بشه }
+  - { n: 6, en: Your little cousin said it sounds just like chips, fa: پسرخاله‌ی کوچیکت گفت صداش عین چیپسه }
+  - { n: 6, en: You found a perfect heavy-bottomed pot in Grandma's cupboard, fa: تو کابینت مامان‌بزرگ یه قابلمه‌ی ته‌کلفتِ بی‌نظیر پیدا کردی }
+  - { n: 9, en: You layered the tahchin with saffron yogurt and it stood up like a cake, fa: ته‌چین رو با ماست زعفرونی لایه چیدی و مثل کیک سرپا وایستاد }
+  - { n: 5, en: You hid the crispy middle piece for yourself before anyone noticed, fa: تیکه‌ی وسطی رو قبل از اینکه کسی بفهمه برای خودت قایم کردی }
+  - { n: 2, en: 'Dad came in "just to take a look" and stood over the pot for an hour', fa: 'بابا اومد «فقط یه نگاه بندازه» و یه ساعت بالای سر قابلمه وایساد' }
+  - { n: 4, en: 'The neighbor rang to ask about the smell and left with a plate of tahdig', fa: 'همسایه زنگ زد بپرسه این بو از کجاست و با یه بشقاب ته‌دیگ برگشت' }
+  - { n: 8, en: 'Uncle tapped it with the spatula and it rang like a bell', fa: 'دایی با کفگیر زد روش و صداش عین زنگ بود' }
+  - { n: 4, en: 'Tahdig, cold doogh and fresh herbs: Friday lunch complete', fa: 'ته‌دیگ و دوغ خنک و سبزی خوردن؛ ناهار جمعه تکمیل شد' }
 
 losses:
-  - { en: You lifted the lid for a peek. Twice, fa: درِ قابلمه رو برداشتی یه سرک بکشی. دو بار }
-  - { en: You left the heat on high and the tahdig turned to charcoal, fa: شعله رو زیاد گذاشتی و ته‌دیگ شد زغال }
-  - { en: You were stingy with the oil, fa: سر روغن خسیس‌بازی درآوردی }
-  - { en: The rice went mushy and the tahdig went limp, fa: برنج شفته شد و ته‌دیگ وارفت }
-  - { en: You forgot the lid towel and the steam made it soggy, fa: دم‌کنی یادت رفت و ته‌دیگ از بخار خیس خورد }
-  - { en: You flipped it and half of it stayed stuck in the pot, fa: برگردوندی و نصفش ته قابلمه چسبید }
-  - { en: Someone drowned it in gheymeh before you got a bite, fa: "یکی قبل از اینکه دستت بهش برسه، روش خورش قیمه خالی کرد" }
-  - { en: You bought this year's new rice and it turned to glue, fa: برنج تازه‌ی امسالی خریدی و شد چسب }
-  - { en: You boiled the rice too long before draining it, fa: برنج رو زیادی جوشوندی و دیر آبکشش کردی }
-  - { en: "While you set the table, your cousin swiped the best piece", fa: "تا سفره رو بچینی، پسرعمه‌ت بهترین تیکه رو کش رفت" }
-  - { en: The pot's non-stick coating finally retired and everything stuck, fa: تفلون قابلمه بالاخره بازنشسته شد و همه‌چی چسبید }
-  - { en: You used bread that was too thick and it stayed doughy, fa: نونش رو زیادی کلفت گذاشتی و ته‌دیگ خمیر موند }
-  - { en: The guests came early and you served it before it crisped up, fa: مهمونا زود رسیدن و ته‌دیگ رو قبل از ترد شدن کشیدی }
-  - { en: The lid towel slipped and you spent the hour putting it back, fa: دم‌کنی هی سُر خورد و کل یه ساعت رو سرِ درست کردنش گذروندی }
-  - { en: You flipped it too early and it was still pale, fa: زود برگردوندی و ته‌دیگ هنوز رنگ‌پریده بود }
-  - { en: Your uncle smashed it with the spatula to share it out, fa: دایی با کفگیر خردش کرد که بین همه تقسیمش کنه }
-  - { en: You were glued to your phone and smelled the burning too late, fa: سرت تو گوشی بود و بوی سوختگی رو دیر فهمیدی }
-  - { en: You cut the potatoes too thick and the middles stayed raw, fa: سیب‌زمینی‌ها رو کلفت بریدی و وسطشون خام موند }
-  - { en: The kids nibbled off every saffron-gold bit, fa: بچه‌ها همه‌ی تیکه‌های زعفرونیش رو ناخنک زدن }
-  - { en: Someone left it out and it went cold and stale, fa: یکی ته‌دیگ رو بیرون جا گذاشت و سرد و بیات شد }
-  - { en: 'Mom said "Your tahdig is good, but..." and never finished the sentence', fa: مامان گفت «ته‌دیگت خوبه، ولی…» و جمله‌ش رو تموم نکرد }
-  - { en: 'You said "just a minute" on the phone and the smoke alarm joined the call', fa: 'گفتی «فقط یه دقیقه» و گوشی رو جواب دادی؛ آخرش آژیر دود هم اومد تو تماس' }
-  - { en: 'Uncle said "let me see how it''s doing" and lifted the lid', fa: 'دایی گفت «ببینم چی شده» و در قابلمه رو برداشت' }
-  - { en: 'You posted it in the family group and everyone asked "is that toast?"', fa: 'عکسش رو گذاشتی تو گروه فامیل و همه پرسیدن «نون برشته‌ست؟»' }
-  - { en: 'You flipped it and it came out shaped like a map of a country that doesn''t exist', fa: 'برگردوندی و شکلش شد عین نقشه‌ی یه کشوری که وجود نداره' }
-  - { en: 'You reheated it the next day and it turned into a brick', fa: 'فرداش گرمش کردی و شد عین آجر' }
-  - { en: 'Three kids appeared out of nowhere and a minute later there was no tahdig', fa: 'سه تا بچه از ناکجا پیدا شدن و یه دقیقه بعد دیگه ته‌دیگی در کار نبود' }
+  - { n: -2, en: You lifted the lid for a peek. Twice, fa: درِ قابلمه رو برداشتی یه سرک بکشی. دو بار }
+  - { n: -5, en: You left the heat on high and the tahdig turned to charcoal, fa: شعله رو زیاد گذاشتی و ته‌دیگ شد زغال }
+  - { n: -3, en: You were stingy with the oil, fa: سر روغن خسیس‌بازی درآوردی }
+  - { n: -4, en: The rice went mushy and the tahdig went limp, fa: برنج شفته شد و ته‌دیگ وارفت }
+  - { n: -3, en: You forgot the lid towel and the steam made it soggy, fa: دم‌کنی یادت رفت و ته‌دیگ از بخار خیس خورد }
+  - { n: -4, en: You flipped it and half of it stayed stuck in the pot, fa: برگردوندی و نصفش ته قابلمه چسبید }
+  - { n: -3, en: Someone drowned it in gheymeh before you got a bite, fa: "یکی قبل از اینکه دستت بهش برسه، روش خورش قیمه خالی کرد" }
+  - { n: -4, en: You bought this year's new rice and it turned to glue, fa: برنج تازه‌ی امسالی خریدی و شد چسب }
+  - { n: -3, en: You boiled the rice too long before draining it, fa: برنج رو زیادی جوشوندی و دیر آبکشش کردی }
+  - { n: -2, en: "While you set the table, your cousin swiped the best piece", fa: "تا سفره رو بچینی، پسرعمه‌ت بهترین تیکه رو کش رفت" }
+  - { n: -4, en: The pot's non-stick coating finally retired and everything stuck, fa: تفلون قابلمه بالاخره بازنشسته شد و همه‌چی چسبید }
+  - { n: -2, en: You used bread that was too thick and it stayed doughy, fa: نونش رو زیادی کلفت گذاشتی و ته‌دیگ خمیر موند }
+  - { n: -3, en: The guests came early and you served it before it crisped up, fa: مهمونا زود رسیدن و ته‌دیگ رو قبل از ترد شدن کشیدی }
+  - { n: -1, en: The lid towel slipped and you spent the hour putting it back, fa: دم‌کنی هی سُر خورد و کل یه ساعت رو سرِ درست کردنش گذروندی }
+  - { n: -2, en: You flipped it too early and it was still pale, fa: زود برگردوندی و ته‌دیگ هنوز رنگ‌پریده بود }
+  - { n: -2, en: Your uncle smashed it with the spatula to share it out, fa: دایی با کفگیر خردش کرد که بین همه تقسیمش کنه }
+  - { n: -4, en: You were glued to your phone and smelled the burning too late, fa: سرت تو گوشی بود و بوی سوختگی رو دیر فهمیدی }
+  - { n: -2, en: You cut the potatoes too thick and the middles stayed raw, fa: سیب‌زمینی‌ها رو کلفت بریدی و وسطشون خام موند }
+  - { n: -2, en: The kids nibbled off every saffron-gold bit, fa: بچه‌ها همه‌ی تیکه‌های زعفرونیش رو ناخنک زدن }
+  - { n: -2, en: Someone left it out and it went cold and stale, fa: یکی ته‌دیگ رو بیرون جا گذاشت و سرد و بیات شد }
+  - { n: -1, en: 'Mom said "Your tahdig is good, but..." and never finished the sentence', fa: مامان گفت «ته‌دیگت خوبه، ولی…» و جمله‌ش رو تموم نکرد }
+  - { n: -5, en: 'You said "just a minute" on the phone and the smoke alarm joined the call', fa: 'گفتی «فقط یه دقیقه» و گوشی رو جواب دادی؛ آخرش آژیر دود هم اومد تو تماس' }
+  - { n: -2, en: 'Uncle said "let me see how it''s doing" and lifted the lid', fa: 'دایی گفت «ببینم چی شده» و در قابلمه رو برداشت' }
+  - { n: -1, en: 'You posted it in the family group and everyone asked "is that toast?"', fa: 'عکسش رو گذاشتی تو گروه فامیل و همه پرسیدن «نون برشته‌ست؟»' }
+  - { n: -2, en: 'You flipped it and it came out shaped like a map of a country that doesn''t exist', fa: 'برگردوندی و شکلش شد عین نقشه‌ی یه کشوری که وجود نداره' }
+  - { n: -2, en: 'You reheated it the next day and it turned into a brick', fa: 'فرداش گرمش کردی و شد عین آجر' }
+  - { n: -3, en: 'Three kids appeared out of nowhere and a minute later there was no tahdig', fa: 'سه تا بچه از ناکجا پیدا شدن و یه دقیقه بعد دیگه ته‌دیگی در کار نبود' }
 
 neutral:
   - { en: The whole house argued potato versus bread tahdig. Nobody won, fa: "سر اینکه ته‌دیگ سیب‌زمینی بهتره یا نون، کل خونه دعوا شد. برنده نداشت" }
@@ -100,26 +100,26 @@ neutral:
 events:
   good:
     # The signature jackpot, kept first on purpose: Mom flipped it perfectly.
-    - { en: "Mom flipped it perfectly! One golden piece, and not a single grain left in the pot", fa: "مامان برگردوندش و بی‌نقص دراومد! یه‌تیکه و طلایی، یه دونه برنج هم ته قابلمه نموند" }
-    - { en: You flipped the pot and the whole family applauded, fa: "قابلمه رو که برگردوندی، کل فامیل براش دست زدن" }
-    - { en: The crunch of your tahdig was heard all the way down the street, fa: صدای قرچ‌قرچ ته‌دیگت تا سر کوچه رفت }
-    - { en: 'Grandma tasted it and said "better than mine". The whole family went silent', fa: "مامان‌بزرگ چشید و گفت «از مال من بهتره». کل فامیل ساکت شدن" }
-    - { en: At the mehmooni the guests ignored the khoresh and only asked for your tahdig, fa: تو مهمونی، مهمونا خورش رو ول کردن و فقط ته‌دیگت رو خواستن }
-    - { en: Your aunt asked for your recipe in front of everyone, fa: خاله جلوی همه دستور پختت رو ازت خواست }
-    - { en: Your tahdig photo got passed around the whole family group chat, fa: عکس ته‌دیگت تو گروه فامیلی دست‌به‌دست شد و همه براش قلب فرستادن }
-    - { en: Grandma handed you her old tahdig pot. You are the heir now, fa: "مامان‌بزرگ قابلمه‌ی قدیمیش رو داد دستت. حالا تو وارثشی" }
-    - { en: 'Your aunt abroad video-called; you held the pot up to the camera and she teared up', fa: 'خاله‌ی خارج‌نشین تصویری زنگ زد، قابلمه رو گرفتی جلوی دوربین و اشکش دراومد' }
-    - { en: 'It came out in one perfect round piece, exactly the size of the pot', fa: 'یه‌تیکه دراومد؛ گرد و کامل، درست اندازه‌ی قابلمه' }
+    - { n: 50, en: "Mom flipped it perfectly! One golden piece, and not a single grain left in the pot", fa: "مامان برگردوندش و بی‌نقص دراومد! یه‌تیکه و طلایی، یه دونه برنج هم ته قابلمه نموند" }
+    - { n: 25, en: You flipped the pot and the whole family applauded, fa: "قابلمه رو که برگردوندی، کل فامیل براش دست زدن" }
+    - { n: 30, en: The crunch of your tahdig was heard all the way down the street, fa: صدای قرچ‌قرچ ته‌دیگت تا سر کوچه رفت }
+    - { n: 45, en: 'Grandma tasted it and said "better than mine". The whole family went silent', fa: "مامان‌بزرگ چشید و گفت «از مال من بهتره». کل فامیل ساکت شدن" }
+    - { n: 35, en: At the mehmooni the guests ignored the khoresh and only asked for your tahdig, fa: تو مهمونی، مهمونا خورش رو ول کردن و فقط ته‌دیگت رو خواستن }
+    - { n: 25, en: Your aunt asked for your recipe in front of everyone, fa: خاله جلوی همه دستور پختت رو ازت خواست }
+    - { n: 20, en: Your tahdig photo got passed around the whole family group chat, fa: عکس ته‌دیگت تو گروه فامیلی دست‌به‌دست شد و همه براش قلب فرستادن }
+    - { n: 40, en: Grandma handed you her old tahdig pot. You are the heir now, fa: "مامان‌بزرگ قابلمه‌ی قدیمیش رو داد دستت. حالا تو وارثشی" }
+    - { n: 30, en: 'Your aunt abroad video-called; you held the pot up to the camera and she teared up', fa: 'خاله‌ی خارج‌نشین تصویری زنگ زد، قابلمه رو گرفتی جلوی دوربین و اشکش دراومد' }
+    - { n: 35, en: 'It came out in one perfect round piece, exactly the size of the pot', fa: 'یه‌تیکه دراومد؛ گرد و کامل، درست اندازه‌ی قابلمه' }
   bad:
-    - { en: You flipped the pot and the tahdig landed on the floor, fa: قابلمه رو برگردوندی و ته‌دیگ پخش زمین شد }
-    - { en: Your aunt called and by the time you said goodbye the tahdig was black, fa: "خاله زنگ زد؛ تا خداحافظی کنی، ته‌دیگ سوخت و سیاه شد" }
-    - { en: Someone reheated the leftover tahdig in the microwave, fa: یکی ته‌دیگِ مونده رو گذاشت تو مایکروویو }
-    - { en: The serving platter cracked right in the middle of the flip, fa: وسط برگردوندن، دیس ترک برداشت }
-    - { en: A surprise crowd of guests turned up and not one piece reached you, fa: یه‌هو یه ایل مهمون رسید و یه تیکه هم به خودت نرسید }
-    - { en: The gas cut out halfway and the rice just sat there half-cooked, fa: گاز وسط کار قطع شد و برنج نیم‌پز موند }
-    - { en: Someone posted your burnt tahdig in the family group chat, fa: یکی عکس ته‌دیگ سوخته‌ت رو گذاشت تو گروه فامیلی }
-    - { en: "Grandma tasted it, sighed, and walked away without a word", fa: "مامان‌بزرگ چشید، آه کشید و بی‌هیچ حرفی رفت" }
-    - { en: 'The guests arrived early and started digging it out of the pot with their hands', fa: 'مهمونا زودتر رسیدن و با دست افتادن به جون ته‌دیگ تو قابلمه' }
+    - { n: -45, en: You flipped the pot and the tahdig landed on the floor, fa: قابلمه رو برگردوندی و ته‌دیگ پخش زمین شد }
+    - { n: -40, en: Your aunt called and by the time you said goodbye the tahdig was black, fa: "خاله زنگ زد؛ تا خداحافظی کنی، ته‌دیگ سوخت و سیاه شد" }
+    - { n: -20, en: Someone reheated the leftover tahdig in the microwave, fa: یکی ته‌دیگِ مونده رو گذاشت تو مایکروویو }
+    - { n: -30, en: The serving platter cracked right in the middle of the flip, fa: وسط برگردوندن، دیس ترک برداشت }
+    - { n: -25, en: A surprise crowd of guests turned up and not one piece reached you, fa: یه‌هو یه ایل مهمون رسید و یه تیکه هم به خودت نرسید }
+    - { n: -35, en: The gas cut out halfway and the rice just sat there half-cooked, fa: گاز وسط کار قطع شد و برنج نیم‌پز موند }
+    - { n: -20, en: Someone posted your burnt tahdig in the family group chat, fa: یکی عکس ته‌دیگ سوخته‌ت رو گذاشت تو گروه فامیلی }
+    - { n: -30, en: "Grandma tasted it, sighed, and walked away without a word", fa: "مامان‌بزرگ چشید، آه کشید و بی‌هیچ حرفی رفت" }
+    - { n: -25, en: 'The guests arrived early and started digging it out of the pot with their hands', fa: 'مهمونا زودتر رسیدن و با دست افتادن به جون ته‌دیگ تو قابلمه' }
 
 # Tahdig styles as titles. Each one is reached once the score is at least `at`.
 titles:

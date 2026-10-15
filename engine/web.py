@@ -85,6 +85,7 @@ def create_app(hooks: Webhooks | None = None) -> FastAPI:
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.hooks = hooks
 
+    @app.api_route("/", methods=["GET", "HEAD"])  # Render probes the root path
     @app.api_route("/health", methods=["GET", "HEAD"])
     async def health() -> dict[str, bool]:
         return {"ok": True}

@@ -18,6 +18,17 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 Lang = Literal["fa", "en"]
 # A piece of copy in one or more languages, e.g. {"en": "Kitten", "fa": "بچه‌گربه"}.
 Text = dict[Lang, str]
+# A message that moves the score: its text plus `n`, the fixed points it's worth
+# (good-for-player points, before the theme's scale), e.g. {"en": ..., "fa": ..., "n": 6}.
+Line = dict[Literal["fa", "en", "n"], str | int]
+
+# Allowed `n` per list. Neutral lines are worth 0 and need no `n`.
+SCORE_RANGES = {
+    "gains": (1, 15),
+    "losses": (-15, -1),
+    "events.good": (15, 60),
+    "events.bad": (-60, -15),
+}
 
 THEMES_DIR = Path(__file__).resolve().parent.parent / "themes"
 
@@ -44,8 +55,8 @@ class Title(_Strict):
 
 
 class Events(_Strict):
-    good: list[Text] = Field(min_length=1)
-    bad: list[Text] = Field(min_length=1)
+    good: list[Line] = Field(min_length=1)
+    bad: list[Line] = Field(min_length=1)
 
 
 class LostTurnHook(_Strict):
@@ -84,9 +95,9 @@ class Theme(_Strict):
     tagline: Text
     leaderboard_title: Text
     score: Score
-    gains: list[Text] = Field(min_length=1)
-    losses: list[Text] = Field(min_length=1)
-    neutral: list[Text] = Field(default_factory=list)
+    gains: list[Line] = Field(min_length=1)
+    losses: list[Line] = Field(min_length=1)
+    neutral: list[Line] = Field(default_factory=list)
     events: Events
     titles: list[Title] = Field(min_length=1)
     hook: Hook | None = None
@@ -119,10 +130,24 @@ class Theme(_Strict):
     @model_validator(mode="after")
     def _check(self) -> Theme:
         self._check_texts()
+        self._check_scores()
         self._check_titles()
         if self.score.start < self.score.min:
             raise ValueError("score.start is below score.min")
         return self
+
+    def _check_scores(self) -> None:
+        lists = {"gains": self.gains, "losses": self.losses,
+                 "events.good": self.events.good, "events.bad": self.events.bad}
+        for where, lines in lists.items():
+            lo, hi = SCORE_RANGES[where]
+            for i, line in enumerate(lines):
+                n = line.get("n")
+                if not isinstance(n, int) or isinstance(n, bool) or not lo <= n <= hi:
+                    raise ValueError(f"{where}[{i}] needs a score n between {lo} and {hi}, got {n!r}")
+        for i, line in enumerate(self.neutral):
+            if line.get("n", 0) != 0:
+                raise ValueError(f"neutral[{i}] must be worth 0")
 
     def _check_texts(self) -> None:
         texts: list[tuple[str, Text]] = [

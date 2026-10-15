@@ -211,12 +211,16 @@ def play_result(theme: Theme, name: str, r: Played) -> str:
         else:
             prefix = {"good": s["rare_good"], "bad": s["rare_bad"]}.get(r.roll.event, "")
             lines.append(
-                f"{prefix}{escape(r.roll.message[lang])}: <b>{amount(theme, r.delta, lang, signed=True)}</b>"
+                # The sentence's own fixed change; a streak bonus is shown on its own line below.
+                f"{prefix}{escape(r.roll.message[lang])}: "
+                f"<b>{amount(theme, game.score_delta(theme, r.roll.line_points), lang, signed=True)}</b>"
             )
         if r.roll.bonus:
             bonus = amount(theme, game.score_delta(theme, r.roll.bonus), lang, signed=True)
             lines.append(s["streak_bonus"].format(days=num(r.streak, lang), bonus=bonus))
-        title = game.title_for(theme, r.score).name[lang]
+        # Your position's nickname, the same one /top shows; themes without them show the score title.
+        nick = theme.nickname(r.rank, r.players) if r.players else None
+        title = nick[lang] if nick is not None else game.title_for(theme, r.score).name[lang]
         lines.append(
             f"{theme.score.name[lang]}: <b>{amount(theme, r.score, lang)}</b> · #{num(r.rank, lang)} · {title}"
         )

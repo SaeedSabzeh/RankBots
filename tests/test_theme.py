@@ -22,7 +22,7 @@ def _write_variant(tmp_path: Path, **changes) -> Path:
 def test_missing_translation_is_rejected(tmp_path):
     data = yaml.safe_load((THEMES_DIR / "cat.yaml").read_text(encoding="utf-8"))
     gains = data["gains"]
-    gains[0] = {"en": gains[0]["en"]}
+    gains[0] = {"en": gains[0]["en"], "n": gains[0]["n"]}
     path = _write_variant(tmp_path, language="both", gains=gains)
     with pytest.raises(ValueError, match=r"gains\[0\] is missing its 'fa' text"):
         load_theme(path)
@@ -31,7 +31,7 @@ def test_missing_translation_is_rejected(tmp_path):
 def test_english_only_theme_needs_no_farsi(tmp_path):
     data = yaml.safe_load((THEMES_DIR / "cat.yaml").read_text(encoding="utf-8"))
     gains = data["gains"]
-    gains[0] = {"en": gains[0]["en"]}
+    gains[0] = {"en": gains[0]["en"], "n": gains[0]["n"]}
     assert load_theme(_write_variant(tmp_path, language="en", gains=gains)).langs == ("en",)
 
 
@@ -96,3 +96,12 @@ def test_nicknames_need_every_language(tmp_path):
     data["nicknames"]["ranks"][0] = {"en": "Boss"}
     with pytest.raises(ValueError, match=r"nicknames.ranks\[0\] is missing its 'fa' text"):
         load_theme(_write_variant(tmp_path, nicknames=data["nicknames"]))
+
+
+@pytest.mark.parametrize(("field", "bad"), [("gains", -2), ("gains", None), ("losses", 3)])
+def test_scores_must_fit_their_list(tmp_path, field, bad):
+    data = yaml.safe_load((THEMES_DIR / "cat.yaml").read_text(encoding="utf-8"))
+    lines = data[field]
+    lines[0] = {k: v for k, v in lines[0].items() if k != "n"} | ({} if bad is None else {"n": bad})
+    with pytest.raises(ValueError, match=rf"{field}\[0\] needs a score n"):
+        load_theme(_write_variant(tmp_path, **{field: lines}))

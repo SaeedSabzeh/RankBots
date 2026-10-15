@@ -32,63 +32,63 @@ score:
   min: 1
 
 gains:
-  - { en: You finished a whole Gaj test book, fa: یه کتاب تست گاج رو کامل زدی }
-  - { en: You studied all day without touching your phone, fa: کل روز بدون دست زدن به گوشی درس خوندی }
-  - { en: You finally understood integrals, fa: بالاخره انتگرال رو فهمیدی }
-  - { en: You crushed the mock exam, fa: تو آزمون آزمایشی ترکوندی }
-  - { en: You deleted Instagram for a week, fa: یه هفته اینستاگرام رو پاک کردی }
-  - { en: Your study plan actually worked, fa: برنامه‌ی مطالعاتیت واقعاً جواب داد }
-  - { en: You memorized all the Arabic grammar, fa: کل قواعد عربی رو حفظ کردی }
-  - { en: You woke up at dawn to study, fa: سحر بیدار شدی درس بخونی }
-  - { en: You read the Kheili Sabz biology book cover to cover, fa: زیست خیلی سبز رو از اول تا آخرش خوندی }
-  - { en: Your taraz went up in the Ghalamchi exam, fa: ترازت تو آزمون قلم‌چی رفت بالا }
-  - { en: You left the hard questions blank instead of guessing, fa: سؤال‌های سخت رو به‌جای شانسی زدن سفید گذاشتی }
-  - { en: 'Your advisor said "keep going just like this"', fa: مشاورت گفت «همین‌جوری ادامه بده» }
-  - { en: 'You solved a physics question your teacher couldn''t', fa: یه تست فیزیک رو حل کردی که معلمتون نتونست }
-  - { en: You finally got the hang of literary devices, fa: بالاخره آرایه‌های ادبی دستت اومد }
-  - { en: You memorized the whole periodic table, fa: جدول تناوبی رو کامل از بر کردی }
-  - { en: You muted every Telegram group except this one, fa: همه‌ی گروه‌های تلگرام رو میوت کردی جز همین یکی }
-  - { en: Your konkur-class teacher taught you a test-taking shortcut, fa: استاد کلاس کنکور یه روش تستی خفن یادت داد }
-  - { en: You sat in the library all day and didn't budge, fa: کل روز تو کتابخونه نشستی و جم نخوردی }
-  - { en: You analyzed your wrong answers instead of just checking your score, fa: به‌جای اینکه فقط نمره‌ت رو ببینی غلط‌هات رو تحلیل کردی }
-  - { en: Your mom brought tea and fruit to your desk, fa: مامانت برات چای و میوه آورد سر میز درس }
-  - { en: You topped your class in the Gozine Do mock exam, fa: تو آزمون گزینه دو اول کلاس شدی }
-  - { en: You finally finished the stoichiometry chapter, fa: بالاخره فصل استوکیومتری شیمی رو تموم کردی }
-  - { en: You explained a lesson to a friend and understood it better yourself, fa: درس رو برای دوستت توضیح دادی و خودت بهتر فهمیدی }
-  - { en: You took a full timed practice exam with a real answer sheet, fa: یه آزمون کامل با تایمر و پاسخ‌نامه‌ی واقعی زدی }
-  - { en: You stopped comparing yourself with the neighbor's kid, fa: دیگه خودت رو با بچه‌ی همسایه مقایسه نکردی }
-  - { en: 'A friend asked you out and you said "after the konkur"', fa: 'دوستت گفت «بیا بریم بیرون» و تو گفتی «بعد کنکور»' }
-  - { en: 'You stuck formulas on the bathroom mirror and they memorized themselves', fa: 'فرمول‌ها رو چسبوندی به آینه‌ی دستشویی و خودشون حفظ شدن' }
-  - { en: 'Your doctor uncle said "you can do it, just keep going"', fa: 'عموی دکترت گفت «تو می‌تونی، فقط ادامه بده»' }
-  - { en: 'You studied for an hour without checking the clock even once', fa: 'یه ساعت درس خوندی و یه بار هم ساعت رو نگاه نکردی' }
+  - { n: 8, en: You finished a whole Gaj test book, fa: یه کتاب تست گاج رو کامل زدی }
+  - { n: 5, en: You studied all day without touching your phone, fa: کل روز بدون دست زدن به گوشی درس خوندی }
+  - { n: 6, en: You finally understood integrals, fa: بالاخره انتگرال رو فهمیدی }
+  - { n: 8, en: You crushed the mock exam, fa: تو آزمون آزمایشی ترکوندی }
+  - { n: 5, en: You deleted Instagram for a week, fa: یه هفته اینستاگرام رو پاک کردی }
+  - { n: 4, en: Your study plan actually worked, fa: برنامه‌ی مطالعاتیت واقعاً جواب داد }
+  - { n: 6, en: You memorized all the Arabic grammar, fa: کل قواعد عربی رو حفظ کردی }
+  - { n: 3, en: You woke up at dawn to study, fa: سحر بیدار شدی درس بخونی }
+  - { n: 9, en: You read the Kheili Sabz biology book cover to cover, fa: زیست خیلی سبز رو از اول تا آخرش خوندی }
+  - { n: 6, en: Your taraz went up in the Ghalamchi exam, fa: ترازت تو آزمون قلم‌چی رفت بالا }
+  - { n: 2, en: You left the hard questions blank instead of guessing, fa: سؤال‌های سخت رو به‌جای شانسی زدن سفید گذاشتی }
+  - { n: 2, en: 'Your advisor said "keep going just like this"', fa: مشاورت گفت «همین‌جوری ادامه بده» }
+  - { n: 7, en: 'You solved a physics question your teacher couldn''t', fa: یه تست فیزیک رو حل کردی که معلمتون نتونست }
+  - { n: 4, en: You finally got the hang of literary devices, fa: بالاخره آرایه‌های ادبی دستت اومد }
+  - { n: 5, en: You memorized the whole periodic table, fa: جدول تناوبی رو کامل از بر کردی }
+  - { n: 3, en: You muted every Telegram group except this one, fa: همه‌ی گروه‌های تلگرام رو میوت کردی جز همین یکی }
+  - { n: 3, en: Your konkur-class teacher taught you a test-taking shortcut, fa: استاد کلاس کنکور یه روش تستی خفن یادت داد }
+  - { n: 5, en: You sat in the library all day and didn't budge, fa: کل روز تو کتابخونه نشستی و جم نخوردی }
+  - { n: 4, en: You analyzed your wrong answers instead of just checking your score, fa: به‌جای اینکه فقط نمره‌ت رو ببینی غلط‌هات رو تحلیل کردی }
+  - { n: 1, en: Your mom brought tea and fruit to your desk, fa: مامانت برات چای و میوه آورد سر میز درس }
+  - { n: 7, en: You topped your class in the Gozine Do mock exam, fa: تو آزمون گزینه دو اول کلاس شدی }
+  - { n: 6, en: You finally finished the stoichiometry chapter, fa: بالاخره فصل استوکیومتری شیمی رو تموم کردی }
+  - { n: 3, en: You explained a lesson to a friend and understood it better yourself, fa: درس رو برای دوستت توضیح دادی و خودت بهتر فهمیدی }
+  - { n: 5, en: You took a full timed practice exam with a real answer sheet, fa: یه آزمون کامل با تایمر و پاسخ‌نامه‌ی واقعی زدی }
+  - { n: 2, en: You stopped comparing yourself with the neighbor's kid, fa: دیگه خودت رو با بچه‌ی همسایه مقایسه نکردی }
+  - { n: 3, en: 'A friend asked you out and you said "after the konkur"', fa: 'دوستت گفت «بیا بریم بیرون» و تو گفتی «بعد کنکور»' }
+  - { n: 3, en: 'You stuck formulas on the bathroom mirror and they memorized themselves', fa: 'فرمول‌ها رو چسبوندی به آینه‌ی دستشویی و خودشون حفظ شدن' }
+  - { n: 1, en: 'Your doctor uncle said "you can do it, just keep going"', fa: 'عموی دکترت گفت «تو می‌تونی، فقط ادامه بده»' }
+  - { n: 2, en: 'You studied for an hour without checking the clock even once', fa: 'یه ساعت درس خوندی و یه بار هم ساعت رو نگاه نکردی' }
 
 losses:
-  - { en: 'You said "just one episode" and watched the whole season', fa: گفتی «فقط یه قسمت» و کل فصل رو دیدی }
-  - { en: You got lost in konkur Telegram channels, fa: تو کانال‌های تلگرامی کنکور گم شدی }
-  - { en: You guessed and got negative marks, fa: شانسی زدی و نمره‌ی منفی خوردی }
-  - { en: The neighbor's kid got a better mock-exam rank, fa: بچه‌ی همسایه تو آزمون آزمایشی رتبه‌ی بهتری آورد }
-  - { en: 'You fell asleep on your chemistry book and woke up with the periodic table on your cheek', fa: 'رو کتاب شیمی خوابت برد و صبح جدول تناوبی رو لپت چاپ شده بود' }
-  - { en: You bought another test book instead of studying, fa: به‌جای درس خوندن یه کتاب تست دیگه خریدی }
-  - { en: You spent the whole day drawing a beautiful study plan, fa: کل روز رو گذاشتی رو کشیدن یه برنامه‌ی مطالعاتی خوشگل }
-  - { en: You pulled an all-nighter and slept through the mock exam, fa: شب تا صبح بیدار موندی و سر آزمون آزمایشی خواب موندی }
-  - { en: 'You hadn''t even sat down before every aunt asked "so, what''s your rank?"', fa: 'تو مهمونی هنوز ننشسته بودی که هر کدوم از عمه‌ها یه بار پرسیدن «رتبه‌ت چی شد؟»' }
-  - { en: You watched konkur motivation videos instead of studying, fa: به‌جای درس خوندن ویدیوی انگیزشی کنکور دیدی }
-  - { en: Your taraz dropped and you moped around all day, fa: ترازت افت کرد و کل روز غمبرک زدی }
-  - { en: You got into an argument under a konkur Instagram post, fa: زیر پست یه پیج کنکوری تو اینستاگرام دعوات شد }
-  - { en: You mixed up mitosis and meiosis again, fa: باز میتوز و میوز رو قاطی کردی }
-  - { en: You saw the question and forgot every physics formula, fa: تا سؤال رو دیدی همه‌ی فرمول‌های فیزیک از یادت پرید }
-  - { en: A friend sent a voice message saying "just one quick question" and it ate your whole evening, fa: دوستت یه ویس فرستاد که «فقط یه سؤال کوتاه» و کل عصرت رفت }
-  - { en: Your parents compared you with your cousin who got into medicine, fa: مامان‌بابات تو رو با دخترخاله‌ت که پزشکی قبول شده مقایسه کردن }
-  - { en: You spent hours planning your major choices before even taking the exam, fa: هنوز کنکور ندادی ولی ساعت‌ها نشستی انتخاب رشته‌ت رو چیدی }
-  - { en: 'Your "quick nap" lasted until dinner', fa: «چرت کوتاهت» تا وقت شام طول کشید }
-  - { en: You translated an Arabic sentence into something completely different, fa: یه جمله‌ی عربی رو ترجمه کردی و یه معنی دیگه دراومد }
-  - { en: 'You opened the group "just for a peek" and you''re still here', fa: گروه رو باز کردی «فقط یه نگاه» و هنوز اینجایی }
-  - { en: 'You went to a café to study and only the coffee got finished', fa: 'رفتی کافه درس بخونی و فقط قهوه‌ت تموم شد' }
-  - { en: 'You watched "how to study ten hours a day" and fell asleep', fa: 'ویدیوی «چطوری روزی ده ساعت درس بخونیم» رو دیدی و خوابت برد' }
-  - { en: 'A friend said "I haven''t studied either" and you relaxed. He was lying', fa: 'دوستت گفت «منم هیچی نخوندم» و خیالت راحت شد. دروغ می‌گفت' }
-  - { en: 'You read the test book''s introduction three times', fa: 'مقدمه‌ی کتاب تست رو سه بار خوندی' }
-  - { en: 'Mom said "go study", you said "I am" and went out', fa: 'مامان گفت «برو درس بخون»، گفتی «دارم می‌خونم» و رفتی بیرون' }
-  - { en: 'You put your phone in the next room so you wouldn''t get distracted, and checked it twice an hour', fa: 'گوشی رو گذاشتی اتاق بغلی که حواست پرت نشه و ساعتی دو بار رفتی سراغش' }
+  - { n: -5, en: 'You said "just one episode" and watched the whole season', fa: گفتی «فقط یه قسمت» و کل فصل رو دیدی }
+  - { n: -2, en: You got lost in konkur Telegram channels, fa: تو کانال‌های تلگرامی کنکور گم شدی }
+  - { n: -3, en: You guessed and got negative marks, fa: شانسی زدی و نمره‌ی منفی خوردی }
+  - { n: -1, en: The neighbor's kid got a better mock-exam rank, fa: بچه‌ی همسایه تو آزمون آزمایشی رتبه‌ی بهتری آورد }
+  - { n: -2, en: 'You fell asleep on your chemistry book and woke up with the periodic table on your cheek', fa: 'رو کتاب شیمی خوابت برد و صبح جدول تناوبی رو لپت چاپ شده بود' }
+  - { n: -2, en: You bought another test book instead of studying, fa: به‌جای درس خوندن یه کتاب تست دیگه خریدی }
+  - { n: -3, en: You spent the whole day drawing a beautiful study plan, fa: کل روز رو گذاشتی رو کشیدن یه برنامه‌ی مطالعاتی خوشگل }
+  - { n: -5, en: You pulled an all-nighter and slept through the mock exam, fa: شب تا صبح بیدار موندی و سر آزمون آزمایشی خواب موندی }
+  - { n: -1, en: 'You hadn''t even sat down before every aunt asked "so, what''s your rank?"', fa: 'تو مهمونی هنوز ننشسته بودی که هر کدوم از عمه‌ها یه بار پرسیدن «رتبه‌ت چی شد؟»' }
+  - { n: -2, en: You watched konkur motivation videos instead of studying, fa: به‌جای درس خوندن ویدیوی انگیزشی کنکور دیدی }
+  - { n: -3, en: Your taraz dropped and you moped around all day, fa: ترازت افت کرد و کل روز غمبرک زدی }
+  - { n: -2, en: You got into an argument under a konkur Instagram post, fa: زیر پست یه پیج کنکوری تو اینستاگرام دعوات شد }
+  - { n: -2, en: You mixed up mitosis and meiosis again, fa: باز میتوز و میوز رو قاطی کردی }
+  - { n: -4, en: You saw the question and forgot every physics formula, fa: تا سؤال رو دیدی همه‌ی فرمول‌های فیزیک از یادت پرید }
+  - { n: -3, en: A friend sent a voice message saying "just one quick question" and it ate your whole evening, fa: دوستت یه ویس فرستاد که «فقط یه سؤال کوتاه» و کل عصرت رفت }
+  - { n: -2, en: Your parents compared you with your cousin who got into medicine, fa: مامان‌بابات تو رو با دخترخاله‌ت که پزشکی قبول شده مقایسه کردن }
+  - { n: -2, en: You spent hours planning your major choices before even taking the exam, fa: هنوز کنکور ندادی ولی ساعت‌ها نشستی انتخاب رشته‌ت رو چیدی }
+  - { n: -3, en: 'Your "quick nap" lasted until dinner', fa: «چرت کوتاهت» تا وقت شام طول کشید }
+  - { n: -1, en: You translated an Arabic sentence into something completely different, fa: یه جمله‌ی عربی رو ترجمه کردی و یه معنی دیگه دراومد }
+  - { n: -2, en: 'You opened the group "just for a peek" and you''re still here', fa: گروه رو باز کردی «فقط یه نگاه» و هنوز اینجایی }
+  - { n: -2, en: 'You went to a café to study and only the coffee got finished', fa: 'رفتی کافه درس بخونی و فقط قهوه‌ت تموم شد' }
+  - { n: -1, en: 'You watched "how to study ten hours a day" and fell asleep', fa: 'ویدیوی «چطوری روزی ده ساعت درس بخونیم» رو دیدی و خوابت برد' }
+  - { n: -2, en: 'A friend said "I haven''t studied either" and you relaxed. He was lying', fa: 'دوستت گفت «منم هیچی نخوندم» و خیالت راحت شد. دروغ می‌گفت' }
+  - { n: -1, en: 'You read the test book''s introduction three times', fa: 'مقدمه‌ی کتاب تست رو سه بار خوندی' }
+  - { n: -4, en: 'Mom said "go study", you said "I am" and went out', fa: 'مامان گفت «برو درس بخون»، گفتی «دارم می‌خونم» و رفتی بیرون' }
+  - { n: -2, en: 'You put your phone in the next room so you wouldn''t get distracted, and checked it twice an hour', fa: 'گوشی رو گذاشتی اتاق بغلی که حواست پرت نشه و ساعتی دو بار رفتی سراغش' }
 
 neutral:
   - { en: You opened the book and stared at the first page, fa: کتاب رو باز کردی و به صفحه‌ی اول زل زدی }
@@ -100,25 +100,25 @@ neutral:
 # Rare events (5% of rolls) replace the normal roll with a big swing.
 events:
   good:
-    - { en: You got into Sharif, fa: شریف قبول شدی }
-    - { en: The answer key had a mistake and it went your way, fa: کلید سؤال‌ها اشتباه داشت و به نفع تو شد }
-    - { en: Every single guess you made was right, fa: همه‌ی شانسی‌هات درست دراومد }
-    - { en: You got into medicine at the University of Tehran, fa: پزشکی دانشگاه تهران قبول شدی }
-    - { en: Your name made the national top-ranks list, fa: اسمت تو لیست رتبه‌برترهای کشور اومد }
-    - { en: The konkur had exactly the questions you studied the night before, fa: سؤال‌های کنکور دقیقاً همونایی بود که شب قبلش خونده بودی }
-    - { en: TV interviewed you as a top ranker, fa: تلویزیون به‌عنوان رتبه‌برتر باهات مصاحبه کرد }
-    - { en: The neighbor's kid came to you for study advice, fa: بچه‌ی همسایه اومد ازت مشاوره گرفت }
-    - { en: 'You opened your results, saw a single-digit rank, and Mom told the whole building', fa: 'کارنامه رو باز کردی، رتبه‌ت تک‌رقمی بود و مامان کل ساختمون رو خبر کرد' }
+    - { n: 50, en: You got into Sharif, fa: شریف قبول شدی }
+    - { n: 25, en: The answer key had a mistake and it went your way, fa: کلید سؤال‌ها اشتباه داشت و به نفع تو شد }
+    - { n: 30, en: Every single guess you made was right, fa: همه‌ی شانسی‌هات درست دراومد }
+    - { n: 50, en: You got into medicine at the University of Tehran, fa: پزشکی دانشگاه تهران قبول شدی }
+    - { n: 45, en: Your name made the national top-ranks list, fa: اسمت تو لیست رتبه‌برترهای کشور اومد }
+    - { n: 35, en: The konkur had exactly the questions you studied the night before, fa: سؤال‌های کنکور دقیقاً همونایی بود که شب قبلش خونده بودی }
+    - { n: 40, en: TV interviewed you as a top ranker, fa: تلویزیون به‌عنوان رتبه‌برتر باهات مصاحبه کرد }
+    - { n: 20, en: The neighbor's kid came to you for study advice, fa: بچه‌ی همسایه اومد ازت مشاوره گرفت }
+    - { n: 50, en: 'You opened your results, saw a single-digit rank, and Mom told the whole building', fa: 'کارنامه رو باز کردی، رتبه‌ت تک‌رقمی بود و مامان کل ساختمون رو خبر کرد' }
   bad:
-    - { en: You filled in the answer sheet one row off, fa: پاسخ‌نامه رو یه ردیف جابه‌جا پر کردی }
-    - { en: You overslept on konkur day, fa: روز کنکور خواب موندی }
-    - { en: Your pencil broke and you had no spare, fa: مدادت شکست و یدک نداشتی }
-    - { en: You realized you spent the whole year on the old textbooks, fa: فهمیدی کل سال کتاب‌های چاپ قدیم رو خوندی }
-    - { en: You entered the wrong codes when choosing your majors, fa: تو انتخاب رشته کدها رو اشتباه وارد کردی }
-    - { en: The air conditioning broke down in the exam hall, fa: کولر حوزه‌ی امتحانی وسط کنکور خراب شد }
-    - { en: You went to the wrong exam center on konkur day, fa: روز کنکور رفتی یه حوزه‌ی دیگه }
-    - { en: You left your exam entry card at home, fa: کارت ورود به جلسه‌ت رو خونه جا گذاشتی }
-    - { en: 'You couldn''t sleep the night before the konkur and stared at the ceiling till morning', fa: 'شب قبل کنکور خوابت نبرد و تا صبح به سقف زل زدی' }
+    - { n: -50, en: You filled in the answer sheet one row off, fa: پاسخ‌نامه رو یه ردیف جابه‌جا پر کردی }
+    - { n: -50, en: You overslept on konkur day, fa: روز کنکور خواب موندی }
+    - { n: -20, en: Your pencil broke and you had no spare, fa: مدادت شکست و یدک نداشتی }
+    - { n: -40, en: You realized you spent the whole year on the old textbooks, fa: فهمیدی کل سال کتاب‌های چاپ قدیم رو خوندی }
+    - { n: -35, en: You entered the wrong codes when choosing your majors, fa: تو انتخاب رشته کدها رو اشتباه وارد کردی }
+    - { n: -20, en: The air conditioning broke down in the exam hall, fa: کولر حوزه‌ی امتحانی وسط کنکور خراب شد }
+    - { n: -45, en: You went to the wrong exam center on konkur day, fa: روز کنکور رفتی یه حوزه‌ی دیگه }
+    - { n: -30, en: You left your exam entry card at home, fa: کارت ورود به جلسه‌ت رو خونه جا گذاشتی }
+    - { n: -25, en: 'You couldn''t sleep the night before the konkur and stared at the ceiling till morning', fa: 'شب قبل کنکور خوابت نبرد و تا صبح به سقف زل زدی' }
 
 # Lower is better: each title is reached once the rank is at or below `at`.
 titles:

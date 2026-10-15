@@ -105,10 +105,13 @@ they don't need Supabase or a real bot token.
 
 - Cooldown per user per group, set by each theme's `cooldown_minutes` to match the joke: chai 5 min,
   taarof 15, mom 30, tahdig 60, cat 90, khastegari 180 (default 12 hours). A group's own
-  `chats.cooldown_minutes` overrides it. Base roll −5 to +10. Score never goes below the theme's `min`.
+  `chats.cooldown_minutes` overrides it. Score never goes below the theme's `min`.
+- Fixed scores: every gain, loss and rare-event sentence carries its own `n` (gains 1…15, losses −15…−1,
+  rare events ±15…±60, neutral 0), so the number always fits the joke. A roll is a gain 10/16, a loss
+  5/16 or neutral 1/16 of the time, then a random sentence from that list; its `n` is the change.
 - Streak: +1 for each consecutive calendar day (Europe/Rome), reset after a missed day.
   Bonus +1 per 3 streak days, capped at +5.
-- Rare events: 5% of rolls, replacing the base roll with ±20 to ±50 and the theme's event message.
+- Rare events: 5% of rolls, using one of the theme's event sentences and its fixed `n`.
 - Theme hook (optional, one per theme): `kind: lost_turn` with a `chance` and `messages`. When it
   fires the turn is lost: the cooldown is used and the streak counts the day, but the score
   doesn't move. The taarof bot will use it at 10% (see the example at the end of `themes/cat.yaml`).

@@ -20,6 +20,7 @@ class Played:
     streak: int
     rank: int
     cooldown: timedelta
+    players: int = 0  # everyone who has played in the group, for position nicknames
 
 
 @dataclass(frozen=True)
@@ -85,7 +86,8 @@ async def play(
         return OnCooldown(game.cooldown_left(fresh.last_play_at, cooldown, now))
 
     rank = await store.rank_of(theme.name, chat_id, score, theme.higher_is_better)
-    return Played(roll, delta, score, streak, rank, cooldown)
+    players = await store.player_count(theme.name, chat_id)
+    return Played(roll, delta, score, streak, rank, cooldown, players)
 
 
 async def stats(store: Store, theme: Theme, *, chat_id: int, user_id: int, now: datetime) -> Stats | None:

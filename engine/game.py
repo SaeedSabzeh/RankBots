@@ -17,9 +17,9 @@ from engine.theme import Text, Theme, Title
 # Calendar days for streaks are counted in this time zone.
 TZ = ZoneInfo("Europe/Rome")
 
-ROLL_MIN, ROLL_MAX = -5, 10
+# Each roll is a gain, a loss or neutral with these odds; the sentence picked sets the points.
+GAIN_SHARE, LOSS_SHARE = 10 / 16, 5 / 16  # the remaining 1/16 is neutral
 EVENT_CHANCE = 0.05
-EVENT_MIN, EVENT_MAX = 20, 50
 STREAK_DAYS_PER_BONUS = 3
 STREAK_BONUS_CAP = 5
 DUEL_COOLDOWN_HOURS = 6
@@ -41,9 +41,13 @@ class Roll:
     multiplier: int = 1
 
     @property
+    def line_points(self) -> int:
+        """The sentence's own points, doubled by boosts when it's a gain."""
+        return self.base * self.multiplier if self.base > 0 else self.base
+
+    @property
     def points(self) -> int:
-        points = self.base + self.bonus
-        return points * self.multiplier if points > 0 else points
+        return self.line_points + self.bonus
 
 
 def local_day(now: datetime) -> date:
@@ -85,22 +89,19 @@ def roll(theme: Theme, streak: int, rng: random.Random, boosts: tuple[Boost, ...
     bonus = streak_bonus(streak)
     if rng.random() < event_chance:
         kind: Literal["good", "bad"] = "good" if no_losses else rng.choice(("good", "bad"))
-        size = rng.randint(EVENT_MIN, EVENT_MAX)
-        pool = theme.events.good if kind == "good" else theme.events.bad
-        base = size if kind == "good" else -size
-        return Roll(base, bonus, kind, rng.choice(pool), names, multiplier)
+        line = rng.choice(theme.events.good if kind == "good" else theme.events.bad)
+        return Roll(int(line["n"]), bonus, kind, line, names, multiplier)
 
-    base = rng.randint(ROLL_MIN, ROLL_MAX)
-    if no_losses:
-        base = abs(base)
-    points = base + bonus
-    if points > 0:
+    # Every sentence carries its own fixed points, so the number always fits the joke.
+    u = rng.random()
+    if u < GAIN_SHARE or (no_losses and u < GAIN_SHARE + LOSS_SHARE):
         pool = theme.gains
-    elif points < 0:
+    elif u < GAIN_SHARE + LOSS_SHARE:
         pool = theme.losses
     else:
         pool = theme.neutral or theme.gains
-    return Roll(base, bonus, None, rng.choice(pool), names, multiplier)
+    line = rng.choice(pool)
+    return Roll(int(line.get("n", 0)), bonus, None, line, names, multiplier)
 
 
 # --- Boosts: the daily lucky hour and Persian holidays ---------------------------
