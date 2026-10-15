@@ -6,8 +6,8 @@ name: taarof
 emoji: "🌹"
 # fa, en, or both. "both" sends every message in Farsi and then English.
 language: fa
-# Time between two /play turns. One round of "after you" at the door: 15 minutes between turns.
-cooldown_minutes: 15
+# Time between two /play turns: 12 hours.
+cooldown_minutes: 720
 
 bot_name:
   en: Taarof Bot

@@ -6,8 +6,8 @@ name: cat
 emoji: "🐱"
 # fa, en, or both. "both" sends every message in Farsi and then English.
 language: fa
-# Time between two /play turns. A cat nap: 1.5 hours between turns.
-cooldown_minutes: 90
+# Time between two /play turns: 12 hours.
+cooldown_minutes: 720
 
 bot_name:
   en: Cat Bot

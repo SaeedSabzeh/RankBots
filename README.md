@@ -103,9 +103,9 @@ they don't need Supabase or a real bot token.
 
 ## Rules (starting values, in `engine/game.py`)
 
-- Cooldown per user per group, set by each theme's `cooldown_minutes` to match the joke: chai 5 min,
-  taarof 15, mom 30, tahdig 60, cat 90, khastegari 180 (default 12 hours). A group's own
-  `chats.cooldown_minutes` overrides it. Score never goes below the theme's `min`.
+- Cooldown per user per group, set by each theme's `cooldown_minutes`: 12 hours for every bot except
+  chai, which is 5 minutes (one glass of tea). A group's own `chats.cooldown_minutes` overrides it.
+  Score never goes below the theme's `min`.
 - Scores per sentence: every gain, loss and rare-event sentence carries a size `n` (everyday 1…10,
   rare events ±15…±60, neutral 0). `game.points_for` turns sizes into points on a straight line,
   size 1 → 3 and size 10 → 20 (rare events ≈ 30…110), and each roll lands at random within ±30% of

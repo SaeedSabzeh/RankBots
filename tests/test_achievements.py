@@ -50,10 +50,10 @@ async def test_badge_is_announced_once_and_shown_in_me(store):
     assert first.roll.event == "good" and "jackpot" in first.new_badges
     assert "اولین جکپات" in texts.play_result(CAT, "Simin", first)
 
-    second = await _play(store, T0 + timedelta(hours=2), Jackpot(0))
+    second = await _play(store, T0 + timedelta(hours=13), Jackpot(0))
     assert "jackpot" not in second.new_badges
 
-    st = await service.stats(store, CAT, chat_id=CHAT, user_id=1, now=T0 + timedelta(hours=2))
+    st = await service.stats(store, CAT, chat_id=CHAT, user_id=1, now=T0 + timedelta(hours=13))
     assert "jackpot" in st.badges
     assert "دستاوردها" in texts.me(CAT, "Simin", st) and "✨" in texts.me(CAT, "Simin", st)
 

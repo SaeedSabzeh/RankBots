@@ -7,8 +7,7 @@ from datetime import datetime, timedelta, timezone
 from engine import service, texts
 from engine.theme import Theme, load_themes
 
-# These tests are written for a 12-hour cooldown; the real cat naps for 1.5 hours.
-CAT = load_themes()["cat"].model_copy(update={"cooldown_minutes": 12 * 60})
+CAT = load_themes()["cat"]  # 12-hour cooldown
 CHAI = load_themes()["chai"]
 TAAROF = Theme.model_validate({
     **CAT.model_dump(),

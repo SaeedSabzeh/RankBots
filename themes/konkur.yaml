@@ -7,8 +7,8 @@ name: konkur
 emoji: "📚"
 # fa, en, or both. "both" sends every message in Farsi and then English.
 language: fa
-# Time between two /play turns. One study session: 2 hours.
-cooldown_minutes: 120
+# Time between two /play turns: 12 hours.
+cooldown_minutes: 720
 
 bot_name:
   en: Konkur Bot

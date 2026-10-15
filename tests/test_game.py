@@ -149,10 +149,10 @@ def test_cooldown_left():
     assert game.cooldown_left(now - timedelta(hours=13), twelve, now) < timedelta(0)
 
 
-def test_each_theme_has_its_own_cooldown():
+def test_every_theme_waits_twelve_hours_except_chai():
     themes = load_themes()
     assert themes["chai"].cooldown == timedelta(minutes=5)
-    assert themes["cat"].cooldown == timedelta(minutes=90)
+    assert all(t.cooldown == timedelta(hours=12) for name, t in themes.items() if name != "chai")
 
 
 def test_durations_read_naturally():

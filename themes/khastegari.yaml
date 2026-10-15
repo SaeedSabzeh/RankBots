@@ -6,8 +6,8 @@ name: khastegari
 emoji: "💍"
 # fa, en, or both. "both" sends every message in Farsi and then English.
 language: fa
-# Time between two /play turns. One khastegari visit: about 3 hours.
-cooldown_minutes: 180
+# Time between two /play turns: 12 hours.
+cooldown_minutes: 720
 
 bot_name:
   en: Khastegari Bot
