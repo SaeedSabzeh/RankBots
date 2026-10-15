@@ -24,6 +24,8 @@ STREAK_DAYS_PER_BONUS = 3
 STREAK_BONUS_CAP = 5
 DUEL_COOLDOWN_HOURS = 6
 DUEL_EXPIRY = timedelta(minutes=10)
+# Stake buttons offered by /duel, in score units before the theme's scale (konkur: x1000).
+DUEL_STAKES = (5, 10, 25, 50)
 
 
 @dataclass(frozen=True)
@@ -232,6 +234,15 @@ def duel_headroom(theme: Theme, score: int) -> int:
     exactly zero-sum in either direction.
     """
     return score - theme.score.min
+
+
+def duel_stake_options(theme: Theme, *headrooms: int) -> list[int]:
+    """Stake buttons both players can afford; if none of the presets fit, their whole headroom."""
+    cap = min(headrooms)
+    if cap <= 0:
+        return []
+    options = [s * theme.score.scale for s in DUEL_STAKES if s * theme.score.scale <= cap]
+    return options or [cap]
 
 
 def duel_winner_delta(theme: Theme, stake: int) -> int:

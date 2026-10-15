@@ -51,8 +51,7 @@ STRINGS: dict[Lang, dict[str, str]] = {
             "/play: roll once every {every}\n"
             "/me: your score, rank, title and streak\n"
             "/top: this group's leaderboard\n"
-            "/duel @user &lt;stake&gt;: bet points against someone, 50/50 "
-            "(or reply to their message with /duel &lt;stake&gt;)\n"
+            "/duel: pick someone and a stake with the buttons, 50/50, winner takes it\n"
             "/help: this message\n\n"
             "Play on consecutive days for a streak bonus. "
             "Rare events can swing your score a lot, either way. "
@@ -68,6 +67,10 @@ STRINGS: dict[Lang, dict[str, str]] = {
             "⚔️ <b>{challenger}</b> challenges <b>{target}</b> to a duel for <b>{stake}</b>!\n"
             "50/50, winner takes the stake. {target}, you have {minutes} minutes to answer."
         ),
+        "duel_pick_target": "⚔️ {name}, who do you want to duel?",
+        "duel_pick_stake": "⚔️ {name} vs {target}: how much are you betting?",
+        "duel_nobody": "Nobody else has played here yet. Someone has to /play first!",
+        "duel_cancel": "✖️ Cancel",
         "duel_accept": "⚔️ Accept",
         "duel_decline": "🏳️ Decline",
         "duel_won": "⚔️ <b>{winner}</b> beat <b>{loser}</b> and takes <b>{stake}</b>!",
@@ -118,8 +121,7 @@ STRINGS: dict[Lang, dict[str, str]] = {
             "/play: هر {every} یه بار بازی کن\n"
             "/me: امتیاز، رتبه، لقب و روزهای پشت سر همت\n"
             "/top: جدول این گروه\n"
-            "/duel @user &lt;امتیاز&gt;: سر امتیاز با یکی دوئل کن، پنجاه‌پنجاه "
-            "(یا روی پیامش ریپلای کن و بنویس /duel &lt;امتیاز&gt;)\n"
+            "/duel: با دکمه‌ها یکی رو انتخاب کن و سر یه مقدار دوئل کن، پنجاه‌پنجاه\n"
             "/help: همین راهنما\n\n"
             "اگه چند روز پشت سر هم بازی کنی جایزه می‌گیری. "
             "اتفاق‌های نادر می‌تونن امتیازت رو حسابی بالا یا پایین ببرن. "
@@ -135,6 +137,10 @@ STRINGS: dict[Lang, dict[str, str]] = {
             "⚔️ <b>{challenger}</b>، <b>{target}</b> رو سر <b>{stake}</b> به دوئل دعوت کرد!\n"
             "پنجاه‌پنجاهه و برنده همه‌ش رو می‌بره. {target}، {minutes} دقیقه وقت داری جواب بدی."
         ),
+        "duel_pick_target": "⚔️ {name}، با کی می‌خوای دوئل کنی؟",
+        "duel_pick_stake": "⚔️ {name} در برابر {target}: سر چقدر؟",
+        "duel_nobody": "هنوز کس دیگه‌ای اینجا بازی نکرده. اول یکی باید /play بزنه!",
+        "duel_cancel": "✖️ بی‌خیال",
         "duel_accept": "⚔️ قبول",
         "duel_decline": "🏳️ نه، مرسی",
         "duel_won": "⚔️ <b>{winner}</b> از <b>{loser}</b> برد و <b>{stake}</b> رو گرفت!",
@@ -329,6 +335,28 @@ def duel_offer(theme: Theme, o: DuelOffer) -> str:
         )
 
     return _join(theme, build)
+
+
+def duel_pick_target(theme: Theme, name: str) -> str:
+    return _join(theme, lambda lang: STRINGS[lang]["duel_pick_target"].format(name=name))
+
+
+def duel_pick_stake(theme: Theme, name: str, target: Player) -> str:
+    return _join(theme, lambda lang: STRINGS[lang]["duel_pick_stake"].format(name=name, target=_player_name(target)))
+
+
+def duel_nobody(theme: Theme) -> str:
+    return _join(theme, lambda lang: STRINGS[lang]["duel_nobody"])
+
+
+def label(theme: Theme, key: str) -> str:
+    """A button label; a "both" theme shows both languages."""
+    return " / ".join(STRINGS[lang][key] for lang in theme.langs)
+
+
+def stake_label(theme: Theme, stake: int) -> str:
+    """A stake on a button, e.g. "25 g" (buttons don't need the RTL number isolation)."""
+    return amount(theme, stake, theme.langs[0]).replace(_LTR_START, "").replace(_LTR_END, "")
 
 
 def duel_buttons(theme: Theme) -> tuple[str, str]:

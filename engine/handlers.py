@@ -28,7 +28,7 @@ from aiogram.types import (
     TelegramObject,
 )
 
-from engine import service, texts
+from engine import game, service, texts
 from engine.db import Store
 from engine.theme import Theme
 
@@ -47,14 +47,14 @@ COMMANDS = {
         BotCommand(command="play", description="Roll once (every {every})"),
         BotCommand(command="me", description="Your score, rank and streak"),
         BotCommand(command="top", description="Group leaderboard"),
-        BotCommand(command="duel", description="Duel someone: /duel @user <stake>"),
+        BotCommand(command="duel", description="Duel someone (pick with buttons)"),
         BotCommand(command="help", description="Rules and commands"),
     ],
     "fa": [
         BotCommand(command="play", description="بازی کن (هر {every})"),
         BotCommand(command="me", description="امتیاز، رتبه و روزهای پشت سر هم"),
         BotCommand(command="top", description="جدول گروه"),
-        BotCommand(command="duel", description="دوئل: /duel @user <امتیاز>"),
+        BotCommand(command="duel", description="دوئل با یکی (با دکمه انتخاب کن)"),
         BotCommand(command="help", description="قوانین و دستورها"),
     ],
 }
@@ -63,6 +63,15 @@ COMMANDS = {
 class DuelButton(CallbackData, prefix="duel"):
     duel_id: int
     accept: bool
+
+
+class DuelPick(CallbackData, prefix="dp"):
+    """The /duel picker: choose an opponent, then a stake. Only the challenger may press."""
+
+    challenger: int
+    target: int = 0
+    stake: int = 0
+    cancel: bool = False
 
 
 class ThemeMiddleware(BaseMiddleware):
@@ -178,12 +187,90 @@ def _duel_target(message: Message) -> service.Who | str | None:
     return None
 
 
+async def _resolve_target(store: Store, theme: Theme, chat_id: int, target: service.Who | str):
+    """The target's player row, or a refusal explaining why they can't be dueled."""
+    if isinstance(target, str):
+        p = await store.find_player(theme.name, chat_id, target)
+        if p is None:
+            return service.DuelRefused("unknown", None, target.lstrip("@"))
+        return p
+    if target.is_bot:
+        return service.DuelRefused("bot", target.first_name, target.username)
+    p = await store.get_player(theme.name, chat_id, target.user_id)
+    if p is None or p.last_play_at is None:
+        return service.DuelRefused("not_played", target.first_name, target.username)
+    return p
+
+
+def _cancel_button(theme: Theme, challenger: int) -> InlineKeyboardButton:
+    return InlineKeyboardButton(text=texts.label(theme, "duel_cancel"),
+                                callback_data=DuelPick(challenger=challenger, cancel=True).pack())
+
+
+def _stake_keyboard(theme: Theme, challenger: int, target: int, options: list[int]) -> InlineKeyboardMarkup:
+    stakes = [InlineKeyboardButton(text=texts.stake_label(theme, s),
+                                   callback_data=DuelPick(challenger=challenger, target=target, stake=s).pack())
+              for s in options]
+    return InlineKeyboardMarkup(inline_keyboard=[stakes, [_cancel_button(theme, challenger)]])
+
+
+def _offer_keyboard(theme: Theme, duel_id: int) -> InlineKeyboardMarkup:
+    accept, decline = texts.duel_buttons(theme)
+    return InlineKeyboardMarkup(inline_keyboard=[[
+        InlineKeyboardButton(text=accept, callback_data=DuelButton(duel_id=duel_id, accept=True).pack()),
+        InlineKeyboardButton(text=decline, callback_data=DuelButton(duel_id=duel_id, accept=False).pack()),
+    ]])
+
+
+def _short(theme: Theme, me, them) -> service.DuelRefused:
+    """Who can't cover even the smallest stake."""
+    p = me if game.duel_headroom(theme, me.score) <= 0 else them
+    return service.DuelRefused("short", p.first_name, p.username, max_stake=0)
+
+
+async def _show_picker(message: Message, theme: Theme, store: Store, target: service.Who | str | None) -> None:
+    """/duel without a full target and stake: offer buttons instead of making people type."""
+    user = message.from_user
+    me = await store.get_player(theme.name, message.chat.id, user.id)
+    if me is None or me.last_play_at is None:
+        await reply_briefly(message, texts.not_played(theme, _name(message)))
+        return
+    if target is None:
+        players = [p for p in await store.top(theme.name, message.chat.id, theme.higher_is_better, 13)
+                   if p.user_id != user.id][:12]
+        if not players:
+            await reply_briefly(message, texts.duel_nobody(theme))
+            return
+        buttons = [InlineKeyboardButton(text=texts.display_name(p.first_name, p.username),
+                                        callback_data=DuelPick(challenger=user.id, target=p.user_id).pack())
+                   for p in players]
+        rows = [buttons[i:i + 2] for i in range(0, len(buttons), 2)]
+        rows.append([_cancel_button(theme, user.id)])
+        await message.reply(texts.duel_pick_target(theme, _name(message)),
+                            reply_markup=InlineKeyboardMarkup(inline_keyboard=rows))
+        return
+    them = await _resolve_target(store, theme, message.chat.id, target)
+    if isinstance(them, service.DuelRefused):
+        await reply_briefly(message, texts.duel_refused(theme, them))
+        return
+    if them.user_id == user.id:
+        await reply_briefly(message, texts.duel_refused(theme, service.DuelRefused("self", me.first_name, me.username)))
+        return
+    options = game.duel_stake_options(theme, game.duel_headroom(theme, me.score), game.duel_headroom(theme, them.score))
+    if not options:
+        await reply_briefly(message, texts.duel_refused(theme, _short(theme, me, them)))
+        return
+    await message.reply(texts.duel_pick_stake(theme, _name(message), them),
+                        reply_markup=_stake_keyboard(theme, user.id, them.user_id, options))
+
+
 async def cmd_duel(message: Message, command: CommandObject, theme: Theme, store: Store) -> None:
     args = (command.args or "").split()
     stake = _stake(args[-1]) if args else None
     target = _duel_target(message)
     if not stake or target is None:
-        await reply_briefly(message, texts.duel_usage(theme))
+        # Anything short of "/duel @user 25" gets buttons for the missing parts.
+        await _show_picker(message, theme, store, target)
         return
 
     user = message.from_user
@@ -196,12 +283,51 @@ async def cmd_duel(message: Message, command: CommandObject, theme: Theme, store
     if isinstance(result, service.DuelRefused):
         await reply_briefly(message, texts.duel_refused(theme, result))
         return
-    accept, decline = texts.duel_buttons(theme)
-    keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text=accept, callback_data=DuelButton(duel_id=result.duel_id, accept=True).pack()),
-        InlineKeyboardButton(text=decline, callback_data=DuelButton(duel_id=result.duel_id, accept=False).pack()),
-    ]])
-    await message.reply(texts.duel_offer(theme, result), reply_markup=keyboard)
+    await message.reply(texts.duel_offer(theme, result), reply_markup=_offer_keyboard(theme, result.duel_id))
+
+
+async def on_duel_pick(query: CallbackQuery, callback_data: DuelPick, theme: Theme, store: Store) -> None:
+    if query.from_user.id != callback_data.challenger:
+        await query.answer(texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
+        return
+    msg = query.message if isinstance(query.message, Message) else None
+    if msg is None:
+        await query.answer()
+        return
+    if callback_data.cancel:
+        ids = [msg.message_id] + ([msg.reply_to_message.message_id] if msg.reply_to_message else [])
+        delete_later(query.bot, msg.chat.id, *ids)
+        await query.answer()
+        return
+    user = query.from_user
+    me = await store.get_player(theme.name, msg.chat.id, user.id)
+    them = await store.get_player(theme.name, msg.chat.id, callback_data.target)
+    if me is None or them is None:
+        await query.answer(texts.duel_popup(theme, "duel_gone"), show_alert=True)
+        return
+    if not callback_data.stake:
+        options = game.duel_stake_options(
+            theme, game.duel_headroom(theme, me.score), game.duel_headroom(theme, them.score))
+        if not options:
+            await query.answer(texts.popup(texts.duel_refused(theme, _short(theme, me, them))), show_alert=True)
+            return
+        name = texts.display_name(user.first_name, user.username)
+        await msg.edit_text(texts.duel_pick_stake(theme, name, them),
+                            reply_markup=_stake_keyboard(theme, user.id, them.user_id, options))
+        await query.answer()
+        return
+    result = await service.challenge(
+        store, theme,
+        chat_id=msg.chat.id, chat_title=msg.chat.title,
+        challenger=service.Who(user.id, user.username, user.first_name),
+        target=service.Who(them.user_id, them.username, them.first_name),
+        stake=callback_data.stake, now=_now(),
+    )
+    if isinstance(result, service.DuelRefused):
+        await query.answer(texts.popup(texts.duel_refused(theme, result)), show_alert=True)
+        return
+    await msg.edit_text(texts.duel_offer(theme, result), reply_markup=_offer_keyboard(theme, result.duel_id))
+    await query.answer()
 
 
 async def on_duel_button(query: CallbackQuery, callback_data: DuelButton, theme: Theme, store: Store) -> None:
@@ -243,6 +369,7 @@ def build_dispatcher(store: Store, themes_by_bot_id: dict[int, Theme]) -> Dispat
     router.message.register(cmd_top, Command("top"), GROUPS)
     router.message.register(cmd_duel, Command("duel"), GROUPS)
     router.callback_query.register(on_duel_button, DuelButton.filter())
+    router.callback_query.register(on_duel_pick, DuelPick.filter())
 
     dp = Dispatcher(store=store)
     dp.update.outer_middleware(ThemeMiddleware(themes_by_bot_id))

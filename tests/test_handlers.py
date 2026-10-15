@@ -195,9 +195,10 @@ async def test_duel_by_reply_and_decline(harness):
 
 async def test_duel_refusals(harness):
     await _two_players(harness, arash=5)
-    assert "عدد صحیح" in await _send(harness, "/duel @arash", user=SIMIN, update_id=3)
-    assert "عدد صحیح" in await _send(harness, "/duel 20", user=SIMIN, update_id=4)  # nobody to duel
-    assert "عدد صحیح" in await _send(harness, "/duel @arash 0", user=SIMIN, update_id=5)
+    # Anything short of "/duel @user <stake>" gets buttons for the missing part.
+    assert "سر چقدر" in await _send(harness, "/duel @arash", user=SIMIN, update_id=3)
+    assert "با کی" in await _send(harness, "/duel 20", user=SIMIN, update_id=4)
+    assert "سر چقدر" in await _send(harness, "/duel @arash 0", user=SIMIN, update_id=5)
     assert "حداکثر" in await _send(harness, "/duel @arash 20", user=SIMIN, update_id=6)
     assert "نمی‌شناسم" in await _send(harness, "/duel @ghost 1", user=SIMIN, update_id=7)
     assert "ربات" in await _send(harness, "/duel 1", user=SIMIN, reply_to=BOT_USER, update_id=8)
@@ -231,3 +232,58 @@ async def test_real_results_are_not_cleaned_up(harness, monkeypatch):
     await _send(harness, "/top", update_id=2)
     await asyncio.sleep(0.05)
     assert session.deleted == []
+
+
+
+def _tap(markup, row: int, col: int, user: User, update_id: int, text: str = "") -> Update:
+    """Tap a button in any inline keyboard (a sent message or an edit)."""
+    data = markup.inline_keyboard[row][col].callback_data
+    msg = Message(message_id=901, date=datetime.now(timezone.utc), chat=GROUP, from_user=BOT_USER, text=text)
+    query = CallbackQuery(id=str(update_id), from_user=user, chat_instance="ci", message=msg, data=data)
+    return Update(update_id=update_id, callback_query=query)
+
+
+async def test_duel_with_buttons_only(harness):
+    dp, bot, session, store = harness
+    await _two_players(harness)  # Simin 50, Arash 30
+
+    picker = await _send(harness, "/duel", user=SIMIN, update_id=3)
+    assert "با کی" in picker
+    who = session.sent[-1].reply_markup
+    assert who.inline_keyboard[0][0].text == "Arash"  # Simin isn't offered herself
+
+    # Arash can't drive Simin's picker.
+    await dp.feed_update(bot, _tap(who, 0, 0, ARASH, 4))
+    assert session.answers[-1].show_alert
+
+    await dp.feed_update(bot, _tap(who, 0, 0, SIMIN, 5))
+    stakes = session.edits[-1]
+    assert "سر چقدر" in stakes.text
+    labels = [b.text for b in stakes.reply_markup.inline_keyboard[0]]
+    assert labels == ["۵ گرم", "۱۰ گرم", "۲۵ گرم"]  # 50 is more than Arash's 30
+
+    await dp.feed_update(bot, _tap(stakes.reply_markup, 0, 2, SIMIN, 6))
+    offer = session.edits[-1]
+    assert "Arash" in offer.text and "۲۵" in offer.text
+    assert len(offer.reply_markup.inline_keyboard[0]) == 2  # Accept / Decline
+    assert await store.pool.fetchval("SELECT stake FROM duels WHERE status = 'pending'") == 25
+
+
+async def test_duel_picker_cancel_cleans_up(harness, monkeypatch):
+    import asyncio
+
+    from engine import handlers
+
+    monkeypatch.setattr(handlers, "CLEANUP_AFTER", 0)
+    dp, bot, session, _ = harness
+    await _two_players(harness)
+    await _send(harness, "/duel", user=SIMIN, update_id=3)
+    who = session.sent[-1].reply_markup
+    await dp.feed_update(bot, _tap(who, len(who.inline_keyboard) - 1, 0, SIMIN, 4))
+    await asyncio.sleep(0.05)
+    assert 901 in session.deleted
+
+
+async def test_duel_picker_with_nobody_else(harness):
+    await _send(harness, "/play", user=SIMIN, update_id=1)
+    assert "کس دیگه‌ای" in await _send(harness, "/duel", user=SIMIN, update_id=2)
