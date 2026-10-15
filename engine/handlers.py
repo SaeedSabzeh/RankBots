@@ -119,6 +119,18 @@ async def _delete_later(bot: Bot, chat_id: int, message_ids: list[int], delay: f
             log.debug("Could not delete %s in %s: %s", message_id, chat_id, e)
 
 
+async def _answer(query: CallbackQuery, text: str | None = None, show_alert: bool = False) -> None:
+    """Answer a button press, ignoring Telegram's "too late" error.
+
+    Telegram only accepts the answer within about 15 seconds. On Render's free plan a press
+    can wake the service up after that; the press itself was still handled.
+    """
+    try:
+        await query.answer(text, show_alert=show_alert)
+    except TelegramAPIError as e:
+        log.info("Late answer to a button press: %s", e)
+
+
 def delete_later(bot: Bot, chat_id: int, *message_ids: int) -> None:
     """Delete these messages after CLEANUP_AFTER seconds, without waiting for it."""
     task = asyncio.create_task(_delete_later(bot, chat_id, list(message_ids), CLEANUP_AFTER))
@@ -303,48 +315,48 @@ async def cmd_duel(message: Message, command: CommandObject, theme: Theme, store
 async def on_rematch(query: CallbackQuery, callback_data: Rematch, theme: Theme, store: Store) -> None:
     result = await service.rematch(store, theme, duel_id=callback_data.duel_id, user_id=query.from_user.id, now=_now())
     if isinstance(result, service.NotYourDuel):
-        await query.answer(texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
+        await _answer(query, texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
     elif isinstance(result, service.DuelGone):
-        await query.answer(texts.duel_popup(theme, "duel_gone"), show_alert=True)
+        await _answer(query, texts.duel_popup(theme, "duel_gone"), show_alert=True)
     elif isinstance(result, service.DuelRefused):
-        await query.answer(texts.popup(texts.duel_refused(theme, result)), show_alert=True)
+        await _answer(query, texts.popup(texts.duel_refused(theme, result)), show_alert=True)
     else:
         msg = query.message if isinstance(query.message, Message) else None
         if msg is not None:
             await msg.edit_reply_markup(reply_markup=None)  # one rematch per duel
             await msg.reply(texts.duel_offer(theme, result), reply_markup=_offer_keyboard(theme, result.duel_id))
-        await query.answer()
+        await _answer(query)
 
 
 async def on_duel_pick(query: CallbackQuery, callback_data: DuelPick, theme: Theme, store: Store) -> None:
     if query.from_user.id != callback_data.challenger:
-        await query.answer(texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
+        await _answer(query, texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
         return
     msg = query.message if isinstance(query.message, Message) else None
     if msg is None:
-        await query.answer()
+        await _answer(query)
         return
     if callback_data.cancel:
         ids = [msg.message_id] + ([msg.reply_to_message.message_id] if msg.reply_to_message else [])
         delete_later(query.bot, msg.chat.id, *ids)
-        await query.answer()
+        await _answer(query)
         return
     user = query.from_user
     me = await store.get_player(theme.name, msg.chat.id, user.id)
     them = await store.get_player(theme.name, msg.chat.id, callback_data.target)
     if me is None or them is None:
-        await query.answer(texts.duel_popup(theme, "duel_gone"), show_alert=True)
+        await _answer(query, texts.duel_popup(theme, "duel_gone"), show_alert=True)
         return
     if not callback_data.stake:
         options = game.duel_stake_options(
             theme, game.duel_headroom(theme, me.score), game.duel_headroom(theme, them.score))
         if not options:
-            await query.answer(texts.popup(texts.duel_refused(theme, _short(theme, me, them))), show_alert=True)
+            await _answer(query, texts.popup(texts.duel_refused(theme, _short(theme, me, them))), show_alert=True)
             return
         name = texts.display_name(user.first_name, user.username)
         await msg.edit_text(texts.duel_pick_stake(theme, name, them),
                             reply_markup=_stake_keyboard(theme, user.id, them.user_id, options))
-        await query.answer()
+        await _answer(query)
         return
     result = await service.challenge(
         store, theme,
@@ -354,10 +366,10 @@ async def on_duel_pick(query: CallbackQuery, callback_data: DuelPick, theme: The
         stake=callback_data.stake, now=_now(),
     )
     if isinstance(result, service.DuelRefused):
-        await query.answer(texts.popup(texts.duel_refused(theme, result)), show_alert=True)
+        await _answer(query, texts.popup(texts.duel_refused(theme, result)), show_alert=True)
         return
     await msg.edit_text(texts.duel_offer(theme, result), reply_markup=_offer_keyboard(theme, result.duel_id))
-    await query.answer()
+    await _answer(query)
 
 
 async def on_duel_button(query: CallbackQuery, callback_data: DuelButton, theme: Theme, store: Store) -> None:
@@ -367,12 +379,12 @@ async def on_duel_button(query: CallbackQuery, callback_data: DuelButton, theme:
         now=_now(), rng=_rng,
     )
     if isinstance(result, service.NotYourDuel):
-        await query.answer(texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
+        await _answer(query, texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
     elif isinstance(result, service.DuelGone):
-        await query.answer(texts.duel_popup(theme, "duel_gone"), show_alert=True)
+        await _answer(query, texts.duel_popup(theme, "duel_gone"), show_alert=True)
     elif isinstance(result, service.DuelRefused):
         # Someone can't cover the stake or dueled elsewhere; the challenge stays open.
-        await query.answer(texts.popup(texts.duel_refused(theme, result)), show_alert=True)
+        await _answer(query, texts.popup(texts.duel_refused(theme, result)), show_alert=True)
     else:
         markup = None
         if isinstance(result, service.DuelResult):
@@ -390,7 +402,7 @@ async def on_duel_button(query: CallbackQuery, callback_data: DuelButton, theme:
                 if query.message.reply_to_message is not None:
                     ids.append(query.message.reply_to_message.message_id)
                 delete_later(query.bot, query.message.chat.id, *ids)
-        await query.answer()
+        await _answer(query)
 
 
 def build_dispatcher(store: Store, themes_by_bot_id: dict[int, Theme]) -> Dispatcher:
