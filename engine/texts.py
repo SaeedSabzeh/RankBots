@@ -56,12 +56,14 @@ STRINGS: dict[Lang, dict[str, str]] = {
             "/play: roll once every {every}\n"
             "/me: your score, rank, title and streak\n"
             "/top: this group's leaderboard\n"
+            "/all: your scores in every bot in this group\n"
             "/duel: pick someone and a stake with the buttons, 50/50, winner takes it\n"
             "/help: this message\n\n"
             "Play on consecutive days for a streak bonus. "
             "Rare events can swing your score a lot, either way. "
             "Every day has a secret lucky hour, Persian holidays bring surprises, "
             "and every Sunday evening the champion of the week is announced. "
+            "Achievements pop up as you earn them; /me shows yours. "
             "One duel every {duel_hours} hours; it doesn't use your /play turn."
         ),
         "duel_usage": (
@@ -131,12 +133,14 @@ STRINGS: dict[Lang, dict[str, str]] = {
             "/play: هر {every} یه بار بازی کن\n"
             "/me: امتیاز، رتبه، لقب و روزهای پشت سر همت\n"
             "/top: جدول این گروه\n"
+            "/all: امتیازهات تو همه‌ی ربات‌های این گروه\n"
             "/duel: با دکمه‌ها یکی رو انتخاب کن و سر یه مقدار دوئل کن، پنجاه‌پنجاه\n"
             "/help: همین راهنما\n\n"
             "اگه چند روز پشت سر هم بازی کنی جایزه می‌گیری. "
             "اتفاق‌های نادر می‌تونن امتیازت رو حسابی بالا یا پایین ببرن. "
             "هر روز یه ساعت شانس مخفی داریم، عیدهای ایرانی سورپرایز دارن، "
             "و یکشنبه‌ها عصر قهرمان هفته اعلام می‌شه. "
+            "دستاوردها همون لحظه که بگیریشون اعلام می‌شن؛ /me مال تو رو نشون می‌ده. "
             "هر {duel_hours} ساعت یه دوئل می‌تونی بکنی و نوبت /play رو نمی‌سوزونه."
         ),
         "duel_usage": (

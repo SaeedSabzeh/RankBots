@@ -136,6 +136,18 @@ banner line at the top of the `/play` reply, and they stack (Yalda in the lucky 
   Render, run `python scripts/weekly_champion.py` as a cron job on Sundays at 18:05 and 19:05 UTC
   (covers summer and winter time). `chats.champion_posted_on` makes sure a group is posted once.
 
+## Achievements and /all
+
+- **Achievements** (`engine/achievements.py`): 13 badges, earned once per bot per group and announced
+  in the reply that earned them: streaks of 3/7/30 days, first jackpot, first disaster, out-taarofed,
+  lucky-hour hunter, played on a holiday, #1 of the group (3+ players), 50/200 plays, 1/5 duels won.
+  Stored in the `achievements` table (migration 004); `/me` shows the icons.
+- **/all**: one message with your score, rank and nickname in every bot you play in this group.
+- **Rematch**: the loser of a duel gets one Rematch button for the same stake within 30 minutes of the
+  challenge, which skips the 6-hour duel limit (`duels.rematch_of`, migration 004).
+- **Duel buttons**: `/duel` alone shows the group's players, then stakes (5/10/25/50 × the theme's
+  scale, capped at what both can afford).
+
 ## Duels
 
 - `/duel @user <stake>`, or reply to someone's message with `/duel <stake>`. A mention of a
