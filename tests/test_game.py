@@ -50,14 +50,15 @@ def test_local_day_uses_rome_time():
     assert game.local_day(datetime(2026, 10, 14, 23, 30, tzinfo=timezone.utc)) == date(2026, 10, 15)
 
 
-def test_every_roll_uses_its_sentences_fixed_score():
+def test_every_roll_matches_its_sentence():
     rng = random.Random(1)
     kinds = Counter()
     for _ in range(20_000):
         r = game.roll(CAT, streak=0, rng=rng)
         kinds[r.event] += 1
-        # The points are always the sentence's own `n` (neutral lines are worth 0).
-        assert r.base == r.message.get("n", 0)
+        # The score always has the sentence's sign (neutral lines are worth 0).
+        n = r.message.get("n", 0)
+        assert (r.base > 0) == (n > 0) and (r.base == 0) == (n == 0)
         if r.event is None:
             if r.base > 0:
                 assert r.message in CAT.gains
@@ -77,13 +78,27 @@ def test_every_roll_uses_its_sentences_fixed_score():
     assert abs(kinds["loss"] / normal - game.LOSS_SHARE) < 0.02
 
 
-def test_the_same_sentence_always_scores_the_same():
+def test_a_sentence_scores_within_its_own_range():
     seen: dict[str, set[int]] = {}
     rng = random.Random(9)
-    for _ in range(5000):
+    for _ in range(20_000):
         r = game.roll(CAT, streak=0, rng=rng)
+        points = game.points_for(r.message.get("n", 0))
+        spread = max(1, round(abs(points) * game.SPREAD))
+        if r.event is None and points:
+            assert game.SCORE_MIN <= abs(r.base) <= game.SCORE_MAX
+        if points:
+            assert (r.base > 0) == (points > 0)
+            assert abs(points) - spread <= abs(r.base) <= abs(points) + spread or abs(r.base) in (
+                game.SCORE_MIN, game.SCORE_MAX, game.points_for(15))
         seen.setdefault(r.message["en"], set()).add(r.base)
-    assert all(len(scores) == 1 for scores in seen.values())
+    # Scores vary: most sentences came up with more than one score.
+    assert sum(len(s) > 1 for s in seen.values()) > len(seen) * 0.8
+
+
+def test_points_scale_from_three_to_twenty():
+    assert game.points_for(1) == 3 and game.points_for(10) == 20
+    assert game.points_for(-10) == -20 and game.points_for(0) == 0
 
 
 def test_every_scoring_line_in_every_theme_has_a_score():
@@ -101,7 +116,7 @@ def test_streak_bonus_is_added_to_the_roll():
 def test_scores_grow_on_average():
     rng = random.Random(7)
     mean = sum(game.roll(CAT, 0, rng).points for _ in range(20_000)) / 20_000
-    assert 1.5 < mean < 3.5
+    assert 2.5 < mean < 6
 
 
 def test_score_delta_follows_direction_and_scale():

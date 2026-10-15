@@ -92,9 +92,10 @@ def roll(theme: Theme, streak: int, rng: random.Random, boosts: tuple[Boost, ...
     if rng.random() < event_chance:
         kind: Literal["good", "bad"] = "good" if no_losses else rng.choice(("good", "bad"))
         line = rng.choice(theme.events.good if kind == "good" else theme.events.bad)
-        return Roll(int(line["n"]), bonus, kind, line, names, multiplier)
+        base = around(points_for(int(line["n"])), rng, lo=points_for(15))
+        return Roll(base, bonus, kind, line, names, multiplier)
 
-    # Every sentence carries its own fixed points, so the number always fits the joke.
+    # Pick gain / loss / neutral, then a sentence; the score is rolled within that sentence's range.
     u = rng.random()
     if u < GAIN_SHARE or (no_losses and u < GAIN_SHARE + LOSS_SHARE):
         pool = theme.gains
@@ -103,7 +104,36 @@ def roll(theme: Theme, streak: int, rng: random.Random, boosts: tuple[Boost, ...
     else:
         pool = theme.neutral or theme.gains
     line = rng.choice(pool)
-    return Roll(int(line.get("n", 0)), bonus, None, line, names, multiplier)
+    base = around(points_for(int(line.get("n", 0))), rng, lo=SCORE_MIN, hi=SCORE_MAX)
+    return Roll(base, bonus, None, line, names, multiplier)
+
+
+# A sentence's `n` is its size: 1–10 for everyday lines, 15–60 for rare events. Sizes turn into
+# points on a straight line, size 1 → 3 and size 10 → 20 (rare events land around 30–110).
+# Each sentence then covers a range of ±30% around its points, and the roll lands somewhere in
+# it, so scores vary but always fit the joke. Everyday rolls stay within 3–20 either way.
+SCORE_MIN, SCORE_MAX = 3, 20
+SPREAD = 0.3
+
+
+def points_for(n: int) -> int:
+    """The points a sentence of size n is worth before the random spread (sign kept, 0 stays 0)."""
+    if n == 0:
+        return 0
+    points = round(SCORE_MIN + (abs(n) - 1) * (SCORE_MAX - SCORE_MIN) / 9)
+    return points if n > 0 else -points
+
+
+def around(points: int, rng: random.Random, lo: int = 1, hi: int | None = None) -> int:
+    """A random score within ±SPREAD of `points`, kept between lo and hi in size, sign kept."""
+    if points == 0:
+        return 0
+    size = abs(points)
+    spread = max(1, round(size * SPREAD))
+    value = max(lo, rng.randint(size - spread, size + spread))
+    if hi is not None:
+        value = min(hi, value)
+    return value if points > 0 else -value
 
 
 # --- Boosts: the daily lucky hour and Persian holidays ---------------------------

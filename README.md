@@ -106,9 +106,11 @@ they don't need Supabase or a real bot token.
 - Cooldown per user per group, set by each theme's `cooldown_minutes` to match the joke: chai 5 min,
   taarof 15, mom 30, tahdig 60, cat 90, khastegari 180 (default 12 hours). A group's own
   `chats.cooldown_minutes` overrides it. Score never goes below the theme's `min`.
-- Fixed scores: every gain, loss and rare-event sentence carries its own `n` (gains 1…15, losses −15…−1,
-  rare events ±15…±60, neutral 0), so the number always fits the joke. A roll is a gain 10/16, a loss
-  5/16 or neutral 1/16 of the time, then a random sentence from that list; its `n` is the change.
+- Scores per sentence: every gain, loss and rare-event sentence carries a size `n` (everyday 1…10,
+  rare events ±15…±60, neutral 0). `game.points_for` turns sizes into points on a straight line,
+  size 1 → 3 and size 10 → 20 (rare events ≈ 30…110), and each roll lands at random within ±30% of
+  its sentence's points, so numbers vary but fit the joke. Everyday rolls stay within 3…20 points.
+  A roll is a gain 10/16, a loss 5/16 or neutral 1/16 of the time, then a random sentence from that list.
 - Streak: +1 for each consecutive calendar day (Europe/Rome), reset after a missed day.
   Bonus +1 per 3 streak days, capped at +5.
 - Rare events: 5% of rolls, using one of the theme's event sentences and its fixed `n`.
