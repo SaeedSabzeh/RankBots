@@ -93,7 +93,7 @@ losses:
   - { n: -2, en: You brewed it with tap water and it tasted of chlorine, fa: با آب لوله‌کشی دم کردی و بوی کلر داد }
   - { n: -3, en: 'You bought cheap imported tea and it tasted like sawdust', fa: چای خارجی ارزون خریدی، مزه‌ی خاک‌اره می‌داد }
   - { n: -2, en: Someone said green tea is healthier and made you drink it, fa: یکی گفت چای سبز سالم‌تره و به زور بهت داد }
-  - { n: -1, en: 'A fly dove into your tea with total confidence', fa: 'یه مگس با اعتمادبه‌نفس کامل شیرجه زد تو چاییت' }
+  - { n: -10, en: 'A fly dove into your tea with total confidence', fa: 'یه مگس با اعتمادبه‌نفس کامل شیرجه زد تو چاییت' }
   - { n: -1, en: At the mehmooni you were too shy to ask for a second glass, fa: تو مهمونی از رودربایستی روت نشد استکان دوم رو بخوای }
   - { n: -2, en: 'The host said "I''ll put the tea on" and never did', fa: صاحب‌خونه گفت «الان چای می‌ذارم» و هیچ‌وقت نذاشت }
   - { n: -3, en: Your dentist saw your tea-stained teeth and lectured you for ages, fa: دندون‌پزشک رنگ دندون‌هات رو دید و کلی برات سخنرانی کرد }
