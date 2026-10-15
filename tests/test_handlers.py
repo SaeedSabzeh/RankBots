@@ -336,3 +336,9 @@ async def test_all_lists_every_bot_you_play(harness):
 
 async def test_all_before_playing(harness):
     assert "هنوز با هیچ" in await _send(harness, "/all", update_id=1)
+
+
+async def test_duel_challenge_mentions_the_target(harness):
+    await _two_players(harness)
+    offer = await _send(harness, "/duel @arash 10", user=SIMIN, update_id=3)
+    assert f'<a href="tg://user?id={ARASH.id}">Arash</a>' in offer

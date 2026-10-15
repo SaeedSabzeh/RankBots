@@ -72,7 +72,7 @@ STRINGS: dict[Lang, dict[str, str]] = {
         ),
         "duel_offer": (
             "⚔️ <b>{challenger}</b> challenges <b>{target}</b> to a duel for <b>{stake}</b>!\n"
-            "50/50, winner takes the stake. {target}, you have {minutes} minutes to answer."
+            "50/50, winner takes the stake. {target_mention}, you have {minutes} minutes to answer."
         ),
         "duel_pick_target": "⚔️ {name}, who do you want to duel?",
         "duel_pick_stake": "⚔️ {name} vs {target}: how much are you betting?",
@@ -149,7 +149,7 @@ STRINGS: dict[Lang, dict[str, str]] = {
         ),
         "duel_offer": (
             "⚔️ <b>{challenger}</b>، <b>{target}</b> رو سر <b>{stake}</b> به دوئل دعوت کرد!\n"
-            "پنجاه‌پنجاهه و برنده همه‌ش رو می‌بره. {target}، {minutes} دقیقه وقت داری جواب بدی."
+            "پنجاه‌پنجاهه و برنده همه‌ش رو می‌بره. {target_mention}، {minutes} دقیقه وقت داری جواب بدی."
         ),
         "duel_pick_target": "⚔️ {name}، با کی می‌خوای دوئل کنی؟",
         "duel_pick_stake": "⚔️ {name} در برابر {target}: سر چقدر؟",
@@ -343,11 +343,17 @@ def duel_usage(theme: Theme) -> str:
     return _join(theme, lambda lang: STRINGS[lang]["duel_usage"])
 
 
+def mention(p: Player) -> str:
+    """A name that notifies the person, even if they have no @username."""
+    return f'<a href="tg://user?id={p.user_id}">{_player_name(p)}</a>'
+
+
 def duel_offer(theme: Theme, o: DuelOffer) -> str:
     def build(lang: Lang) -> str:
         return STRINGS[lang]["duel_offer"].format(
             challenger=_player_name(o.challenger),
             target=_player_name(o.target),
+            target_mention=mention(o.target),
             stake=amount(theme, o.stake, lang),
             minutes=num(int(game.DUEL_EXPIRY.total_seconds() // 60), lang),
         )
