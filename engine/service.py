@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Literal
 
-from engine import game
+from engine import achievements, game
 from engine.db import Blocked, Player, Store
 from engine.theme import Theme
 
@@ -21,6 +21,7 @@ class Played:
     rank: int
     cooldown: timedelta
     players: int = 0  # everyone who has played in the group, for position nicknames
+    new_badges: tuple[str, ...] = ()  # achievements earned by this play
 
 
 @dataclass(frozen=True)
@@ -34,6 +35,7 @@ class Stats:
     rank: int
     players: int
     cooldown_left: timedelta
+    badges: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -87,7 +89,12 @@ async def play(
 
     rank = await store.rank_of(theme.name, chat_id, score, theme.higher_is_better)
     players = await store.player_count(theme.name, chat_id)
-    return Played(roll, delta, score, streak, rank, cooldown, players)
+    codes = achievements.after_play(
+        streak=streak, event=roll.event, boosts=roll.boosts, rank=rank, players=players,
+        plays=await store.play_count(theme.name, chat_id, user_id),
+    )
+    new = await store.award(theme.name, chat_id, user_id, codes, now)
+    return Played(roll, delta, score, streak, rank, cooldown, players, tuple(new))
 
 
 async def stats(store: Store, theme: Theme, *, chat_id: int, user_id: int, now: datetime) -> Stats | None:
@@ -100,7 +107,8 @@ async def stats(store: Store, theme: Theme, *, chat_id: int, user_id: int, now: 
     streak = game.live_streak(player.streak, player.last_play_date, game.local_day(now))
     player = Player(**{**player.__dict__, "streak": streak})
     left = game.cooldown_left(player.last_play_at, cooldown, now)
-    return Stats(player, rank, players, left)
+    badges = await store.badges(theme.name, chat_id, user_id)
+    return Stats(player, rank, players, left, tuple(badges))
 
 
 async def board(store: Store, theme: Theme, *, chat_id: int, user_id: int, limit: int = 10) -> Board:
@@ -147,6 +155,8 @@ class DuelResult:
     loser: Player
     stake: int
     winner_delta: int
+    duel_id: int = 0
+    winner_badges: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -166,10 +176,12 @@ class DuelGone:
     """Already accepted, declined or expired."""
 
 
-def _duel_check(theme: Theme, p: Player, stake: int, now: datetime) -> DuelRefused | None:
+def _duel_check(theme: Theme, p: Player, stake: int, now: datetime, rematch: bool = False) -> DuelRefused | None:
     headroom = game.duel_headroom(theme, p.score)
     if headroom < stake:
         return DuelRefused("short", p.first_name, p.username, max_stake=max(headroom, 0))
+    if rematch:
+        return None  # a rematch skips the duel limit
     left = game.cooldown_left(p.last_duel_at, timedelta(hours=game.DUEL_COOLDOWN_HOURS), now)
     if left > timedelta(0):
         return DuelRefused("cooldown", p.first_name, p.username, left=left)
@@ -262,9 +274,63 @@ async def answer_duel(
         # Answered or expired between the read above and the claim.
         return DuelGone()
     if isinstance(settled, Blocked):
-        refused = _duel_check(theme, settled.player, duel.stake, now)
+        refused = _duel_check(theme, settled.player, duel.stake, now, rematch=duel.rematch_of is not None)
         return refused or DuelGone()
-    return DuelResult(settled.winner, settled.loser, duel.stake, delta)
+    wins = await store.duel_wins(theme.name, duel.chat_id, settled.winner.user_id, theme.higher_is_better)
+    new = await store.award(theme.name, duel.chat_id, settled.winner.user_id, achievements.after_duel_win(wins), now)
+    return DuelResult(settled.winner, settled.loser, duel.stake, delta, duel_id, tuple(new))
+
+
+# A rematch can be asked for this long after the original challenge was made.
+REMATCH_WINDOW = timedelta(minutes=30)
+
+
+async def rematch(
+    store: Store, theme: Theme, *, duel_id: int, user_id: int, now: datetime
+) -> DuelOffer | DuelRefused | NotYourDuel | DuelGone:
+    """The loser of a duel challenges the winner again, same stake, once, skipping the duel limit."""
+    duel = await store.get_duel(theme.name, duel_id)
+    if duel is None or duel.status != "accepted" or duel.winner_id is None:
+        return DuelGone()
+    loser_id = duel.target_id if duel.winner_id == duel.challenger_id else duel.challenger_id
+    if user_id != loser_id:
+        return NotYourDuel()
+    if now - duel.created_at > REMATCH_WINDOW:
+        return DuelGone()
+    me = await store.get_player(theme.name, duel.chat_id, loser_id)
+    them = await store.get_player(theme.name, duel.chat_id, duel.winner_id)
+    for p in (me, them):
+        refused = _duel_check(theme, p, duel.stake, now, rematch=True)
+        if refused:
+            return refused
+    new_id = await store.create_duel(
+        theme.name, duel.chat_id, loser_id, duel.winner_id, duel.stake,
+        now=now, expiry=game.DUEL_EXPIRY, rematch_of=duel.id,
+    )
+    if new_id is None:
+        return DuelGone()
+    return DuelOffer(new_id, me, them, duel.stake)
+
+
+@dataclass(frozen=True)
+class Everywhere:
+    theme: Theme
+    player: Player
+    rank: int
+    players: int
+
+
+async def everywhere(store: Store, themes: list[Theme], *, chat_id: int, user_id: int) -> list[Everywhere]:
+    """This person's standing in every bot they've played in this group (for /all)."""
+    played = set(await store.bots_played(chat_id, user_id))
+    out = []
+    for t in themes:
+        if t.name not in played:
+            continue
+        p = await store.get_player(t.name, chat_id, user_id)
+        rank = await store.rank_of(t.name, chat_id, p.score, t.higher_is_better)
+        out.append(Everywhere(t, p, rank, await store.player_count(t.name, chat_id)))
+    return out
 
 
 @dataclass(frozen=True)

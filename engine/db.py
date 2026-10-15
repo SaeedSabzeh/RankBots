@@ -36,9 +36,10 @@ class Duel:
     status: str
     winner_id: int | None
     created_at: datetime
+    rematch_of: int | None = None
 
 
-_DUEL_COLS = "id, chat_id, challenger_id, target_id, stake, status, winner_id, created_at"
+_DUEL_COLS = "id, chat_id, challenger_id, target_id, stake, status, winner_id, created_at, rematch_of"
 
 
 @dataclass(frozen=True)
@@ -210,6 +211,52 @@ class Store:
         )
         return [_player(r) for r in rows]
 
+    async def award(self, bot: str, chat_id: int, user_id: int, codes: list[str], now: datetime) -> list[str]:
+        """Record achievements; returns only the ones this player didn't have yet, in order."""
+        if not codes:
+            return []
+        rows = await self.pool.fetch(
+            """
+            INSERT INTO achievements (bot, chat_id, user_id, code, earned_at)
+            SELECT $1, $2, $3, code, $5 FROM unnest($4::text[]) AS code
+            ON CONFLICT DO NOTHING
+            RETURNING code
+            """,
+            bot, chat_id, user_id, codes, now,
+        )
+        new = {r["code"] for r in rows}
+        return [c for c in codes if c in new]
+
+    async def badges(self, bot: str, chat_id: int, user_id: int) -> list[str]:
+        rows = await self.pool.fetch(
+            "SELECT code FROM achievements WHERE bot = $1 AND chat_id = $2 AND user_id = $3 ORDER BY earned_at, code",
+            bot, chat_id, user_id,
+        )
+        return [r["code"] for r in rows]
+
+    async def play_count(self, bot: str, chat_id: int, user_id: int) -> int:
+        return await self.pool.fetchval(
+            "SELECT count(*) FROM plays WHERE bot = $1 AND chat_id = $2 AND user_id = $3 "
+            "AND event IS DISTINCT FROM 'duel'",
+            bot, chat_id, user_id,
+        )
+
+    async def duel_wins(self, bot: str, chat_id: int, user_id: int, higher_is_better: bool) -> int:
+        better = ">" if higher_is_better else "<"
+        return await self.pool.fetchval(
+            f"SELECT count(*) FROM plays WHERE bot = $1 AND chat_id = $2 AND user_id = $3 "
+            f"AND event = 'duel' AND delta {better} 0",
+            bot, chat_id, user_id,
+        )
+
+    async def bots_played(self, chat_id: int, user_id: int) -> list[str]:
+        """Every bot this person has played in this group."""
+        rows = await self.pool.fetch(
+            "SELECT bot FROM players WHERE chat_id = $1 AND user_id = $2 AND last_play_at IS NOT NULL",
+            chat_id, user_id,
+        )
+        return [r["bot"] for r in rows]
+
     async def active_chats(self, bot: str, since: datetime) -> list[int]:
         """Groups where someone has played since `since`."""
         rows = await self.pool.fetch(
@@ -256,21 +303,26 @@ class Store:
         *,
         now: datetime,
         expiry: timedelta,
+        rematch_of: int | None = None,
     ) -> int | None:
-        """Open a challenge, or return None if the challenger already has one open."""
-        return await self.pool.fetchval(
-            """
-            INSERT INTO duels (bot, chat_id, challenger_id, target_id, stake, created_at)
-            SELECT $1, $2, $3, $4, $5, $6
-            WHERE NOT EXISTS (
-                SELECT 1 FROM duels
-                WHERE bot = $1 AND chat_id = $2 AND challenger_id = $3
-                  AND status = 'pending' AND created_at > $6::timestamptz - $7::interval
+        """Open a challenge, or return None if the challenger already has one open
+        (or this duel already had its one rematch)."""
+        try:
+            return await self.pool.fetchval(
+                """
+                INSERT INTO duels (bot, chat_id, challenger_id, target_id, stake, created_at, rematch_of)
+                SELECT $1, $2, $3, $4, $5, $6, $8
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM duels
+                    WHERE bot = $1 AND chat_id = $2 AND challenger_id = $3
+                      AND status = 'pending' AND created_at > $6::timestamptz - $7::interval
+                )
+                RETURNING id
+                """,
+                bot, chat_id, challenger_id, target_id, stake, now, expiry, rematch_of,
             )
-            RETURNING id
-            """,
-            bot, chat_id, challenger_id, target_id, stake, now, expiry,
-        )
+        except asyncpg.UniqueViolationError:
+            return None
 
     async def get_duel(self, bot: str, duel_id: int) -> Duel | None:
         row = await self.pool.fetchrow(f"SELECT {_DUEL_COLS} FROM duels WHERE bot = $1 AND id = $2", bot, duel_id)
@@ -337,7 +389,8 @@ class Store:
                         p = players[user_id]
                         if p.score - min_score < duel.stake:
                             raise _Rollback(Blocked("short", p))
-                        if p.last_duel_at is not None and now - p.last_duel_at < timedelta(hours=duel_cooldown_hours):
+                        if (duel.rematch_of is None and p.last_duel_at is not None
+                                and now - p.last_duel_at < timedelta(hours=duel_cooldown_hours)):
                             raise _Rollback(Blocked("cooldown", p))
 
                     loser_id = duel.target_id if winner_id == duel.challenger_id else duel.challenger_id

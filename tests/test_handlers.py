@@ -9,7 +9,15 @@ from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.client.session.base import BaseSession
 from aiogram.enums import ParseMode
-from aiogram.methods import AnswerCallbackQuery, DeleteMessage, EditMessageText, GetMe, SendMessage, TelegramMethod
+from aiogram.methods import (
+    AnswerCallbackQuery,
+    DeleteMessage,
+    EditMessageReplyMarkup,
+    EditMessageText,
+    GetMe,
+    SendMessage,
+    TelegramMethod,
+)
 from aiogram.types import CallbackQuery, Chat, Message, MessageEntity, Update, User
 
 from engine.db import Store
@@ -52,6 +60,8 @@ class FakeSession(BaseSession):
             return True
         if isinstance(method, AnswerCallbackQuery):
             self.answers.append(method)
+            return True
+        if isinstance(method, EditMessageReplyMarkup):
             return True
         if isinstance(method, DeleteMessage):
             self.deleted.append(method.message_id)
@@ -172,7 +182,8 @@ async def test_duel_by_mention_with_buttons(harness):
 
     await dp.feed_update(bot, _press(sent, 0, ARASH, 5))
     assert len(session.edits) == 1 and "برد" in session.edits[0].text
-    assert session.edits[0].reply_markup is None
+    # Only a rematch button is left under the result.
+    assert [b.text for b in session.edits[0].reply_markup.inline_keyboard[0]] == ["⚔️ انتقام!"]
     scores = await store.pool.fetch("SELECT score FROM players ORDER BY user_id")
     assert sorted(r["score"] for r in scores) in ([10, 70], [30, 50])  # 50/50: 50-20 and 30+20, or the reverse
 
@@ -287,3 +298,41 @@ async def test_duel_picker_cancel_cleans_up(harness, monkeypatch):
 async def test_duel_picker_with_nobody_else(harness):
     await _send(harness, "/play", user=SIMIN, update_id=1)
     assert "کس دیگه‌ای" in await _send(harness, "/duel", user=SIMIN, update_id=2)
+
+
+
+async def test_rematch_button_for_the_loser_only(harness):
+    dp, bot, session, store = harness
+    await _two_players(harness)  # Simin 50, Arash 30
+    await _send(harness, "/duel @arash 10", user=SIMIN, update_id=3)
+    await dp.feed_update(bot, _press(session.sent[-1], 0, ARASH, 4))  # Arash accepts
+    result = session.edits[-1]
+    winner_id = await store.pool.fetchval("SELECT winner_id FROM duels")
+    winner, loser = (SIMIN, ARASH) if winner_id == SIMIN.id else (ARASH, SIMIN)
+
+    await dp.feed_update(bot, _tap(result.reply_markup, 0, 0, winner, 5))
+    assert session.answers[-1].show_alert  # the winner can't ask for a rematch
+
+    before = len(session.sent)
+    await dp.feed_update(bot, _tap(result.reply_markup, 0, 0, loser, 6))
+    assert len(session.sent) == before + 1  # a fresh challenge, despite the 6-hour duel limit
+    rematch = await store.pool.fetchrow("SELECT challenger_id, target_id, stake, rematch_of FROM duels WHERE rematch_of IS NOT NULL")
+    assert (rematch["challenger_id"], rematch["target_id"], rematch["stake"]) == (loser.id, winner.id, 10)
+
+    # The rematch can be accepted although both just dueled.
+    await dp.feed_update(bot, _press(session.sent[-1], 0, winner, 7))
+    assert await store.pool.fetchval("SELECT count(*) FROM duels WHERE status = 'accepted'") == 2
+
+    # One rematch per duel.
+    await dp.feed_update(bot, _tap(result.reply_markup, 0, 0, loser, 8))
+    assert session.answers[-1].show_alert
+
+
+async def test_all_lists_every_bot_you_play(harness):
+    await _send(harness, "/play", update_id=1)
+    out = await _send(harness, "/all", update_id=2)
+    assert "همه‌ی ربات‌های این گروه" in out and "پشمالویی" in out
+
+
+async def test_all_before_playing(harness):
+    assert "هنوز با هیچ" in await _send(harness, "/all", update_id=1)

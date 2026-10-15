@@ -47,6 +47,7 @@ COMMANDS = {
         BotCommand(command="play", description="Roll once (every {every})"),
         BotCommand(command="me", description="Your score, rank and streak"),
         BotCommand(command="top", description="Group leaderboard"),
+        BotCommand(command="all", description="Your scores in every bot here"),
         BotCommand(command="duel", description="Duel someone (pick with buttons)"),
         BotCommand(command="help", description="Rules and commands"),
     ],
@@ -54,6 +55,7 @@ COMMANDS = {
         BotCommand(command="play", description="بازی کن (هر {every})"),
         BotCommand(command="me", description="امتیاز، رتبه و روزهای پشت سر هم"),
         BotCommand(command="top", description="جدول گروه"),
+        BotCommand(command="all", description="امتیازهات تو همه‌ی ربات‌های گروه"),
         BotCommand(command="duel", description="دوئل با یکی (با دکمه انتخاب کن)"),
         BotCommand(command="help", description="قوانین و دستورها"),
     ],
@@ -63,6 +65,10 @@ COMMANDS = {
 class DuelButton(CallbackData, prefix="duel"):
     duel_id: int
     accept: bool
+
+
+class Rematch(CallbackData, prefix="rm"):
+    duel_id: int
 
 
 class DuelPick(CallbackData, prefix="dp"):
@@ -160,6 +166,14 @@ async def cmd_me(message: Message, theme: Theme, store: Store) -> None:
         await reply_briefly(message, texts.not_played(theme, _name(message)))
     else:
         await message.reply(texts.me(theme, _name(message), st))
+
+
+async def cmd_all(message: Message, theme: Theme, store: Store, all_themes: list[Theme]) -> None:
+    rows = await service.everywhere(store, all_themes, chat_id=message.chat.id, user_id=message.from_user.id)
+    if not rows:
+        await reply_briefly(message, texts.all_stats(theme, _name(message), rows))
+    else:
+        await message.reply(texts.all_stats(theme, _name(message), rows))
 
 
 async def cmd_top(message: Message, theme: Theme, store: Store) -> None:
@@ -286,6 +300,22 @@ async def cmd_duel(message: Message, command: CommandObject, theme: Theme, store
     await message.reply(texts.duel_offer(theme, result), reply_markup=_offer_keyboard(theme, result.duel_id))
 
 
+async def on_rematch(query: CallbackQuery, callback_data: Rematch, theme: Theme, store: Store) -> None:
+    result = await service.rematch(store, theme, duel_id=callback_data.duel_id, user_id=query.from_user.id, now=_now())
+    if isinstance(result, service.NotYourDuel):
+        await query.answer(texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
+    elif isinstance(result, service.DuelGone):
+        await query.answer(texts.duel_popup(theme, "duel_gone"), show_alert=True)
+    elif isinstance(result, service.DuelRefused):
+        await query.answer(texts.popup(texts.duel_refused(theme, result)), show_alert=True)
+    else:
+        msg = query.message if isinstance(query.message, Message) else None
+        if msg is not None:
+            await msg.edit_reply_markup(reply_markup=None)  # one rematch per duel
+            await msg.reply(texts.duel_offer(theme, result), reply_markup=_offer_keyboard(theme, result.duel_id))
+        await query.answer()
+
+
 async def on_duel_pick(query: CallbackQuery, callback_data: DuelPick, theme: Theme, store: Store) -> None:
     if query.from_user.id != callback_data.challenger:
         await query.answer(texts.duel_popup(theme, "duel_not_yours"), show_alert=True)
@@ -344,12 +374,16 @@ async def on_duel_button(query: CallbackQuery, callback_data: DuelButton, theme:
         # Someone can't cover the stake or dueled elsewhere; the challenge stays open.
         await query.answer(texts.popup(texts.duel_refused(theme, result)), show_alert=True)
     else:
+        markup = None
         if isinstance(result, service.DuelResult):
             text = texts.duel_result(theme, result)
+            # The loser gets one rematch, same stake, without waiting out the duel limit.
+            markup = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(
+                text=texts.label(theme, "rematch"), callback_data=Rematch(duel_id=result.duel_id).pack())]])
         else:
             text = texts.duel_closed(theme, result)
         if isinstance(query.message, Message):
-            await query.message.edit_text(text, reply_markup=None)
+            await query.message.edit_text(text, reply_markup=markup)
             if isinstance(result, service.DuelClosed):
                 # A declined or expired challenge is clutter: clear it and the /duel command.
                 ids = [query.message.message_id]
@@ -363,15 +397,17 @@ def build_dispatcher(store: Store, themes_by_bot_id: dict[int, Theme]) -> Dispat
     router = Router()
     router.message.register(cmd_help, CommandStart())
     router.message.register(cmd_help, Command("help"))
-    router.message.register(cmd_private, Command("play", "me", "top", "duel"), ~GROUPS)
+    router.message.register(cmd_private, Command("play", "me", "top", "duel", "all"), ~GROUPS)
     router.message.register(cmd_play, Command("play"), GROUPS)
     router.message.register(cmd_me, Command("me"), GROUPS)
     router.message.register(cmd_top, Command("top"), GROUPS)
+    router.message.register(cmd_all, Command("all"), GROUPS)
     router.message.register(cmd_duel, Command("duel"), GROUPS)
     router.callback_query.register(on_duel_button, DuelButton.filter())
     router.callback_query.register(on_duel_pick, DuelPick.filter())
+    router.callback_query.register(on_rematch, Rematch.filter())
 
-    dp = Dispatcher(store=store)
+    dp = Dispatcher(store=store, all_themes=list(themes_by_bot_id.values()))
     dp.update.outer_middleware(ThemeMiddleware(themes_by_bot_id))
     dp.include_router(router)
     return dp

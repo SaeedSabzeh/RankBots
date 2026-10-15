@@ -11,9 +11,9 @@ from collections.abc import Callable
 from datetime import timedelta
 from html import escape, unescape
 
-from engine import game
+from engine import achievements, game
 from engine.db import Player
-from engine.service import Board, DuelClosed, DuelOffer, DuelRefused, DuelResult, Played, Stats, WeeklyReport
+from engine.service import Board, DuelClosed, DuelOffer, DuelRefused, DuelResult, Everywhere, Played, Stats, WeeklyReport
 from engine.theme import Lang, Theme
 
 _FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
@@ -47,6 +47,11 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "next_now": "⏳ Next try: now!",
         "next_in": "⏳ Next try in {time}",
         "you": "You",
+        "badge_new": "🏅 New achievement: {badge}!",
+        "badges": "🏅 Achievements ({count}): {list}",
+        "rematch": "⚔️ Rematch!",
+        "all_title": "📋 <b>{name}</b> in every bot in this group",
+        "all_none": "{name}, you haven't played with any bot in this group yet. Send /play!",
         "help": (
             "/play: roll once every {every}\n"
             "/me: your score, rank, title and streak\n"
@@ -117,6 +122,11 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "next_now": "⏳ نوبت بعدی: همین الان!",
         "next_in": "⏳ نوبت بعدی: {time} دیگه",
         "you": "تو",
+        "badge_new": "🏅 دستاورد جدید: {badge}!",
+        "badges": "🏅 دستاوردها ({count}): {list}",
+        "rematch": "⚔️ انتقام!",
+        "all_title": "📋 <b>{name}</b> تو همه‌ی ربات‌های این گروه",
+        "all_none": "{name}، هنوز با هیچ ربات‌ی تو این گروه بازی نکردی. /play بفرست!",
         "help": (
             "/play: هر {every} یه بار بازی کن\n"
             "/me: امتیاز، رتبه، لقب و روزهای پشت سر همت\n"
@@ -231,6 +241,7 @@ def play_result(theme: Theme, name: str, r: Played) -> str:
             f"{theme.score.name[lang]}: <b>{amount(theme, r.score, lang)}</b> · #{num(r.rank, lang)} · {title}"
         )
         lines.append(s["next_try"].format(time=duration(r.cooldown, lang)))
+        lines += [s["badge_new"].format(badge=badge_name(code, lang)) for code in r.new_badges]
         return "\n".join(lines)
 
     return _join(theme, build)
@@ -261,6 +272,9 @@ def me(theme: Theme, name: str, st: Stats) -> str:
             lines.append(s["next_in"].format(time=duration(st.cooldown_left, lang)))
         else:
             lines.append(s["next_now"])
+        if st.badges:
+            icons = " ".join(achievements.BY_CODE[c].emoji for c in st.badges if c in achievements.BY_CODE)
+            lines.append(s["badges"].format(count=num(len(st.badges), lang), list=icons))
         return "\n".join(lines)
 
     return _join(theme, build)
@@ -379,6 +393,30 @@ def duel_result(theme: Theme, r: DuelResult) -> str:
                 delta=amount(theme, delta, lang, signed=True),
                 title=game.title_for(theme, p.score).name[lang],
             ))
+        lines += [s["badge_new"].format(badge=badge_name(code, lang)) for code in r.winner_badges]
+        return "\n".join(lines)
+
+    return _join(theme, build)
+
+
+def badge_name(code: str, lang: Lang) -> str:
+    a = achievements.BY_CODE[code]
+    return f"{a.emoji} {a.name[lang]}"
+
+
+def all_stats(theme: Theme, name: str, rows: list[Everywhere]) -> str:
+    """/all: one line per bot this person plays in this group."""
+    def build(lang: Lang) -> str:
+        s = STRINGS[lang]
+        if not rows:
+            return s["all_none"].format(name=name)
+        lines = [s["all_title"].format(name=name), ""]
+        for e in rows:
+            t = e.theme
+            nick = t.nickname(e.rank, e.players)
+            label = nick[lang] if nick is not None else game.title_for(t, e.player.score).name[lang]
+            lines.append(f"{t.emoji} {t.score.name[lang]}: <b>{amount(t, e.player.score, lang)}</b>"
+                         f" · #{num(e.rank, lang)} · {label}")
         return "\n".join(lines)
 
     return _join(theme, build)
