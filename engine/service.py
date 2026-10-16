@@ -22,11 +22,13 @@ class Played:
     cooldown: timedelta
     players: int = 0  # everyone who has played in the group, for position nicknames
     new_badges: tuple[str, ...] = ()  # achievements earned by this play
+    reminders: bool = False  # the player gets a private message when the next turn is ready
 
 
 @dataclass(frozen=True)
 class OnCooldown:
     left: timedelta
+    reminders: bool = False
 
 
 @dataclass(frozen=True)
@@ -69,7 +71,7 @@ async def play(
 
     left = game.cooldown_left(player.last_play_at, cooldown, now)
     if left > timedelta(0):
-        return OnCooldown(left)
+        return OnCooldown(left, player.remind)
 
     today = game.local_day(now)
     streak = game.next_streak(player.streak, player.last_play_date, today)
@@ -85,7 +87,7 @@ async def play(
     if score is None:
         # Another /play from the same person won the race.
         fresh = await store.get_player(theme.name, chat_id, user_id)
-        return OnCooldown(game.cooldown_left(fresh.last_play_at, cooldown, now))
+        return OnCooldown(game.cooldown_left(fresh.last_play_at, cooldown, now), fresh.remind)
 
     rank = await store.rank_of(theme.name, chat_id, score, theme.higher_is_better)
     players = await store.player_count(theme.name, chat_id)
@@ -94,7 +96,7 @@ async def play(
         plays=await store.play_count(theme.name, chat_id, user_id),
     )
     new = await store.award(theme.name, chat_id, user_id, codes, now)
-    return Played(roll, delta, score, streak, rank, cooldown, players, tuple(new))
+    return Played(roll, delta, score, streak, rank, cooldown, players, tuple(new), player.remind)
 
 
 async def stats(store: Store, theme: Theme, *, chat_id: int, user_id: int, now: datetime) -> Stats | None:

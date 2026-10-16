@@ -23,6 +23,7 @@ from aiogram.enums import ParseMode
 from engine.champion import champion_loop
 from engine.db import Store
 from engine.handlers import build_dispatcher, set_commands
+from engine.reminders import reminder_loop
 from engine.theme import Theme, load_themes
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -92,10 +93,13 @@ async def run(only: list[str] | None) -> None:
 
     # Sunday-evening weekly champion posts, alongside the bots.
     champions = asyncio.create_task(champion_loop([(bot, theme) for bot, (theme, _) in zip(bots, selected)], store))
+    reminder_task = asyncio.create_task(
+        reminder_loop({theme.name: (bot, theme) for bot, (theme, _) in zip(bots, selected)}, store))
     try:
         await dp.start_polling(*bots)
     finally:
         champions.cancel()
+        reminder_task.cancel()
         await store.close()
         for bot in bots:
             await bot.session.close()

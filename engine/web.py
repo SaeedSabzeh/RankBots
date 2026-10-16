@@ -17,15 +17,18 @@ import logging
 import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
 
 from aiogram import Bot, Dispatcher
 from fastapi import FastAPI, Header, HTTPException, Request, Response
 
 from engine.champion import champion_loop
+from engine.db import Store
 from engine.handlers import build_dispatcher
 from engine.main import bots_to_run, connect_store, load_dotenv, new_bot
-from engine.theme import load_themes
+from engine.reminders import reminder_loop, send_due
+from engine.theme import Theme, load_themes
 
 log = logging.getLogger(__name__)
 
@@ -47,6 +50,11 @@ class Webhooks:
     dp: Dispatcher
     bots: dict[str, Bot]  # theme name -> bot
     secrets: dict[str, str]  # theme name -> secret
+    store: Store | None = None  # for /tick
+    themes: dict[str, Theme] = field(default_factory=dict)  # theme name -> theme, for /tick
+
+    def reminder_bots(self) -> dict[str, tuple[Bot, Theme]]:
+        return {name: (bot, self.themes[name]) for name, bot in self.bots.items() if name in self.themes}
 
 
 @asynccontextmanager
@@ -61,10 +69,15 @@ async def _from_env() -> AsyncIterator[Webhooks]:
     # Sunday champion posts. On Render's free plan this only runs while the service is awake,
     # but it checks as soon as it wakes, so the first message after Sunday 20:00 triggers it.
     champions = asyncio.create_task(champion_loop([(bots[t.name], t) for t, _ in selected], store))
+    hooks = Webhooks(dp, bots, {theme.name: webhook_secret(token, key) for theme, token in selected},
+                     store, {theme.name: theme for theme, _ in selected})
+    # Private "your turn is ready" messages, while awake; /tick wakes the service when one is due.
+    reminder_task = asyncio.create_task(reminder_loop(hooks.reminder_bots(), store))
     try:
-        yield Webhooks(dp, bots, {theme.name: webhook_secret(token, key) for theme, token in selected})
+        yield hooks
     finally:
         champions.cancel()
+        reminder_task.cancel()
         await store.close()
         for bot in bots.values():
             await bot.session.close()
@@ -89,6 +102,17 @@ def create_app(hooks: Webhooks | None = None) -> FastAPI:
     @app.api_route("/health", methods=["GET", "HEAD"])
     async def health() -> dict[str, bool]:
         return {"ok": True}
+
+    @app.api_route("/tick", methods=["GET", "POST"])
+    async def tick(request: Request) -> dict[str, int]:
+        """Send due reminders now. Called by a Supabase pg_cron job, which also wakes a sleeping service.
+
+        Open to anyone: all it can do is send reminders that are already due, once each.
+        """
+        hooks: Webhooks = request.app.state.hooks
+        if hooks.store is None:
+            return {"sent": 0}
+        return {"sent": await send_due(hooks.reminder_bots(), hooks.store, datetime.now(timezone.utc))}
 
     @app.post("/tg/{name}")
     async def telegram(

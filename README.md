@@ -147,6 +147,13 @@ banner line at the top of the `/play` reply, and they stack (Yalda in the lucky 
 - **/all**: one message with your score, rank and nickname in every bot you play in this group.
 - **Rematch**: the loser of a duel gets one Rematch button for the same stake within 30 minutes of the
   challenge, which skips the 6-hour duel limit (`duels.rematch_of`, migration 004).
+- **Private reminders**: the /play reply (and the "not yet" reply) has a 🔔 button that opens the bot's
+  private chat with `/start r<group id>`, which turns on "your turn is ready" messages for that bot and
+  group (`players.remind`, `players.remind_at`, migration 005). The message has a 🔕 button to stop them;
+  blocking the bot stops them too. `engine/reminders.py` sends due ones every 30 s while the service is
+  up. On Render's free plan the service sleeps, so a Supabase pg_cron job
+  (`supabase/reminder_wakeup.sql`, run once in the SQL editor) calls `GET /tick` each minute that a
+  reminder is due, which wakes the service; expect them up to a minute or so late after a quiet spell.
 - **Duel buttons**: `/duel` alone shows the group's players, then stakes (5/10/25/50 × the theme's
   scale, capped at what both can afford).
 

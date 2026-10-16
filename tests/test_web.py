@@ -106,3 +106,9 @@ async def test_register_sets_webhook_and_commands():
     assert hook.url == url and hook.secret_token == SECRET
     assert sorted(hook.allowed_updates) == ["callback_query", "message"]
     assert any(isinstance(c, SetMyCommands) for c in session.calls)
+
+
+async def test_tick_without_a_store_sends_nothing(web):
+    client, _ = web
+    r = await client.get("/tick")
+    assert r.status_code == 200 and r.json() == {"sent": 0}

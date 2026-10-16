@@ -21,9 +21,21 @@ class Player:
     last_play_at: datetime | None
     last_play_date: date | None
     last_duel_at: datetime | None = None
+    remind: bool = False  # private "your turn is ready" messages are on
 
 
-_PLAYER_COLS = "user_id, username, first_name, score, streak, last_play_at, last_play_date, last_duel_at"
+_PLAYER_COLS = "user_id, username, first_name, score, streak, last_play_at, last_play_date, last_duel_at, remind"
+
+
+@dataclass(frozen=True)
+class Reminder:
+    """A private message that is due: this player's turn is ready in this group."""
+
+    bot: str
+    chat_id: int
+    user_id: int
+    first_name: str | None
+    title: str | None
 
 
 @dataclass(frozen=True)
@@ -163,7 +175,8 @@ class Store:
                     score = GREATEST($4::bigint, score + $5::bigint),
                     streak = $6::int,
                     last_play_at = $7::timestamptz,
-                    last_play_date = $8::date
+                    last_play_date = $8::date,
+                    remind_at = CASE WHEN remind THEN $7::timestamptz + make_interval(mins => $10::int) END
                 WHERE bot = $1 AND chat_id = $2 AND user_id = $3
                   AND last_play_at IS NOT DISTINCT FROM $9::timestamptz
                   AND (last_play_at IS NULL OR last_play_at <= $7::timestamptz - make_interval(mins => $10::int))
@@ -181,6 +194,51 @@ class Store:
                 bot, chat_id, user_id, delta, event, score, now,
             )
             return score
+
+    async def set_reminders(
+        self, bot: str, chat_id: int, user_id: int, on: bool, *, now: datetime, cooldown_minutes: int
+    ) -> tuple[datetime | None, str | None] | None:
+        """Turn this player's private reminders on or off for one group.
+
+        Returns None if they have never played there. Otherwise (when the next reminder is due,
+        the group's title); the time is None when turning them off or if the turn is ready already.
+        """
+        row = await self.pool.fetchrow(
+            """
+            UPDATE players p SET
+                remind = $4,
+                remind_at = CASE WHEN $4 AND p.last_play_at + make_interval(mins => COALESCE(c.cooldown_minutes, $6))
+                                       > $5::timestamptz
+                                 THEN p.last_play_at + make_interval(mins => COALESCE(c.cooldown_minutes, $6)) END
+            FROM chats c
+            WHERE c.bot = p.bot AND c.chat_id = p.chat_id
+              AND p.bot = $1 AND p.chat_id = $2 AND p.user_id = $3 AND p.last_play_at IS NOT NULL
+            RETURNING p.remind_at, c.title
+            """,
+            bot, chat_id, user_id, on, now, cooldown_minutes,
+        )
+        return None if row is None else (row["remind_at"], row["title"])
+
+    async def stop_all_reminders(self, bot: str, user_id: int) -> None:
+        """The person blocked this bot: no reminders from it in any group."""
+        await self.pool.execute(
+            "UPDATE players SET remind = false, remind_at = NULL WHERE bot = $1 AND user_id = $2 AND remind",
+            bot, user_id,
+        )
+
+    async def take_due_reminders(self, bots: list[str], now: datetime) -> list[Reminder]:
+        """Claim every reminder that is due. Each is returned once, even with several senders."""
+        rows = await self.pool.fetch(
+            """
+            UPDATE players p SET remind_at = NULL
+            FROM chats c
+            WHERE c.bot = p.bot AND c.chat_id = p.chat_id
+              AND p.remind_at <= $2 AND p.remind AND p.bot = ANY($1::text[])
+            RETURNING p.bot, p.chat_id, p.user_id, p.first_name, c.title
+            """,
+            bots, now,
+        )
+        return [Reminder(**dict(r)) for r in rows]
 
     async def rank_of(self, bot: str, chat_id: int, score: int, higher_is_better: bool) -> int:
         """1 + the number of players strictly ahead. Ties share a rank."""

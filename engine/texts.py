@@ -97,6 +97,16 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "hours": "{h}h",
         "minutes": "{m}m",
         "under_minute": "less than a minute",
+        "remind_button": "🔔 Ping me in private when it's my turn",
+        "remind_stop_button": "🔕 Stop reminders",
+        "remind_on": "🔔 Done! I'll message you here when your turn is ready in <b>{group}</b> (in {time}).",
+        "remind_on_now": (
+            "🔔 Done! From now on I'll message you here when your turn is ready in <b>{group}</b>. "
+            "It's your turn right now, go /play!"
+        ),
+        "remind_unknown": "Play once in that group with /play first, then I can remind you.",
+        "remind_ping": "{emoji} {name}, your turn is ready in <b>{group}</b>! Go send /play.",
+        "remind_stopped": "🔕 OK, no more reminders for {group}.",
     },
     "fa": {
         "rare_good": "✨ اتفاق نادر! ",
@@ -174,6 +184,16 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "hours": "{h} ساعت",
         "minutes": "{m} دقیقه",
         "under_minute": "کمتر از یه دقیقه",
+        "remind_button": "🔔 نوبتم شد پی‌وی خبرم کن",
+        "remind_stop_button": "🔕 دیگه خبرم نکن",
+        "remind_on": "🔔 حله! نوبتت تو <b>{group}</b> که شد، همین‌جا بهت خبر می‌دم ({time} دیگه).",
+        "remind_on_now": (
+            "🔔 حله! از این به بعد نوبتت تو <b>{group}</b> که شد، همین‌جا بهت خبر می‌دم. "
+            "الانم نوبتته، برو /play بزن!"
+        ),
+        "remind_unknown": "اول باید تو اون گروه یه بار /play بزنی، بعد می‌تونم خبرت کنم.",
+        "remind_ping": "{emoji} {name}، نوبتت تو <b>{group}</b> شد! برو /play بزن.",
+        "remind_stopped": "🔕 باشه، دیگه برای {group} خبرت نمی‌کنم.",
     },
 }
 
@@ -473,3 +493,28 @@ def weekly_champion(theme: Theme, report: WeeklyReport) -> str:
         return "\n".join(lines)
 
     return _join(theme, build)
+
+
+def _group(title: str | None) -> str:
+    return escape(title or "?")
+
+
+def reminders_on(theme: Theme, title: str | None, left: timedelta | None) -> str:
+    """The private reply to the reminder button; `left` is None when the turn is ready already."""
+    if left is None:
+        return _join(theme, lambda lang: STRINGS[lang]["remind_on_now"].format(group=_group(title)))
+    return _join(theme, lambda lang: STRINGS[lang]["remind_on"].format(
+        group=_group(title), time=duration(left, lang)))
+
+
+def reminders_unknown(theme: Theme) -> str:
+    return _join(theme, lambda lang: STRINGS[lang]["remind_unknown"])
+
+
+def reminder(theme: Theme, first_name: str | None, title: str | None) -> str:
+    return _join(theme, lambda lang: STRINGS[lang]["remind_ping"].format(
+        emoji=theme.emoji, name=escape(first_name or "?"), group=_group(title)))
+
+
+def reminders_stopped(theme: Theme, title: str | None) -> str:
+    return popup(_join(theme, lambda lang: STRINGS[lang]["remind_stopped"].format(group=title or "?")))

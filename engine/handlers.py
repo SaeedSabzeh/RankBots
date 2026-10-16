@@ -28,7 +28,7 @@ from aiogram.types import (
     TelegramObject,
 )
 
-from engine import game, service, texts
+from engine import game, reminders, service, texts
 from engine.db import Store
 from engine.theme import Theme
 
@@ -138,9 +138,9 @@ def delete_later(bot: Bot, chat_id: int, *message_ids: int) -> None:
     task.add_done_callback(_cleanups.discard)
 
 
-async def reply_briefly(message: Message, text: str) -> None:
+async def reply_briefly(message: Message, text: str, reply_markup: InlineKeyboardMarkup | None = None) -> None:
     """Reply, then remove the reply and the command a minute later (groups only)."""
-    sent = await message.reply(text)
+    sent = await message.reply(text, reply_markup=reply_markup)
     if message.chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
         delete_later(message.bot, message.chat.id, sent.message_id, message.message_id)
 
@@ -158,6 +158,15 @@ async def cmd_private(message: Message, theme: Theme) -> None:
     await message.reply(texts.group_only(theme))
 
 
+async def _remind_keyboard(message: Message, theme: Theme, reminders_on: bool) -> InlineKeyboardMarkup | None:
+    """The "ping me in private" button, for players who don't have reminders on yet."""
+    if reminders_on:
+        return None
+    me = await message.bot.me()
+    return InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(
+        text=texts.label(theme, "remind_button"), url=reminders.start_link(me.username, message.chat.id))]])
+
+
 async def cmd_play(message: Message, theme: Theme, store: Store) -> None:
     user = message.from_user
     result = await service.play(
@@ -166,10 +175,34 @@ async def cmd_play(message: Message, theme: Theme, store: Store) -> None:
         user_id=user.id, username=user.username, first_name=user.first_name,
         now=_now(), rng=_rng,
     )
+    markup = await _remind_keyboard(message, theme, result.reminders)
     if isinstance(result, service.OnCooldown):
-        await reply_briefly(message, texts.cooldown(theme, _name(message), result.left))
+        await reply_briefly(message, texts.cooldown(theme, _name(message), result.left), markup)
     else:
-        await message.reply(texts.play_result(theme, _name(message), result))
+        await message.reply(texts.play_result(theme, _name(message), result), reply_markup=markup)
+
+
+async def cmd_start_reminders(message: Message, command: CommandObject, theme: Theme, store: Store) -> None:
+    """/start r<chat_id> in private, from the reminder button: turn reminders on for that group."""
+    chat_id = int(command.args[1:])
+    now = _now()
+    found = await store.set_reminders(theme.name, chat_id, message.from_user.id, True,
+                                      now=now, cooldown_minutes=theme.cooldown_minutes)
+    if found is None:
+        await message.answer(texts.reminders_unknown(theme))
+        return
+    due, title = found
+    await message.answer(texts.reminders_on(theme, title, due - now if due else None),
+                         reply_markup=reminders.stop_keyboard(theme, chat_id))
+
+
+async def on_stop_reminders(query: CallbackQuery, callback_data: reminders.StopReminders,
+                            theme: Theme, store: Store) -> None:
+    found = await store.set_reminders(theme.name, callback_data.chat_id, query.from_user.id, False,
+                                      now=_now(), cooldown_minutes=theme.cooldown_minutes)
+    if isinstance(query.message, Message):
+        await query.message.edit_reply_markup(reply_markup=None)
+    await _answer(query, texts.reminders_stopped(theme, found[1] if found else None), show_alert=True)
 
 
 async def cmd_me(message: Message, theme: Theme, store: Store) -> None:
@@ -407,6 +440,8 @@ async def on_duel_button(query: CallbackQuery, callback_data: DuelButton, theme:
 
 def build_dispatcher(store: Store, themes_by_bot_id: dict[int, Theme]) -> Dispatcher:
     router = Router()
+    router.message.register(cmd_start_reminders, CommandStart(deep_link=True, magic=F.args.regexp(r"^r-?\d+$")),
+                            ~GROUPS)
     router.message.register(cmd_help, CommandStart())
     router.message.register(cmd_help, Command("help"))
     router.message.register(cmd_private, Command("play", "me", "top", "duel", "all"), ~GROUPS)
@@ -418,6 +453,7 @@ def build_dispatcher(store: Store, themes_by_bot_id: dict[int, Theme]) -> Dispat
     router.callback_query.register(on_duel_button, DuelButton.filter())
     router.callback_query.register(on_duel_pick, DuelPick.filter())
     router.callback_query.register(on_rematch, Rematch.filter())
+    router.callback_query.register(on_stop_reminders, reminders.StopReminders.filter())
 
     dp = Dispatcher(store=store, all_themes=list(themes_by_bot_id.values()))
     dp.update.outer_middleware(ThemeMiddleware(themes_by_bot_id))
